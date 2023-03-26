@@ -6,8 +6,6 @@ use TypeError;
 
 class Maybe
 {
-    private static $NOTHING;
-
     private function __construct(private readonly bool $isJust_,
                                  private mixed         $value_ = null)
     {
