@@ -297,4 +297,31 @@ class ResultTest extends TestCase
 
         $this->assertEquals(Exception::class, get_class($result->get()));
     }
+
+    public function test_it_should_be_able_finally_method_called_after_all_actions_of_chaining()
+    {
+        $result = new Result(null);
+
+        $result->finally(function ($value) {
+            $this->assertEquals(true, true);
+        })->then(function ($value) {
+            $this->assertEquals(1, $value);
+
+            throw new Exception('test');
+        })->then(function () {
+            // it should not be called.
+            $this->assertEquals(false, true);
+        })->then(function () {
+            // it should not be called.
+            $this->assertEquals(false, true);
+        })->catch(function ($value) {
+            $this->assertEquals('test', $value->getMessage());
+
+            return 2;
+        })->then(function ($value) {
+            $this->assertEquals(2, $value);
+        })->resolve(1);
+
+        $this->assertEquals(Exception::class, get_class($result->get()));
+    }
 }

@@ -23,7 +23,7 @@ readonly class Maybe
 
     public static function flat(mixed $value, bool $nullable = false): Maybe
     {
-        if ($nullable && is_null($value)) {
+        if (!$nullable && is_null($value)) {
             return self::nothing();
         }
 
