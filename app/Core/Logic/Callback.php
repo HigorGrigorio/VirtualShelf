@@ -5,7 +5,7 @@ namespace App\Core\Logic;
 use Exception;
 use App\Core\Logic\Maybe;
 
-abstract class Callback
+readonly class Callback
 {
 
     /**
