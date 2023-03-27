@@ -11,7 +11,7 @@ class Result extends Thenable
     private mixed $value_;
 
     private array $callbacks_ = [];
-    private array $fulfillementActions_ = [];
+    private array $fulfillmentActions_ = [];
 
     private array $rejectActions_ = [];
 
@@ -58,6 +58,42 @@ class Result extends Thenable
         return self::status() === ResultStatus::Pending ? null : $this->value_;
     }
 
+    private function notify(array $callbacks, mixed $value, Maybe $cache): Maybe
+    {
+        $cache = Maybe::flat($cache, true);
+
+        foreach ($callbacks as $callback) {
+            if (is_callable($callback)) {
+                $result = $callback($cache->getOrElse($value));
+                $cache = Maybe::flat(Result::isResult($result) ? $result->get() : $result, true);
+            }
+        }
+
+        return $cache;
+    }
+
+    private function catch_($e)
+    {
+        $this->value_ = $e;
+        $this->status_ = ResultStatus::Rejected;
+        $this->notify($this->finallyActions_, $e,
+            $this->notify($this->catchActions_, $e, Maybe::nothing()));
+    }
+
+
+    private function resolve_($value)
+    {
+        $this->value_ = $value;
+        $this->status_ = ResultStatus::Resolved;
+        $cache = Maybe::nothing();
+
+        // notify all fulfillement actions.
+        $cache = $this->notify($this->fulfillmentActions_, $value, $cache);
+
+        // notify all finally actions.
+        $this->notify($this->finallyActions_, $value, $cache);
+    }
+
     public function resolve(mixed $value = null): Result
     {
         try {
@@ -68,32 +104,7 @@ class Result extends Thenable
                         if (self::isResult($value)) {
                             self::resolve($value->get());
                         } else {
-                            $this->value_ = $value;
-                            $this->status_ = ResultStatus::Resolved;
-                            $cache = null;
-
-                            // notify all fulfillement actions.
-                            foreach ($this->fulfillementActions_ as $action) {
-                                if (is_callable($action)) {
-                                    $result = $action($cache ?? $this->value_);
-
-                                    if ($result !== null) {
-                                        $cache = self::isResult($value) ? $value->get() : $value;
-                                    }
-                                }
-                            }
-
-                            // notify all finally actions.
-                            foreach ($this->finallyActions_ as $action) {
-                                if (is_callable($action)) {
-                                    $result = $action($value);
-                                    $cache = null;
-
-                                    if ($result !== null) {
-                                        $cache = self::isResult($value) ? $value->get() : $value;
-                                    }
-                                }
-                            }
+                            self::resolve_($value);
                         }
                         break;
                     case ResultStatus::Resolved:
@@ -102,33 +113,22 @@ class Result extends Thenable
                 }
             }
         } catch (Throwable $e) {
-            $this->value_ = $e;
-            $this->status_ = ResultStatus::Rejected;
-            $cache = null;
-
-            // notify all reject actions.
-            foreach ($this->catchActions_ as $action) {
-                if (is_callable($action)) {
-                    $result = $action($cache ?? $this->value_);
-
-                    if ($result !== null) {
-                        $cache = self::isResult($result) ? $result->get() : $result;
-                    }
-                }
-            }
-
-            // notify all finally actions.
-            foreach ($this->finallyActions_ as $action) {
-                if (is_callable($action)) {
-                    $result = $action($value);
-
-                    if ($result !== null) {
-                        $cache = self::isResult($value) ? $value->get() : $value;
-                    }
-                }
-            }
+            self::catch_($e);
         }
         return $this;
+    }
+
+    private function reject_($value)
+    {
+        $this->value_ = $value;
+        $this->status_ = ResultStatus::Rejected;
+        $cache = Maybe::nothing();
+
+        // notify all reject actions.
+        $cache = $this->notify($this->rejectActions_, $value, $cache);
+
+        // notify all finally actions.
+        $this->notify($this->finallyActions_, $value, $cache);
     }
 
     public function reject(mixed $value = null): Result
@@ -140,29 +140,7 @@ class Result extends Thenable
                         if (self::isResult($value)) {
                             self::reject($value->get());
                         } else {
-                            $this->value_ = $value;
-                            $this->status_ = ResultStatus::Rejected;
-                            $cache = null;
-                            // notify all reject actions.
-                            foreach ($this->rejectActions_ as $action) {
-                                if (is_callable($action)) {
-                                    $result = $action($cache ?? $this->value_);
-
-                                    if ($result !== null) {
-                                        $cache = self::isResult($result) ? $result->get() : $result;
-                                    }
-                                }
-                            }
-                            // notify all finally actions.
-                            foreach ($this->finallyActions_ as $action) {
-                                if (is_callable($action)) {
-                                    $result = $action($value);
-
-                                    if ($result !== null) {
-                                        $cache = self::isResult($value) ? $value->get() : $value;
-                                    }
-                                }
-                            }
+                           $this->reject_( $value);
                         }
                         break;
                     case ResultStatus::Resolved:
@@ -171,34 +149,8 @@ class Result extends Thenable
                 }
             }
         } catch (Throwable $e) {
-            $this->value_ = $e;
-            $this->status_ = ResultStatus::Rejected;
-
-            $cache = null;
-            // notify all reject actions.
-            foreach ($this->catchActions_ as $action) {
-                if (is_callable($action)) {
-                    $result = $action($cache ?? $e);
-
-                    if ($result !== null) {
-                        $cache = $result;
-                    }
-                }
-            }
-
-            $cache = null;
-            // notify all finally actions.
-            foreach ($this->finallyActions_ as $action) {
-                if (is_callable($action)) {
-                    $result = $action($cache ?? $e);
-
-                    if ($result !== null) {
-                        $cache = $result;
-                    }
-                }
-            }
+            self::catch_($e);
         }
-
         return $this;
     }
 
@@ -210,7 +162,7 @@ class Result extends Thenable
             switch (self::status()) {
                 case ResultStatus::Pending:
                     if ($onFulfilled) {
-                        $this->fulfillementActions_[] = $onFulfilled;
+                        $this->fulfillmentActions_[] = $onFulfilled;
                     }
                     if ($onRejected) {
                         $this->rejectActions_[] = $onRejected;
@@ -222,9 +174,7 @@ class Result extends Thenable
 
                         // support for thenables and callables chaining.
                         if (isset($callResult)) {
-                            $result = self::isResult($callResult) ? $callResult : new Result(function ($resolve, $reject) use ($callResult) {
-                                $resolve($callResult);
-                            });
+                            $result = $this->chaining_($callResult);
                         }
                     }
                     break;
@@ -234,39 +184,13 @@ class Result extends Thenable
 
                         // support for thenables and callables chaining.
                         if (isset($callResult)) {
-                            $result = self::isResult($callResult) ? $callResult : new Result(function ($resolve, $reject) use ($callResult) {
-                                $resolve($callResult);
-                            });
+                            $result = $this->chaining_($callResult);
                         }
                     }
                     break;
             }
         } catch (Throwable $e) {
-            $this->value_ = $e;
-            $this->status_ = ResultStatus::Rejected;
-            $cache = null;
-
-            // notify all reject actions.
-            foreach ($this->catchActions_ as $action) {
-                if (is_callable($action)) {
-                    $result = $action($cache ?? $this->value_);
-
-                    if ($result !== null) {
-                        $cache = $result;
-                    }
-                }
-            }
-
-            // notify all finally actions.
-            foreach ($this->finallyActions_ as $action) {
-                if (is_callable($action)) {
-                    $result = $action($e);
-
-                    if ($result !== null) {
-                        $cache = $result;
-                    }
-                }
-            }
+           $this->catch_($e);
         }
         return $result;
     }
@@ -287,38 +211,12 @@ class Result extends Thenable
 
                     // support for thenables and callables chaining.
                     if (isset($callResult)) {
-                        $result = self::isResult($callResult) ? $callResult : new Result(function ($resolve, $reject) use ($callResult) {
-                            $resolve($callResult);
-                        });
+                        $result = $this->chaining_($callResult);
                     }
                     break;
             }
         } catch (Throwable $e) {
-            $this->value_ = $e;
-            $this->status_ = ResultStatus::Rejected;
-            $cache = null;
-
-            // notify all reject actions.
-            foreach ($this->catchActions_ as $action) {
-                if (is_callable($action)) {
-                    $result = $action($cache ?? $this->value_);
-
-                    if ($result !== null) {
-                        $cache = $result;
-                    }
-                }
-            }
-
-            // notify all finally actions.
-            foreach ($this->finallyActions_ as $action) {
-                if (is_callable($action)) {
-                    $result = $action($e);
-
-                    if ($result !== null) {
-                        $cache = $result;
-                    }
-                }
-            }
+           $this->catch_($e);
         }
         return $result;
     }
@@ -338,39 +236,26 @@ class Result extends Thenable
 
                     // support for thenables and callables chaining.
                     if (isset($callResult)) {
-                        $result = self::isResult($callResult) ? $callResult : new Result(function ($resolve, $reject) use ($callResult) {
-                            $resolve($callResult);
-                        });
+                        $result = $this->chaining_($callResult);
                     }
                     break;
             }
         } catch (Throwable $e) {
-            $this->value_ = $e;
-            $this->status_ = ResultStatus::Rejected;
-            $cache = null;
-
-            // notify all reject actions.
-            foreach ($this->catchActions_ as $action) {
-                if (is_callable($action)) {
-                    $result = $action($cache ?? $this->value_);
-
-                    if ($result !== null) {
-                        $cache = $result;
-                    }
-                }
-            }
-
-            // notify all finally actions.
-            foreach ($this->finallyActions_ as $action) {
-                if (is_callable($action)) {
-                    $result = $action($e);
-
-                    if ($result !== null) {
-                        $cache = $result;
-                    }
-                }
-            }
+            $this->catch_($e);
         }
         return $result;
+    }
+
+    /**
+     * Support for thenables and callables chaining.
+     *
+     * @param $callResult
+     * @return Result
+     */
+    private function chaining_($callResult): Result
+    {
+        return self::isResult($callResult) ? $callResult : new Result(function ($resolve, $reject) use ($callResult) {
+            $resolve($callResult);
+        });
     }
 }
