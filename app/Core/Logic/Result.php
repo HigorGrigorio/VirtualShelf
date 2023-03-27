@@ -25,10 +25,9 @@ class Result extends Thenable
 
         if (isset($executor)) {
             try {
-                if (self::isThenable($executor)) {
-                    $executor->then([$this, 'resolve'], [$this, 'reject']);
-                } else if (is_callable($executor)) {
-                    $executor([$this, 'resolve'], [$this, 'reject']);
+                if (self::isThenable($executor) || is_callable($executor)) {
+                    Callback::invoke(self::isThenable($executor) ? [$executor, 'then']
+                        : $executor, [[$this, 'resolve'], [$this, 'reject']], [$this, 'reject']);
                 } else {
                     // reject with a TypeError if executor is not a function
                     self::reject(new \TypeError('Executor must be callable or Thenable'));
@@ -140,7 +139,7 @@ class Result extends Thenable
                         if (self::isResult($value)) {
                             self::reject($value->get());
                         } else {
-                           $this->reject_( $value);
+                            $this->reject_($value);
                         }
                         break;
                     case ResultStatus::Resolved:
@@ -190,7 +189,7 @@ class Result extends Thenable
                     break;
             }
         } catch (Throwable $e) {
-           $this->catch_($e);
+            $this->catch_($e);
         }
         return $result;
     }
@@ -216,7 +215,7 @@ class Result extends Thenable
                     break;
             }
         } catch (Throwable $e) {
-           $this->catch_($e);
+            $this->catch_($e);
         }
         return $result;
     }
