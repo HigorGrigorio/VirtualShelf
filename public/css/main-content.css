@@ -1,0 +1,21 @@
+#main-content {
+    transition: all 1s;
+}
+
+#main-content.active {
+    transition: all 1s;
+    margin-left: 295px;
+    max-width: calc(100% - 300px);
+    width: calc(100% - 298px);
+}
+
+#main-content.inactive {
+    margin: 0;
+    width: 100vw;
+}
+
+.content-wrapper {
+    transition: width 1s;
+    min-height: calc(100% - 70px);
+    background: var(--bs-gray-100);
+}

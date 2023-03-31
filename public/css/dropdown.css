@@ -1,0 +1,5 @@
+.dropend .dropdown-toggle::after {
+    right: 5%;
+    top: 40%;
+    position: absolute;
+}

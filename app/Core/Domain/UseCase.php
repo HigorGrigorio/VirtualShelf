@@ -7,7 +7,7 @@ use App\Core\Logic\Result;
 /**
  * A base interface for services.
  */
-interface Service
+interface UseCase
 {
-    public function execute($request = null): Result;
+    public function execute($options): Result;
 }

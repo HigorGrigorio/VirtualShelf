@@ -23,11 +23,19 @@ readonly class Maybe
 
     public static function flat(mixed $value, bool $nullable = false): Maybe
     {
+        if ($value instanceof Maybe) {
+            if ($value->isJust() && $value->get() == null) {
+                $value = null;
+            } else {
+                return $value;
+            }
+        }
+
         if (!$nullable && is_null($value)) {
             return self::nothing();
         }
 
-        return $value instanceof Maybe ? $value : new Maybe(true, $value);
+        return new Maybe(true, $value);
     }
 
     /**
@@ -36,13 +44,26 @@ readonly class Maybe
      *
      * @throws TypeError
      */
-    public static function check(mixed $value): Maybe
+    public static function check(mixed $value, $message = ''): Maybe
     {
         if ($value instanceof Maybe) {
             return $value;
         }
 
-        throw new TypeError("Value is not a Maybe");
+        throw new TypeError($message ?? "Value is not a Maybe");
+    }
+
+    public static function unwrap(mixed $value): mixed
+    {
+        if ($value instanceof Maybe) {
+            return $value->get();
+        }
+
+        if (is_array($value)) {
+            return array_map(fn($v) => self::unwrap($v), $value);
+        }
+
+        return $value;
     }
 
     public function isJust(): bool
@@ -62,7 +83,7 @@ readonly class Maybe
 
     public function getOrElse(mixed $default): mixed
     {
-        if($this->isJust_) {
+        if ($this->isJust_) {
             return $this->value_;
         }
 
