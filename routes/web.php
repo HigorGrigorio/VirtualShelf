@@ -20,3 +20,11 @@ Route::get('/', function () {
 
 
 Route::get('/countries', [CountryController::class, 'index']);
+
+Route::prefix('country')->group(function () {
+    Route::get('/store', [CountryController::class, 'create']);
+    Route::post('/', [CountryController::class, 'store']);
+    Route::get('/edit/{id}', [CountryController::class, 'edit']);
+    Route::post('/update/{id}', [CountryController::class, 'update']);
+    Route::get('/delete/{id}', [CountryController::class, 'delete']);
+});

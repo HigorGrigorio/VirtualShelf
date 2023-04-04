@@ -1,6 +1,6 @@
 <x-app>
     <div class="container px-0">
-        <div class="pt-4 pb-3 container-fluid  d-flex flex-row justify-content-between px-0">
+        <div class="pt-4 pb-3 container-fluid d-flex flex-row justify-content-between px-0">
             <div>
                 <a href="{{url('/country/store')}}" class="btn btn-black">
                     <i class="fas fa-plus"></i>

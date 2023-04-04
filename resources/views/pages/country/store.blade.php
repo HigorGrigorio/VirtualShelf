@@ -4,20 +4,23 @@
             <div>
                 <h1 class="text-smoke">Add Country</h1>
             </div>
-            <form action="{{url('/country')}}" class="mt-3" method="POST">
+            <form action="{{url('/country')}}" method="POST">
                 @csrf
-                <x-input name="email" type="email" help="" placeHolder="" $ariaDescribedby="" />
-                <div class="form-group mt-3">
-                    <label for="code">Code</label>
-                    <input type="text" name="code" class="form-control input-smoke" id="code" placeholder="Code">
+                <div class="form-outline mb-5">
+                    <input type="text" id="name" name="name" class="form-control"/>
+                    <label class="form-label" for="name">Country Name</label>
+                    <span class="form-helper">make sure the country is not registered</span>
                 </div>
-                <div class="container-sm d-flex justify-content-around pt-3">
-                    <button type="submit" class="btn btn-primary btn-smoke">
-                        Submit
-                    </button>
-                    <a href="{{url('/countries')}}" class="btn btn-outline-danger">
-                        Back
-                    </a>
+
+                <div class="form-outline mb-4">
+                    <input type="text" id="code" name="code" class="form-control"/>
+                    <label class="form-label" for="code">Country code</label>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-around" role="group"
+                     aria-label="Basic example">
+                    <button type="submit" class="btn btn-black" style="width: 15%">Send</button>
+                    <a href="{{ url('/countries') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
                 </div>
             </form>
         </div>

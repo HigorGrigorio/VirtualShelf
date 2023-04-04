@@ -13,10 +13,10 @@ class CreateCountry implements UseCase
     {
     }
 
-    public function execute($options): Result
+    public function execute($data): Result
     {
         try {
-            $id = $this->repository->create($options);
+            $id = $this->repository->create($data);
 
             return Result::accept(Maybe::flat($id), 'Country created successfully');
         } catch (\Throwable $e) {
