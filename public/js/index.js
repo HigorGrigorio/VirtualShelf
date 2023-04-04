@@ -1,22 +1,25 @@
-
 $(window).on('load', () => {
+    $('.sidenav-drop-btn').click((e) => {
+        e.preventDefault();
+
+        const drop = $(e.target).closest('.sidenav-drop');
+        console.log(drop);
+        drop.hasClass('active') ? drop.removeClass('active') : drop.addClass('active');
+    })
+
     $('#toggle-side-bar').on('click', () => {
         const side = document.getElementById('side-nav');
         const main = document.getElementById('main-content');
 
         if (side.classList.contains('active')) {
             side.classList.remove('active');
-            side.classList.add('inactive');
         } else {
-            side.classList.remove('inactive');
             side.classList.add('active');
         }
 
         if (main.classList.contains('active')) {
             main.classList.remove('active');
-            main.classList.add('inactive');
         } else {
-            main.classList.remove('inactive');
             main.classList.add('active');
         }
     }).click();

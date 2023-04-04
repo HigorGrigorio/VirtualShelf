@@ -1,21 +1,12 @@
-.page-item {
-    color: var(--bs-blue-smoke-dark) !important;
+.page-item-dark {
+    background-color: var(--bs-dark) !important;
+    color: var(--bs-light);
+    border-color: var(--bs-dark);
 }
 
-.page-item.active .page-link {
-    background-color: var(--bs-blue-smoke-dark) !important;
-    border-color: var(--bs-blue-smoke-dark) !important;
-    color: var(--bs-white) !important;
-}
-
-.page-link {
-    color: var(--bs-blue-smoke-dark) !important;
-}
-
-.page-item.disabled .page-link {
-    background-color: var(--bs-gray-100) !important;
-}
-
-.page-link:focus{
-    box-shadow: none !important;
+.page-item-dark:hover{
+    background-color: rgba(0, 0, 0, .8) !important;
+    color: var(--bs-light);
+    border-color: var(--bs-dark);
+    cursor: pointer;
 }

@@ -1,27 +1,32 @@
-<nav id="navbar" class="container-fluid rounded-3 d-flex align-items-center primary-shadow">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-2 d-flex flex-row align-items-center gap-3">
-                <button id="toggle-side-bar" class="btn btn-outline-smoke rounded-3" style="border-radius: 0">
-                    <i class="ph-fill ph-list m-0 p-0"></i>
-                </button>
-                <span class="text-dark d-flex flex-row text-nowrap">
-                     Tables /  <span class="text-bold fw-bold"> Countries</span>
+<nav class="rounded-3 navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <div class="collapse navbar-collapse" id="navbar-buttons">
+            <ul class="d-flex flex-row navbar-nav me-auto mb-lg-0 align-items-center">
+                <a id="toggle-side-bar"
+                   class="btn btn-black px-3 me-3"
+                   type="button"
+                   aria-label="Toggle navigation">
+                    <i class="fas fa-bars p-0 m-0"></i>
+                </a>
+                <span class="text-black">Tables /
+                    <span class="text-gray-600 fw-bold">
+                        Countries
+                    </span>
                 </span>
-            </div>
-            <div class="col-10">
-                <div class="d-flex justify-content-end gap-2">
-                    <a href="#" class="btn btn-outline-smoke rounded-3">
-                        <i class="ph-fill ph-user"></i>
-                        Sign in
-                    </a>
-                    <a href="#" class="btn btn-outline-smoke rounded-3">
-                        <i class="ph-fill ph-gear"></i>
-                    </a>
-                    <a href="#" class="btn btn-outline-smoke rounded-3">
-                        <i class="ph-fill ph-bell"></i>
-                    </a>
-                </div>
+            </ul>
+            <div class="d-flex align-items-center">
+                <button type="button" class="btn btn-link text-black px-3 me-2">
+                    Login
+                </button>
+                <button type="button" class="btn btn-black me-3">
+                    Sign up for free
+                </button>
+                <a
+                    class="btn btn-black px-3"
+                    href="https://github.com/mdbootstrap/mdb-ui-kit"
+                    role="button"
+                ><i class="fab fa-github"></i
+                    ></a>
             </div>
         </div>
     </div>

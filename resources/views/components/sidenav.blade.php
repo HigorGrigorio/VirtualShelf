@@ -1,63 +1,50 @@
-<aside class="position-fixed h-100 p-2 inactive" id="side-nav"
-       style="width: 300px;">
-    <div class="h-100 rounded primary-shadow position-relative">
-        <header class="container-fluid profile border-bottom d-flex flex-column justify-content-center h-auto">
-            <div class="profile-wrapper d-flex justify-content-center align-items-center">
-                <div class="profile-image-wrapper d-flex align-items-center ">
-                    <img src="https://i.pravatar.cc/150?img=1" alt="profile image"
-                         class="profile-image rounded-circle  primary-shadow">
-                </div>
-                <div class="profile-info-wrapper d-flex flex-column justify-content-start align-items-start px-3">
-                    <div class="profile-name-wrapper">
-                        <h4 class="profile-name m-0">John Doe</h4>
-                    </div>
-                    <div class="profile-email-wrapper">
-                        <p class="profile-email fs-6 text-nowrap m-0">johndoe@gmail.com</p>
-                    </div>
-                </div>
+<aside class="position-fixed h-100 p-2 inactive" id="side-nav">
+    <div class="container-fluid h-100 rounded-3 p-0 primary-shadow">
+        <header class="bg-black side-header"
+                style="">
+            <div class="d-flex flex-column justify-content-center align-items-center px-0 position-relative">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                     alt="Generic placeholder image" class="img-fluid img-thumbnail mt-3 mb-2 rounded-3"
+                     style="width: 150px; z-index: 1">
+                <a href="#" class="btn-dark profile-edit">
+                    <i class="fas fa-pencil"></i>
+                </a>
+                <span class="fw-bold">John Newman </span>
+                <span class="fw-light">john@gmail.com</span>
             </div>
         </header>
-        <div class="links-wrapper">
-            <ul class="nav flex-column px-2 gap-2  pt-4">
-                <li class="nav-item text-dark">
-                    <a href="#" class="btn btn-outline-smoke d-flex align-items-center gap-1">
-                        <i class="ph-fill ph-squares-four"></i>
-                        <span>Home</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="btn btn-outline-smoke d-flex align-items-center gap-1 active">
-                        <i class="ph-fill ph-heart"></i>
-                        <span>Favorites</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="btn btn-outline-smoke d-flex align-items-center gap-1">
-                        <i class="ph-fill ph-book"></i>
-                        <span>Books</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="btn btn-outline-smoke d-flex align-items-center gap-1">
-                        <i class="ph ph-clock-counter-clockwise"></i>
-                        <span>Historic</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <div class="btn-group dropend w-100">
-                        <button type="button" class="btn text-lg-start dropdown-toggle btn-outline-smoke d-flex align-items-center gap-1"  data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                            <i class="ph ph-columns"></i>
-                            Tables
-                        </button>
-                        <ul class="dropdown-menu w-100">
-                            <li><a class="dropdown-item" href="#">Country</a></li>/
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <img class="position-absolute footer-img" src="{{asset('images/library-sidebar-background.jpg')}}"
-             alt="Image of footer">
+        <ul class="pl-0 border-top border-1 links">
+            <li class="sidenav-btn sidenav-link">
+                <i class="fa-solid fa-layer-group pr-1"></i>
+                <span>Dashboard</span>
+            </li>
+            <li class="sidenav-btn sidenav-link">
+                <i class="fa-solid fa-layer-group pr-1"></i>
+                <span>Dashboard</span>
+            </li>
+            <li class="sidenav-btn sidenav-link">
+                <i class="fa-solid fa-layer-group pr-1"></i>
+                <span>Dashboard</span>
+            </li>
+            <li class="sidenav-btn sidenav-drop">
+                <span class="sidenav-btn sidenav-link sidenav-drop-btn">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Dashboard</span>
+                    <i class="fas fa-angle-down rotate-icon"></i>
+                </span>
+                <ul class="sub-links">
+                    <li class="sidenav-btn sidenav-link">
+                        <span>Countries</span>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidenav-btn sidenav-link">
+                <i class="fa-solid fa-layer-group pr-1"></i>
+                <span>Dashboard</span>
+            </li>
+        </ul>
+        <footer class="d-flex justify-content-center align-items-center sidebar-footer" style="height: max-content">
+            <span class="fw-light"> © <span class="fw-bold">{{date('Y')}}</span>, made by Higor Grigorio.</span>
+        </footer>
     </div>
 </aside>

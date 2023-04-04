@@ -1,8 +1,0 @@
-.input-smoke {
-    border: 1px solid var(--bs-blue-smoke) !important;
-}
-
-.input-smoke:focus {
-    border: 1px solid var(--bs-blue-smoke) !important;
-    box-shadow: 0 0 0 0.2rem rgba(111, 135, 124, .3) !important;
-}
