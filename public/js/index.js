@@ -23,4 +23,5 @@ $(window).on('load', () => {
             main.classList.add('active');
         }
     }).click();
+
 });

@@ -33,7 +33,22 @@ class CountryController extends Controller
         $result = $this->loadCountries
             ->execute($options);
 
-        return view('pages.country.index')->with($result->toArray(['value' => 'collection']));
+        if ($result->isRejected()) {
+            $this->danger($result->getMessage(), 'Internal Server Error');
+
+            return view('pages.country.index');
+        }
+
+        $array = $result->get();
+
+        if (count($array) == 0) {
+            $this->info('No countries found');
+        } else {
+            $this->success($result->getMessage());
+        }
+        return view('pages.country.index')->with([
+            'collection' => $result->get(),
+        ]);
     }
 
     public function create(): Application|Factory|View|LaravelApplication
@@ -51,11 +66,12 @@ class CountryController extends Controller
         $result = $this->createCountry
             ->execute($raw);
 
-        if($result->isRejected()) {
-            return redirect('pages.country.store')->with([
-                'fail' => $result->getMessage(),
-            ]);
+        if ($result->isRejected()) {
+            $this->danger($result->getMessage());
+            return redirect('pages.country.store');
         }
+
+        $this->success($result->getMessage());
 
         return redirect('/countries')->with([
             'success' => $result->getMessage(),

@@ -27,7 +27,7 @@
                 </div>
             </form>
         </div>
-        @if($collection)
+        @if(isset($collection))
             <div class="d-block scrollable-y" style="height: calc(100vh - 220px)">
                 <table class="table-bordered table-sm table table-hover">
                     <thead
