@@ -6,16 +6,12 @@
             </div>
             <form action="{{url('/country')}}" method="POST">
                 @csrf
-                <div class="form-outline mb-5">
-                    <input type="text" id="name" name="name" class="form-control"/>
-                    <label class="form-label" for="name">Country Name</label>
-                    <span class="form-helper">make sure the country is not registered</span>
-                </div>
 
-                <div class="form-outline mb-4">
-                    <input type="text" id="code" name="code" class="form-control"/>
-                    <label class="form-label" for="code">Country code</label>
-                </div>
+                <x-input-group type="text" id="name " name="name" label="Country Name"
+                               help="make sure the country is not registered"/>
+
+                <x-input-group type="text" id="code" name="code" label="Country Code"
+                               placeholder="Tap a country code here..."/>
 
                 <div class="d-flex align-items-center justify-content-around" role="group"
                      aria-label="Basic example">
