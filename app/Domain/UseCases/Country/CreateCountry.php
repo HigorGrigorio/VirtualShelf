@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\UseCases;
+namespace App\Domain\UseCases\Country;
 
 use App\Core\Domain\UseCase;
 use App\Core\Logic\Maybe;

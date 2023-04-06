@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\UseCases\CreateCountry;
-use App\Domain\UseCases\DeleteCountryById;
-use App\Domain\UseCases\LoadCountries;
-use App\Domain\UseCases\LoadCountryById;
-use App\Domain\UseCases\UpdateCountry;
+use App\Domain\UseCases\Country\CreateCountry;
+use App\Domain\UseCases\Country\DeleteCountryById;
+use App\Domain\UseCases\Country\LoadCountries;
+use App\Domain\UseCases\Country\LoadCountryById;
+use App\Domain\UseCases\Country\UpdateCountry;
 use App\Http\Requests\CountryRequest;
 use App\Http\Requests\UpdateCountryRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use \Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Routing\Redirector;
 
 class CountryController extends Controller
