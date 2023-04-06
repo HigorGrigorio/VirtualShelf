@@ -46,8 +46,8 @@
                             <td>{{$item->name}}</td>
                             <td>{{$item->code}}</td>
                             <td class="d-flex flex-row align-items-center justify-content-center gap-3">
-                                <a href="#" class="link-black">Edit</a>
-                                <a href="#" class="link-black">Remove</a>
+                                <a href="{{ url('country/edit/' . $item->id) }}" class="link-black">Edit</a>
+                                <a href="{{ url('country/delete/' . $item->id) }}" class="link-black">Remove</a>
                             </td>
                         </tr>
                     @endforeach
@@ -56,7 +56,7 @@
             </div>
             <div class="mt-2">
 
-            {{ $collection->links() }}
+                {{ $collection->links() }}
             </div>
         @else
             <div class="alert alert-danger">

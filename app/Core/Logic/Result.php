@@ -57,32 +57,16 @@ class Result
         return new Result(ResultStatus::DANGER, $value, $message);
     }
 
-    public static function warning(Maybe $value, string $message = ''): Result
+    public static function from(mixed $value, string $message = null): Result
     {
-        if ($value->isNothing()) {
-            $value = null;
-        }
+        $message = $message ?? '';
 
-        // support for exceptions
-        if ($value instanceof \Throwable) {
-            $value = $value->__toString();
-
-            if ($message === '') {
-                $message = $value;
-            }
-        }
-
-        return new Result(ResultStatus::WARNING, $value, $message);
-    }
-
-    public static function from(mixed $value, string $message = ''): Result
-    {
         if ($value instanceof Result) {
             return $value;
         }
 
         if ($value instanceof \Throwable) {
-            return self::reject(Maybe::just($value), $message);
+            return self::reject(Maybe::just($value), $message ?? $value->getMessage());
         }
 
         if ($value instanceof Maybe) {
@@ -94,7 +78,7 @@ class Result
         }
 
         if ($value === null) {
-            return self::reject(Maybe::just($value), $message);
+            return self::reject(Maybe::just($value), $message ?? 'Value must not be null');
         }
 
         return self::accept($value, $message);

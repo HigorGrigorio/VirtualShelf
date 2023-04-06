@@ -67,7 +67,7 @@
     border-color: var(--bs-gray-300);
     overflow-y: overlay;
     overflow-x: hidden;
-    max-height: 350px;
+    max-height: 50%;
     height: auto;
     scroll-behavior: smooth;
 }

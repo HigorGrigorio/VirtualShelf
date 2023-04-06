@@ -11,7 +11,7 @@
                                help="make sure the country is not registered"/>
 
                 <x-input-group type="text" id="code" name="code" label="Country Code"
-                               placeholder="Tap a country code here..."/>
+                               help="must contain a maximum of 3 characters"/>
 
                 <div class="d-flex align-items-center justify-content-around" role="group"
                      aria-label="Basic example">
