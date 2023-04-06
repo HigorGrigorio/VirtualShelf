@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\UseCases\CreateCountry;
+use App\Domain\UseCases\DeleteCountryById;
 use App\Domain\UseCases\LoadCountries;
 use App\Domain\UseCases\LoadCountryById;
 use App\Domain\UseCases\UpdateCountry;
@@ -20,10 +21,11 @@ use Illuminate\Routing\Redirector;
 class CountryController extends Controller
 {
     public function __construct(
-        private readonly CreateCountry   $createCountry,
-        private readonly LoadCountries   $loadCountries,
-        private readonly LoadCountryById $loadCountry,
-        private readonly UpdateCountry   $updateCountry,
+        private readonly CreateCountry     $createCountry,
+        private readonly LoadCountries     $loadCountries,
+        private readonly LoadCountryById   $loadCountry,
+        private readonly UpdateCountry     $updateCountry,
+        private readonly DeleteCountryById $deleteCountry,
     )
     {
     }
@@ -86,10 +88,10 @@ class CountryController extends Controller
 
     public function edit(int $id): Application|Factory|View|LaravelApplication
     {
-        $result  = $this->loadCountry->execute(['id' => $id]);
+        $result = $this->loadCountry->execute(['id' => $id]);
 
 
-        if($result->isRejected()) {
+        if ($result->isRejected()) {
             $this->danger($result->getMessage());
             return redirect('/countries');
         }
@@ -101,7 +103,8 @@ class CountryController extends Controller
         ]);
     }
 
-    public function update(UpdateCountryRequest $request, int $id) {
+    public function update(UpdateCountryRequest $request, int $id)
+    {
         $raw = [
             'id' => $id,
             'name' => $request->input('name'),
@@ -114,6 +117,38 @@ class CountryController extends Controller
         if ($result->isRejected()) {
             $this->danger($result->getMessage());
             return redirect('pages.country.edit');
+        }
+
+        $this->success($result->getMessage());
+
+        return redirect('/countries')->with([
+            'success' => $result->getMessage(),
+        ]);
+    }
+
+    public function confirm(int $id): View|LaravelApplication|Factory|Redirector|Application|RedirectResponse
+    {
+        $result = $this->loadCountry->execute(['id' => $id]);
+
+        if ($result->isRejected()) {
+            $this->danger($result->getMessage());
+            return redirect('/countries');
+        }
+
+        $country = $result->get();
+
+        return view('pages.country.delete')->with([
+            'model' => $country,
+        ]);
+    }
+
+    public function destroy(int $id)
+    {
+        $result = $this->deleteCountry->execute(['id' => $id]);
+
+        if ($result->isRejected()) {
+            $this->danger($result->getMessage());
+            return redirect('/countries');
         }
 
         $this->success($result->getMessage());

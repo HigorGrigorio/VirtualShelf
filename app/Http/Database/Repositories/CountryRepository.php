@@ -55,7 +55,7 @@ class CountryRepository implements ICountryRepository
 
     public function delete(array $columns): int
     {
-        $users = $this->country->all($columns);
+        $users = $this->country->where($columns)->get();
 
         if ($users) {
             $c = count($users);

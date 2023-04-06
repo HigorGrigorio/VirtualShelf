@@ -2,7 +2,7 @@
     <div class="pt-lg-5 d-flex align-items-center">
         <div class="container-sm d-flex flex-column w-75">
             <div class="pb-4">
-                <h1 class="text-smoke">Editing country @if(isset($model))
+                <h1>Editing country @if(isset($model))
                         {{$model['name']}} ({{$model['code']}})
                     @endif.</h1>
             </div>
