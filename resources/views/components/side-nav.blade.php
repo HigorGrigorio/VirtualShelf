@@ -15,32 +15,39 @@
         </header>
         <ul class="pl-0 border-top border-1 links">
             <li class="sidenav-btn sidenav-link">
-                <i class="fa-solid fa-layer-group pr-1"></i>
-                <span>Dashboard</span>
+                <i class="fa-solid fa-home pr-1"></i>
+                <span>Home</span>
             </li>
             <li class="sidenav-btn sidenav-link">
-                <i class="fa-solid fa-layer-group pr-1"></i>
-                <span>Dashboard</span>
+                <i class="fa-solid fa-clock pr-1"></i>
+                <span>History</span>
             </li>
             <li class="sidenav-btn sidenav-link">
-                <i class="fa-solid fa-layer-group pr-1"></i>
-                <span>Dashboard</span>
+                <i class="fa-solid fa-heart pr-1"></i>
+                <span>Favorites</span>
+            </li>
+            <li class="sidenav-btn sidenav-link">
+                <i class="fa-solid fa-bell pr-1"></i>
+                <span>Notifications</span>
             </li>
             <li class="sidenav-btn sidenav-drop">
                 <span class="sidenav-btn sidenav-link sidenav-drop-btn">
                     <i class="fa-solid fa-layer-group"></i>
-                    <span>Dashboard</span>
+                    <span>Tables</span>
                     <i class="fas fa-angle-down rotate-icon"></i>
                 </span>
                 <ul class="sub-links">
-                    <li class="sidenav-btn sidenav-link">
-                        <span>Countries</span>
-                    </li>
+                    @foreach($tables as $table)
+                        <li class="sidenav-btn sidenav-link
+                            @if($currentEditingTable  && $currentEditingTable == $table)
+                                active
+                            @endif
+                        ">
+                            <i class="fa-solid fa-table pr-1"></i>
+                            <span>{{$table}}</span>
+                        </li>
+                    @endforeach
                 </ul>
-            </li>
-            <li class="sidenav-btn sidenav-link">
-                <i class="fa-solid fa-layer-group pr-1"></i>
-                <span>Dashboard</span>
             </li>
         </ul>
         <footer class="d-flex justify-content-center align-items-center sidebar-footer" style="height: max-content">

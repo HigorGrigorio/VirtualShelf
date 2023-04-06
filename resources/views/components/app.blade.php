@@ -33,7 +33,7 @@
 </head>
 <body>
 
-<x-sidenav/>
+<x-side-nav/>
 
 <main id="main-content" class="p-2 pb-0 inactive">
     <div class="h-100">
