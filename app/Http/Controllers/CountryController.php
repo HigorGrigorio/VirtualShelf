@@ -47,15 +47,17 @@ class CountryController extends Controller
             return view('pages.country.index');
         }
 
-        $array = $result->get();
-
-        if (count($array) == 0) {
+        if (count($result->get()) == 0) {
             $this->info('No countries found');
         } else {
             $this->success($result->getMessage());
         }
+
         return view('pages.country.index')->with([
             'collection' => $result->get(),
+            'search' => $options['search'],
+            'limit' => $options['limit'],
+            'limits' => [10, 25, 50, 100],
         ]);
     }
 

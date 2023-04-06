@@ -10,15 +10,14 @@
             <form action="/table/countries" method="get" class="d-flex flex-row w-75 gap-3 align-items-center">
                 <div>
                     <select name="limit" class="form-select" aria-label="Limit of exhibition..." style="width: 5rem">
-                        <option value="10" selected>10</option>
-                        <option value="20">20</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
+                        @foreach($limits as $op)
+                            <option value="{{$op}}" {{ $op == $limit ? 'selected' : '' }}>{{$op}}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="input-group">
                     <div class="form-outline">
-                        <input type="search" id="search" name="search" class="form-control"/>
+                        <input type="search" id="search" name="search" class="form-control" value="{{ $search ?? ''}}"/>
                         <label class="form-label" for="search">Search</label>
                     </div>
                     <button type="submit" class="btn btn-black">
