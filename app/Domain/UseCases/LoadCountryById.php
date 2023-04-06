@@ -16,18 +16,21 @@ class LoadCountryById implements \App\Core\Domain\UseCase
 
     public function execute($options): Result
     {
-        $id = $options['id'] ?? null;
+        try {
+            $id = $options['id'] ?? null;
 
-        if (is_null($id)) {
-            $result = Result::reject(Maybe::nothing(), 'Invalid country id');
-        } else {
+            if (is_null($id))
+                $result = Result::reject(Maybe::nothing(), 'Invalid country id');
+            else {
+                $maybe = $this->countryRepository->findById($id);
 
-            $maybe = $this->countryRepository->findById($id);
-
-            if ($maybe->isNothing()) {
-                $result = Result::reject(Maybe::nothing(), 'Country not found');
-            } else
-                $result = Result::accept($maybe);
+                if ($maybe->isNothing())
+                    $result = Result::reject(Maybe::nothing(), 'Country not found');
+                else
+                    $result = Result::accept($maybe);
+            }
+        } catch (\Exception $e) {
+            $result = Result::from($e);
         }
 
         return $result;
