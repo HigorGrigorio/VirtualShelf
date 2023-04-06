@@ -37,7 +37,7 @@
 
 <main id="main-content" class="p-2 pb-0 inactive">
     <div class="h-100">
-        <x-navbar/>
+        <x-nav-bar/>
         <section class="container-fluid content-wrapper mt-2 primary-shadow rounded-3">
             {{ $slot }}
         </section>

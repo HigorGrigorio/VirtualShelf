@@ -8,10 +8,16 @@
                    aria-label="Toggle navigation">
                     <i class="fas fa-bars p-0 m-0"></i>
                 </a>
-                <span class="text-black">Tables /
-                    <span class="text-gray-600 fw-bold">
-                        Countries
-                    </span>
+                <span class="text-black">
+                    @foreach($currentPage as $word)
+                        @if($loop->index == count($currentPage) - 1)
+                            <span class="fw-bold">
+                                {{$word}}
+                            </span>
+                        @else
+                            {{$word}} /
+                        @endif
+                    @endforeach
                 </span>
             </ul>
             <div class="d-flex align-items-center">

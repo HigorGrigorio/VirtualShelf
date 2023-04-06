@@ -7,7 +7,7 @@
                     <span class="ms-2">Add</span>
                 </a>
             </div>
-            <form action="/countries" method="get" class="d-flex flex-row w-75 gap-3 align-items-center">
+            <form action="/table/countries" method="get" class="d-flex flex-row w-75 gap-3 align-items-center">
                 <div>
                     <select name="limit" class="form-select" aria-label="Limit of exhibition..." style="width: 5rem">
                         <option value="10" selected>10</option>

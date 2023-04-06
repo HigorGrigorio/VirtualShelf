@@ -14,12 +14,9 @@ use App\Http\Controllers\CountryController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('/table')->group(function () {
+    Route::get('/countries', [CountryController::class, 'index']);
 });
-
-
-Route::get('/countries', [CountryController::class, 'index']);
 
 Route::prefix('country')->group(function () {
     Route::get('/store', [CountryController::class, 'create']);

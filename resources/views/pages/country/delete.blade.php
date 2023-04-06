@@ -11,7 +11,7 @@
                     <button type="submit" class="btn btn-black"
                             style="width: 15%">Remove
                     </button>
-                    <a href="{{ url('/countries') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
+                    <a href="{{ url('/table/countries') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
                 </div>
             </form>
         </div>
