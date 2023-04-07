@@ -15,34 +15,41 @@
         </header>
         <ul class="pl-0 border-top border-1 links">
             <li class="sidenav-btn sidenav-link">
-                <i class="fa-solid fa-home pr-1"></i>
-                <span>Home</span>
+                <a href="{{url('/shelf')}}" class="text-dark">
+                    <i class="fa-solid fa-home pr-1"></i>
+                    <span>Home</span>
+                </a>
             </li>
             <li class="sidenav-btn sidenav-link">
-                <i class="fa-solid fa-clock pr-1"></i>
-                <span>History</span>
+                <a href="{{url('user/history')}}" class="text-dark">
+                    <i class="fa-solid fa-clock pr-1"></i>
+                    <span>History</span>
+                </a>
             </li>
             <li class="sidenav-btn sidenav-link">
-                <i class="fa-solid fa-heart pr-1"></i>
-                <span>Favorites</span>
+                <a href="{{url('user/favorites')}}" class="text-dark">
+                    <i class="fa-solid fa-heart pr-1"></i>
+                    <span>Favorites</span>
+                </a>
             </li>
             <li class="sidenav-btn sidenav-link">
-                <i class="fa-solid fa-bell pr-1"></i>
-                <span>Notifications</span>
+                <a href="{{url('user/notifications')}}" class="text-dark">
+                    <i class="fa-solid fa-bell pr-1"></i>
+                    <span>Notifications</span>
+                </a>
             </li>
             <li class="sidenav-btn sidenav-drop">
-                <span class="sidenav-btn sidenav-link sidenav-drop-btn">
+                <span class="sidenav-btn sidenav-link sidenav-drop-btn text-dark">
                     <i class="fa-solid fa-layer-group"></i>
                     <span>Tables</span>
                     <i class="fas fa-angle-down rotate-icon"></i>
                 </span>
-                <ul class="sub-links">
+                <ul class="sub-links text-dark">
                     @foreach($tables as $table)
                         <li class="sidenav-btn sidenav-link
                             @if($currentEditingTable  && $currentEditingTable == $table)
                                 active
                             @endif ">
-                            <i class="fa-solid fa-table pr-1"></i>
                             <span>{{$table}}</span>
                         </li>
                     @endforeach
@@ -50,7 +57,7 @@
             </li>
         </ul>
         <footer class="d-flex justify-content-center align-items-center sidebar-footer" style="height: max-content">
-            <span class="fw-light"> © <span class="fw-bold">{{date('Y')}}</span>, made by Higor Grigorio.</span>
+            <span class="fw-light text-dark"> © <span class="fw-bold">{{date('Y')}}</span>, made by Higor Grigorio.</span>
         </footer>
     </div>
 </aside>

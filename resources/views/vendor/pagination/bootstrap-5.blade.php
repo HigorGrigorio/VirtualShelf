@@ -30,7 +30,7 @@
 
         <div class="d-flex align-items-center justify-content-between w-100">
             <div>
-                <p class="fw-light">
+                <p class="fw-light text-dark">
                     {!! __('Showing') !!}
                     <span class="fw-bold">{{ $paginator->firstItem() }}</span>
                     {!! __('to') !!}

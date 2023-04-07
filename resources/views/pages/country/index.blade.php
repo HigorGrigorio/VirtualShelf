@@ -28,14 +28,14 @@
             </form>
         </div>
         @if(isset($collection))
-            <div class="d-block scrollable-y" style="height: calc(100vh - 220px)">
+            <div class="d-block scrollable-y table-bordered" style="height: calc(100vh - 220px)">
                 <table class="table-bordered table-sm table table-hover">
                     <thead
                         style="  position: sticky;
                                  background: var(--bs-gray-200);
                                  top: 0;
                                  z-index: 100;">
-                    <tr>
+                    <tr class="text-dark">
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Code</th>
