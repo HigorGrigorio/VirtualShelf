@@ -48,8 +48,6 @@ class CountryController extends Controller
         } else {
             if (count($result->get()) == 0) {
                 $this->info('No countries found');
-            } else {
-                $this->success($result->getMessage());
             }
 
             $view = view('pages.country.index')->with([
@@ -112,7 +110,7 @@ class CountryController extends Controller
         ]);
     }
 
-    public function update(UpdateCountryRequest $request, int $id)
+    public function update(UpdateCountryRequest $request, int $id): LaravelApplication|Redirector|RedirectResponse|Application
     {
         $raw = [
             'id' => $id,
@@ -133,7 +131,7 @@ class CountryController extends Controller
         return redirect('table/countries');
     }
 
-    public function destroy(int $id)
+    public function destroy(int $id): LaravelApplication|Redirector|RedirectResponse|Application
     {
         $result = $this->deleteCountry->execute(['id' => $id]);
 
