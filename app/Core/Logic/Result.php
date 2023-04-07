@@ -43,10 +43,7 @@ class Result
     {
         if ($value->isNothing()) {
             $value = null;
-        }
-
-        // support for exceptions
-        if ($value->get() instanceof \Throwable) {
+        } else if ($value->get() instanceof \Throwable) { // support for exceptions
             $value = $value->get()->getMessage();
 
             if ($message === '') {
