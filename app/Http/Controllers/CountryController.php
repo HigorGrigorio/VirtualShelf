@@ -92,9 +92,7 @@ class CountryController extends Controller
 
         $this->success($result->getMessage());
 
-        return redirect('table/countries')->with([
-            'success' => $result->getMessage(),
-        ]);
+        return redirect('table/countries');
     }
 
     public function edit(int $id): Application|Factory|View|LaravelApplication
@@ -132,25 +130,7 @@ class CountryController extends Controller
 
         $this->success($result->getMessage());
 
-        return redirect('table/countries')->with([
-            'success' => $result->getMessage(),
-        ]);
-    }
-
-    public function confirm(int $id): View|LaravelApplication|Factory|Redirector|Application|RedirectResponse
-    {
-        $result = $this->loadCountry->execute(['id' => $id]);
-
-        if ($result->isRejected()) {
-            $this->danger($result->getMessage());
-            return redirect('table/countries');
-        }
-
-        $country = $result->get();
-
-        return view('pages.country.delete')->with([
-            'model' => $country,
-        ]);
+        return redirect('table/countries');
     }
 
     public function destroy(int $id)
@@ -164,8 +144,6 @@ class CountryController extends Controller
 
         $this->success($result->getMessage());
 
-        return redirect('table/countries')->with([
-            'success' => $result->getMessage(),
-        ]);
+        return redirect('table/countries');
     }
 }
