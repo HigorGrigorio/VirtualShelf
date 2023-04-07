@@ -20,17 +20,22 @@
                     @endforeach
                 </span>
             </ul>
-            <div class="d-flex align-items-center">
-                <button type="button" class="btn btn-link text-dark px-3 me-2">
-                    Login
+            <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-link btn-floating">
+                    <a href="#" class="text-dark">
+                        <i class="fa-solid fa-bell"></i>
+                    </a>
                 </button>
-                <button type="button" class="btn btn-dark me-3">
-                    Sign up for free
+                <button class="btn btn-link btn-floating">
+                    <a href="#" class="text-dark">
+                        <i class="fa-solid fa-gear"></i>
+                    </a>
                 </button>
                 <a class="btn btn-dark px-3"
                    href="https://github.com/mdbootstrap/mdb-ui-kit"
                    role="button">
-                    <i class="fab fa-github"></i>
+                    <i class="fa-solid fa-door-open me-3"></i>
+                    Sign in
                 </a>
             </div>
         </div>
