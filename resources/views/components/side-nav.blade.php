@@ -14,26 +14,26 @@
             </div>
         </header>
         <ul class="pl-0 border-top border-1 links">
-            <li class="sidenav-btn sidenav-link">
-                <a href="{{url('/shelf')}}" class="text-dark">
+            <li>
+                <a href="{{url('/shelf')}}" class="sidenav-btn sidenav-link text-dark">
                     <i class="fa-solid fa-home pr-1"></i>
                     <span>Home</span>
                 </a>
             </li>
-            <li class="sidenav-btn sidenav-link">
-                <a href="{{url('user/history')}}" class="text-dark">
+            <li>
+                <a href="{{url('my/history')}}" class="sidenav-btn sidenav-link text-dark">
                     <i class="fa-solid fa-clock pr-1"></i>
                     <span>History</span>
                 </a>
             </li>
-            <li class="sidenav-btn sidenav-link">
-                <a href="{{url('user/favorites')}}" class="text-dark">
+            <li>
+                <a href="{{url('my/favorites')}}" class="sidenav-btn sidenav-link text-dark">
                     <i class="fa-solid fa-heart pr-1"></i>
                     <span>Favorites</span>
                 </a>
             </li>
-            <li class="sidenav-btn sidenav-link">
-                <a href="{{url('user/notifications')}}" class="text-dark">
+            <li>
+                <a href="{{url('my/notifications')}}" class="sidenav-btn sidenav-link text-dark">
                     <i class="fa-solid fa-bell pr-1"></i>
                     <span>Notifications</span>
                 </a>
@@ -46,18 +46,18 @@
                 </span>
                 <ul class="sub-links text-dark">
                     @foreach($tables as $table)
-                        <li class="sidenav-btn sidenav-link
-                            @if($currentEditingTable  && $currentEditingTable == $table)
-                                active
-                            @endif ">
-                            <span>{{$table}}</span>
+                        <li>
+                            <a href="{{url('my/favorites')}}" class="sidenav-btn sidenav-link text-dark @if($currentEditingTable  && $currentEditingTable == $table) active @endif">
+                                <span>{{$table}}</span>
+                            </a>
                         </li>
                     @endforeach
                 </ul>
             </li>
         </ul>
         <footer class="d-flex justify-content-center align-items-center sidebar-footer" style="height: max-content">
-            <span class="fw-light text-dark"> © <span class="fw-bold">{{date('Y')}}</span>, made by Higor Grigorio.</span>
+            <span class="fw-light text-dark"> © <span
+                    class="fw-bold">{{date('Y')}}</span>, made by Higor Grigorio.</span>
         </footer>
     </div>
 </aside>
