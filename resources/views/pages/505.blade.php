@@ -13,10 +13,8 @@
 <div class="container-fluid d-flex align-items-center justify-content-center h-100">
     <div class="row">
         <div class="col-12">
-            <div class="alert alert-danger">
-                <h1 class="text-center">505</h1>
-                <h2 class="text-center">Internal Server Error</h2>
-            </div>
+            <h1 class="text-center">505</h1>
+            <h2 class="text-center">Internal Server Error</h2>
         </div>
     </div>
 </div>
