@@ -41,8 +41,7 @@
                         <li class="sidenav-btn sidenav-link
                             @if($currentEditingTable  && $currentEditingTable == $table)
                                 active
-                            @endif
-                        ">
+                            @endif ">
                             <i class="fa-solid fa-table pr-1"></i>
                             <span>{{$table}}</span>
                         </li>

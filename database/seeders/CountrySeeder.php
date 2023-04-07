@@ -260,7 +260,7 @@ class CountrySeeder extends Seeder
         ];
 
         foreach ($countries as $code => $name) {
-            Country::create([
+            Country::factory()->create([
                 'code' => $code,
                 'name' => $name
             ]);

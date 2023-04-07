@@ -27,12 +27,11 @@
                 <button type="button" class="btn btn-dark me-3">
                     Sign up for free
                 </button>
-                <a
-                    class="btn btn-dark px-3"
-                    href="https://github.com/mdbootstrap/mdb-ui-kit"
-                    role="button"
-                ><i class="fab fa-github"></i
-                    ></a>
+                <a class="btn btn-dark px-3"
+                   href="https://github.com/mdbootstrap/mdb-ui-kit"
+                   role="button">
+                    <i class="fab fa-github"></i>
+                </a>
             </div>
         </div>
     </div>

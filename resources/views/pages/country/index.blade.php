@@ -21,7 +21,7 @@
                         <input type="search" id="search" name="search" class="form-control" value="{{ $search ?? ''}}"/>
                         <label class="form-label" for="search">Search</label>
                     </div>
-                    <button type="button" class="btn btn-dark">
+                    <button type="submit" class="btn btn-dark">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -31,7 +31,10 @@
             <div class="d-block scrollable-y" style="height: calc(100vh - 220px)">
                 <table class="table-bordered table-sm table table-hover">
                     <thead
-                        style="position: sticky; background: var(--bs-gray-200); top: 0; border: 1px solid var(--bs-gray-300)">
+                        style="  position: sticky;
+                                 background: var(--bs-gray-200);
+                                 top: 0;
+                                 z-index: 100;">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
