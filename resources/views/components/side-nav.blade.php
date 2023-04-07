@@ -6,10 +6,10 @@
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
                      alt="Generic placeholder image" class="img-fluid img-thumbnail mt-3 mb-2 rounded-3"
                      style="width: 150px; z-index: 1">
-                <a href="#" class="btn-dark profile-edit">
+                <a href="#" class="btn text-dark profile-edit">
                     <i class="fas fa-pencil"></i>
                 </a>
-                <span class="fw-bold">John Newman </span>
+                <span class="fw-bold text-dark">John Newman </span>
                 <span class="fw-light">john@gmail.com</span>
             </div>
         </header>
