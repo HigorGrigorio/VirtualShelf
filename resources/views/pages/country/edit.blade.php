@@ -25,7 +25,7 @@
 
                 <div class="d-flex align-items-center justify-content-around" role="group"
                      aria-label="Basic example">
-                    <button type="submit" class="btn btn-black" style="width: 15%">Send</button>
+                    <button type="submit" class="btn btn-dark" style="width: 15%">Send</button>
                     <a href="{{ url('table/countries') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
                 </div>
             </form>

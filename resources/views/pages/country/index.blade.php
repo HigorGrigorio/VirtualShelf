@@ -3,7 +3,7 @@
     <div class="container px-0">
         <div class="pt-4 pb-3 container-fluid d-flex flex-row justify-content-between px-0">
             <div>
-                <a href="{{url('table/country/store')}}" class="btn btn-black">
+                <a href="{{url('table/country/store')}}" class="btn btn-dark">
                     <i class="fas fa-plus"></i>
                     <span class="ms-2">Add</span>
                 </a>
@@ -21,7 +21,7 @@
                         <input type="search" id="search" name="search" class="form-control" value="{{ $search ?? ''}}"/>
                         <label class="form-label" for="search">Search</label>
                     </div>
-                    <button type="button" class="btn btn-black">
+                    <button type="button" class="btn btn-dark">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>

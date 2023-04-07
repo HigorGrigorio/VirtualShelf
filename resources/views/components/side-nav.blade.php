@@ -1,6 +1,6 @@
 <aside class="position-fixed h-100 p-2 inactive" id="side-nav">
     <div class="container-fluid h-100 rounded-3 p-0 primary-shadow">
-        <header class="bg-black side-header"
+        <header class="bg-dark side-header"
                 style="">
             <div class="d-flex flex-column justify-content-center align-items-center px-0 position-relative">
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
