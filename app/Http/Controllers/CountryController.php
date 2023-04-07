@@ -44,17 +44,26 @@ class CountryController extends Controller
         if ($result->isRejected()) {
             $this->danger($result->getMessage(), 'Internal Server Error');
 
-            return view('pages.country.index');
-        }
-
-        if (count($result->get()) == 0) {
-            $this->info('No countries found');
+            $view = view('pages.country.index');
         } else {
-            $this->success($result->getMessage());
+            if (count($result->get()) == 0) {
+                $this->info('No countries found');
+            } else {
+                $this->success($result->getMessage());
+            }
+
+            $view = view('pages.country.index')->with([
+                'collection' => $result->get(),
+            ]);
         }
 
-        return view('pages.country.index')->with([
-            'collection' => $result->get(),
+        $view->with([
+            'search' => $options['search'],
+            'limit' => $options['limit'],
+            'limits' => [10, 25, 50, 100],
+        ]);
+
+        return $view->with([
             'search' => $options['search'],
             'limit' => $options['limit'],
             'limits' => [10, 25, 50, 100],
@@ -83,7 +92,7 @@ class CountryController extends Controller
 
         $this->success($result->getMessage());
 
-        return redirect('/countries')->with([
+        return redirect('table/countries')->with([
             'success' => $result->getMessage(),
         ]);
     }
@@ -95,7 +104,7 @@ class CountryController extends Controller
 
         if ($result->isRejected()) {
             $this->danger($result->getMessage());
-            return redirect('/countries');
+            return redirect('table/countries');
         }
 
         $country = $result->get();
@@ -123,7 +132,7 @@ class CountryController extends Controller
 
         $this->success($result->getMessage());
 
-        return redirect('/countries')->with([
+        return redirect('table/countries')->with([
             'success' => $result->getMessage(),
         ]);
     }
@@ -134,7 +143,7 @@ class CountryController extends Controller
 
         if ($result->isRejected()) {
             $this->danger($result->getMessage());
-            return redirect('/countries');
+            return redirect('table/countries');
         }
 
         $country = $result->get();
@@ -150,12 +159,12 @@ class CountryController extends Controller
 
         if ($result->isRejected()) {
             $this->danger($result->getMessage());
-            return redirect('/countries');
+            return redirect('table/countries');
         }
 
         $this->success($result->getMessage());
 
-        return redirect('/countries')->with([
+        return redirect('table/countries')->with([
             'success' => $result->getMessage(),
         ]);
     }

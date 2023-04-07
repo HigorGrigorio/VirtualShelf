@@ -1,8 +1,9 @@
 <x-app>
+    <x-modal-confirm/>
     <div class="container px-0">
         <div class="pt-4 pb-3 container-fluid d-flex flex-row justify-content-between px-0">
             <div>
-                <a href="{{url('/country/store')}}" class="btn btn-black">
+                <a href="{{url('table/country/store')}}" class="btn btn-black">
                     <i class="fas fa-plus"></i>
                     <span class="ms-2">Add</span>
                 </a>
@@ -20,7 +21,7 @@
                         <input type="search" id="search" name="search" class="form-control" value="{{ $search ?? ''}}"/>
                         <label class="form-label" for="search">Search</label>
                     </div>
-                    <button type="submit" class="btn btn-black">
+                    <button type="button" class="btn btn-black">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -45,8 +46,18 @@
                             <td>{{$item->name}}</td>
                             <td>{{$item->code}}</td>
                             <td class="d-flex flex-row align-items-center justify-content-center gap-3">
-                                <a href="{{ url('country/edit/' . $item->id) }}" class="link-black">Edit</a>
-                                <a href="{{ url('country/delete/' . $item->id) }}" class="link-black">Remove</a>
+                                <div class="btn-group">
+                                    <a href="{{ url('table/country/edit/' . $item->id) }}"
+                                       class="btn btn-info btn-sm">
+                                        <i class="fa-solid fa-pencil"></i>
+                                    </a>
+                                    <button data-href="{{url('table/country/delete/' . $item->id)}}"
+                                            data-mdb-toggle="modal"
+                                            data-mdb-target="#confirm-modal"
+                                            class="btn btn-danger btn-sm">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -54,7 +65,6 @@
                 </table>
             </div>
             <div class="mt-2">
-
                 {{ $collection->links() }}
             </div>
         @else

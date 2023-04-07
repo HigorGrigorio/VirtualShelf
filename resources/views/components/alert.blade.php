@@ -12,7 +12,7 @@
         <script>
             $(document).ready(function () {
                 setTimeout(function () {
-                    let alert = $('[data-alert-count]');
+                    let alert = $('[data-alert-count={{ $id }}]');
 
                     if (alert) {
                         alert.remove();

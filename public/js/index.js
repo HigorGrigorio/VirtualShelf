@@ -1,4 +1,4 @@
-$(window).on('load', () => {
+$(document).ready(() => {
     $('.sidenav-drop-btn').click((e) => {
         e.preventDefault();
 
@@ -24,4 +24,7 @@ $(window).on('load', () => {
         }
     }).click();
 
+    $('#confirm-modal').on('show.mdb.modal',
+        event =>
+            $('#confirm-btn').get()[0].href = $(event.relatedTarget).data('href'));
 });

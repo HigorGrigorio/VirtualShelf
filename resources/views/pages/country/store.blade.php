@@ -4,7 +4,7 @@
             <div>
                 <h1 class="text-smoke">Add Country</h1>
             </div>
-            <form action="{{url('/country')}}" method="POST">
+            <form action="{{url('table/country')}}" method="POST">
                 @csrf
 
                 <x-input-group type="text" id="name " name="name" label="Country Name"
@@ -16,7 +16,7 @@
                 <div class="d-flex align-items-center justify-content-around" role="group"
                      aria-label="Basic example">
                     <button type="submit" class="btn btn-black" style="width: 15%">Send</button>
-                    <a href="{{ url('/countries') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
+                    <a href="{{ url('table/countries') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
                 </div>
             </form>
         </div>
