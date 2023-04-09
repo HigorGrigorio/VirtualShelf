@@ -214,4 +214,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'pagination' => [
+        'per_page' => 10,
+    ],
 ];
