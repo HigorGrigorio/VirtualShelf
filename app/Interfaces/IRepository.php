@@ -16,6 +16,8 @@ interface IRepository
 
     public function getAll(): array;
 
+    public function getBy(string $column, string $value): Maybe;
+
     public function getById(int $id): Maybe;
 
     public function getDao(): Model;

@@ -47,14 +47,19 @@ abstract class Repository implements IRepository
         return $affectedRows;
     }
 
-    public function getById($id): Maybe
-    {
-        return Maybe::flat($this->dao->find($id));
-    }
-
     public function getAll(): array
     {
         return $this->dao->all()->toArray();
+    }
+
+    public function getBy(string $column, string $value): Maybe
+    {
+        return Maybe::flat($this->dao->where($column, $value)->first());
+    }
+
+    public function getById($id): Maybe
+    {
+        return Maybe::flat($this->dao->find($id));
     }
 
     private function getSearchQuery(string $search, array $searchable): \Closure
