@@ -21,8 +21,35 @@ readonly class Maybe
         return new Maybe(false);
     }
 
-    public static function flat(mixed $value, bool $nullable = false): Maybe
+    private static function getFlatOptions(array $options): array
     {
+        $default = [
+            'nullable' => false,
+            'array' => false,
+        ];
+
+        if ($options != null && count($options) > 0)
+            $default = array_merge($default, $options);
+
+        return $default;
+    }
+
+    /**
+     * @param mixed $value
+     * @param array|null $options
+     *
+     * Use options to specify if the value can be null or empty array
+     *
+     * Default options:
+     * - nullable: false
+     * - array: false
+     *
+     * @return Maybe
+     */
+    public static function flat(mixed $value, array $options = null): Maybe
+    {
+        $options = self::getFlatOptions($options);
+
         if ($value instanceof Maybe) {
             if ($value->isJust() && $value->get() == null) {
                 $value = null;
@@ -31,20 +58,23 @@ readonly class Maybe
             }
         }
 
-        if (!$nullable && is_null($value)) {
-            return self::nothing();
-        }
+        if (!$options['nullable'] && is_null($value))
+            $result = self::nothing();
+        else if (!$options['array'] && is_array($value) && count($value) == 0)
+            $result = self::nothing();
+        else
+            $result = new Maybe(true, $value);
 
-        return new Maybe(true, $value);
+        return $result;
     }
 
     /**
      * @param mixed $value
+     * @param string $message
      * @return Maybe
      *
-     * @throws TypeError
      */
-    public static function check(mixed $value, $message = ''): Maybe
+    public static function check(mixed $value, string $message = ''): Maybe
     {
         if ($value instanceof Maybe) {
             return $value;

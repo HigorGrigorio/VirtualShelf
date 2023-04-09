@@ -2,16 +2,27 @@
 
 namespace App\Http\Database\Repositories;
 
+use App\Core\Logic\Maybe;
+use App\Models\Author;
+
 class AuthorRepository implements \App\Interfaces\IAuthorRepository
 {
     public function __construct(
-        private readonly \App\Models\Author $dao
+        private readonly Author $dao
     )
     {
     }
 
-    public function getAll(): array {
-        return [];
+    public function getAll(string $search): array
+    {
+        return $this->dao
+            ->where(function ($query) use ($search) {
+                if (isset($search)) {
+                    $query->where('name', 'like', "%{$search}%");
+                    $query->orWhere('surname', 'like', "%{$search}%");
+                }
+            })
+            ->get();
     }
 
     public function paginate(int $page, string $search = null, int $limit = null): array
@@ -34,33 +45,38 @@ class AuthorRepository implements \App\Interfaces\IAuthorRepository
         return $builder->paginate($limit);
     }
 
-    public function getAuthorById(int $id): array
+    public function getAuthorById(int $id): Maybe
     {
-        // TODO: Implement getAuthorById() method.
+        return Maybe::flat($this->dao->find($id));
     }
 
-    public function getAuthorByName(string $name): array
+    public function getAuthorByName(string $name): Maybe
     {
-        // TODO: Implement getAuthorByName() method.
+        return Maybe::flat($this->dao->where('name', $name)->first());
     }
 
-    public function getAuthorBySurname(string $surname): array
+    /**
+     * @param string $surname
+     *
+     * @return Maybe<array<int,Author>>
+     */
+    public function getAuthorBySurname(string $surname): Maybe
     {
-        // TODO: Implement getAuthorBySurname() method.
+        return $this->dao->where('surname', $surname)->get();
     }
 
     public function create(array $data): int
     {
-        // TODO: Implement create() method.
+        return $this->dao->create($data)->id;
     }
 
     public function update(int $id, array $data): bool
     {
-        // TODO: Implement update() method.
+        return $this->dao->where('id', $id)->update($data);
     }
 
     public function delete(array $columns): int
     {
-        // TODO: Implement delete() method.
+        return $this->dao->where($columns)->delete();
     }
 }

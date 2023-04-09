@@ -2,19 +2,37 @@
 
 namespace App\Interfaces;
 
+use App\Core\Logic\Maybe;
+use App\Models\Author;
+
 interface IAuthorRepository
 {
     public function create(array $data): int;
 
     public function paginate(int $page, string $search = null, $limit = null): array;
 
-    public function getAll($search): array;
+    public function getAll(string $search): array;
 
-    public function getAuthorById(int $id): array;
+    /**
+     * @param int $id
+     *
+     * @return Maybe<Author>
+     */
+    public function getAuthorById(int $id): Maybe;
 
-    public function getAuthorByName(string $name): array;
+    /**
+     * @param string $name
+     *
+     * @return Maybe<Author>
+     */
+    public function getAuthorByName(string $name): Maybe;
 
-    public function getAuthorBySurname(string $surname): array;
+    /**
+     * @param string $surname
+     *
+     * @return Maybe<array<int,Author>>
+     */
+    public function getAuthorBySurname(string $surname): Maybe;
 
     public function update(int $id, array $data): bool;
 
