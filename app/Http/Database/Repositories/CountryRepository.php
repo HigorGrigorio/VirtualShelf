@@ -10,7 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class CountryRepository implements ICountryRepository
 {
     public function __construct(
-        private readonly Country $country
+        private readonly Country $dao
     )
     {
     }
@@ -18,7 +18,7 @@ class CountryRepository implements ICountryRepository
     public function getAll($options): LengthAwarePaginator
     {
         $offset = ($options['page'] - 1) * $options['limit'];
-        $builder = $this->country
+        $builder = $this->dao
             ->where(function ($query) use ($options) {
                 if (isset($options['search'])) {
                     $query->where('name', 'like', "%{$options['search']}%");
@@ -33,17 +33,17 @@ class CountryRepository implements ICountryRepository
 
     public function findById(int $id): Maybe
     {
-        return Maybe::flat($this->country->find($id));
+        return Maybe::flat($this->dao->find($id));
     }
 
     public function create(array $data): int
     {
-        return $this->country->create($data)->id;
+        return $this->dao->create($data)->id;
     }
 
     public function update(int $id, array $data): bool
     {
-        $user = $this->country->find($id);
+        $user = $this->dao->find($id);
 
         if ($user) {
             $user->update($data);
@@ -55,7 +55,7 @@ class CountryRepository implements ICountryRepository
 
     public function delete(array $columns): int
     {
-        $users = $this->country->where($columns)->get();
+        $users = $this->dao->where($columns)->get();
 
         if ($users) {
             $c = count($users);
