@@ -36,7 +36,7 @@ class SideNav extends Component
 
     private function getTables(): array
     {
-       return $this->dataBase->getTables();
+        return $this->dataBase->getTables();
     }
 
     private function getTablesInSingularName(): array
@@ -49,7 +49,10 @@ class SideNav extends Component
         );
 
         return array_map(function ($table) {
-            return Str::singular(Str::studly($table)); // singular and capitalize words
+            return [
+                'route' => '/table/' . $table,
+                'name' => Str::singular(Str::studly($table))
+            ]; // singular and capitalize words
         }, $tables);
     }
 

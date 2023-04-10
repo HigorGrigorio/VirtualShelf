@@ -38,22 +38,25 @@
                     <span>Notifications</span>
                 </a>
             </li>
-            <li class="sidenav-btn sidenav-drop">
+            @if(count($tables) > 0)
+                <li class="sidenav-btn sidenav-drop">
                 <span class="sidenav-btn sidenav-link sidenav-drop-btn text-dark">
                     <i class="fa-solid fa-layer-group"></i>
                     <span>Tables</span>
                     <i class="fas fa-angle-down rotate-icon"></i>
                 </span>
-                <ul class="sub-links text-dark">
-                    @foreach($tables as $table)
-                        <li>
-                            <a href="{{url('my/favorites')}}" class="sidenav-btn sidenav-link text-dark @if($currentEditingTable  && $currentEditingTable == $table) active @endif">
-                                <span>{{$table}}</span>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </li>
+                    <ul class="sub-links text-dark">
+                        @foreach($tables as $table)
+                            <li>
+                                <a href="{{url($table['route'] ?? '#')}}"
+                                   class="sidenav-btn sidenav-link text-dark @if($currentEditingTable  && $currentEditingTable == $table) active @endif">
+                                    <span>{{$table['name']}}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </li>
+            @endif
         </ul>
         <footer class="d-flex justify-content-center align-items-center sidebar-footer" style="height: max-content">
             <span class="fw-light text-dark"> © <span
