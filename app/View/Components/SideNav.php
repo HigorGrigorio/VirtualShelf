@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Interfaces\IDataBase;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
@@ -17,9 +18,11 @@ class SideNav extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(
+        public IDataBase $dataBase
+    )
     {
-        $this->tables = $this->getTables();
+        $this->tables = $this->getTablesInSingularName();
         $this->currentEditingTable = $this->getCurrentEditingTable();
     }
 
@@ -33,7 +36,12 @@ class SideNav extends Component
 
     private function getTables(): array
     {
-        $all = DB::select('SHOW TABLES');
+       return $this->dataBase->getTables();
+    }
+
+    private function getTablesInSingularName(): array
+    {
+        $all = $this->getTables();
 
         $tables = array_diff(
             array_column($all, 'Tables_in_' . env('DB_DATABASE')),
