@@ -27,53 +27,20 @@
                 </div>
             </form>
         </div>
-        @if(isset($collection))
-            <div class="d-block scrollable-y table-bordered" style="height: calc(100vh - 220px)">
-                <table class="table-bordered table-sm table table-hover">
-                    <thead
-                        style="  position: sticky;
-                                 background: var(--bs-gray-200);
-                                 top: 0;
-                                 z-index: 100;">
-                    <tr class="text-dark">
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Surname</th>
-                        <th scope="col" class="text-center">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($collection as $item)
-                        <tr>
-                            <th scope="row">{{$item->id}}</th>
-                            <td>{{$item->name}}</td>
-                            <td>{{$item->surname}}</td>
-                            <td class="d-flex flex-row align-items-center justify-content-center gap-3">
-                                <div class="btn-group">
-                                    <a href="{{ url('table/author/edit/' . $item->id) }}"
-                                       class="btn btn-info btn-sm">
-                                        <i class="fa-solid fa-pencil"></i>
-                                    </a>
-                                    <button data-href="{{url('table/author/delete/' . $item->id)}}"
-                                            data-mdb-toggle="modal"
-                                            data-mdb-target="#confirm-modal"
-                                            class="btn btn-danger btn-sm">
-                                        <i class="fa-solid fa-xmark"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="mt-2">
-                {{ $collection->links() }}
-            </div>
-        @else
-            <div class="alert alert-danger">
-                There is no data to show
-            </div>
-        @endif
+        <x-table :pagination="$pagination" :columns="[
+            'id' => '#',
+            'name' => 'Name',
+            'surname' => 'Surname',
+            'actions' => [
+                'edit' => [
+                    'route' => 'table.author.index',
+                    'params' => ['id' => 'id']
+                ],
+                'delete' => [
+                    'route' => 'table.author.index',
+                    'params' => ['id' => 'id']
+                ]
+            ]
+        ]"/>
     </div>
 </x-app>

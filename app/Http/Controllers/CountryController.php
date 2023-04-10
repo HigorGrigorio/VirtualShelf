@@ -61,11 +61,7 @@ class CountryController extends Controller
             'limits' => [10, 25, 50, 100],
         ]);
 
-        return $view->with([
-            'search' => $options['search'],
-            'limit' => $options['limit'],
-            'limits' => [10, 25, 50, 100],
-        ]);
+        return $view;
     }
 
     public function create(): Application|Factory|View|LaravelApplication

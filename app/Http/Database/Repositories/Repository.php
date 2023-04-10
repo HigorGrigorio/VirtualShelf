@@ -62,7 +62,7 @@ abstract class Repository implements IRepository
         return Maybe::flat($this->dao->find($id));
     }
 
-    private function getSearchQuery(string $search, array $searchable): \Closure
+    private function getSearchQuery(string|null $search, array $searchable): \Closure
     {
         return function ($query) use ($searchable, $search) {
             if ($search) {
@@ -80,18 +80,24 @@ abstract class Repository implements IRepository
 
     public function paginate(int $page, string $search = null, $limit = null, array $searchable = null): LengthAwarePaginator
     {
-        if (is_null($searchable)) {
-            $searchable = $this->getSearchable();
+        if (!is_null($search)) {
+            if (is_null($searchable)) {
+                $searchable = $this->getSearchable();
+            } else {
+                $searchable = array_merge(
+                    $this->getSearchable(),
+                    $searchable
+                );
+            }
+
+            $data = $this->dao
+                ->where($this->getSearchQuery($search, $searchable))
+                ->paginate($limit);
         } else {
-            $searchable = array_merge(
-                $this->getSearchable(),
-                $searchable
-            );
+            $data = $this->dao->paginate($limit);
         }
 
-        return $this->dao
-            ->where($this->getSearchQuery($search, $searchable))
-            ->paginate($limit);
+        return $data;
     }
 
     public function update(array $data, array $columns): int

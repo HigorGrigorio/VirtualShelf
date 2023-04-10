@@ -23,29 +23,17 @@ class AuthorController extends Controller
         if ($result->isRejected()) {
             $this->danger($result->getMessage());
             $view = view('pages.author.index');
+            dd($result);
         } else {
-            if (count($result->get()) == 0) {
-                $this->info('No authors found');
-            }
-
-            $data = $result->get();
-            $paginator = null;
-
-            if($data instanceof LengthAwarePaginator) {
-                $paginator = $data;
-                $data = $data->toArray();
-            }
-
             $view = view('pages.author.index')->with([
-                'collection' => $data,
-                'paginator' => $paginator,
+                'pagination' => $result->get(),
             ]);
         }
 
         $view->with([
             'search' => $options['search'] ?? '',
             'limit' => $options['limit'] ?? Config::get('app.pagination.per_page'),
-            'page' => $options['page'] ?? 1,
+            'limits' => Config::get('app.pagination.limits'),
         ]);
 
         return $view;

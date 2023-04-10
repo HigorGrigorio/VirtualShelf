@@ -15,8 +15,6 @@ class Author extends Model
         'surname'
     ];
 
-    protected $table = 'Author';
-
     public static function factory(): AuthorFactory
     {
         return new AuthorFactory();

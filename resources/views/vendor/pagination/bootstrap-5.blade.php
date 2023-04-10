@@ -68,7 +68,7 @@
                             @foreach ($element as $page => $url)
                                 @if ($page == $paginator->currentPage())
                                     <li class="page-item" aria-current="page">
-                                        <span class="page-link  page-item-dark text-white">{{ $page }}</span></li>
+                                        <span class="page-link bg-dark text-white">{{ $page }}</span></li>
                                 @else
                                     <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
                                 @endif

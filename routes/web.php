@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountryController;
 
@@ -26,4 +27,6 @@ Route::prefix('/table')->group(function () {
 
         Route::get('/delete/{id}', [CountryController::class, 'destroy']);
     });
+
+    Route::get('/authors', [AuthorController::class, 'index'])->name('table.author.index');
 });

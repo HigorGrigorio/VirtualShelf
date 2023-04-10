@@ -48,7 +48,7 @@ readonly class Maybe
      */
     public static function flat(mixed $value, array $options = null): Maybe
     {
-        $options = self::getFlatOptions($options);
+        $options = self::getFlatOptions($options ?? []);
 
         if ($value instanceof Maybe) {
             if ($value->isJust() && $value->get() == null) {
