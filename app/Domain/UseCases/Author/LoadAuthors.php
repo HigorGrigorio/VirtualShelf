@@ -17,20 +17,23 @@ class LoadAuthors implements \App\Core\Domain\UseCase
 
     public function execute($options): Result
     {
-        $search = $options['search'] ?? null;
+        try {
+            $search = $options['search'] ?? null;
 
 
-        $page = $options['page'] ?? 1;
-        $limit = $options['limit'] ?? Config::get('app.pagination.per_page');
+            $page = $options['page'] ?? 1;
+            $limit = $options['limit'] ?? Config::get('app.pagination.per_page');
 
-        $authors = $this->authorRepository->paginate($page, $search, $limit);
+            $authors = $this->authorRepository->paginate($page, $search, $limit);
 
-        if (!$authors->count()) {
-            $result = Result::reject(Maybe::flat($authors), 'Authors not found');
-        } else {
-            $result = Result::accept(Maybe::flat($authors), 'Authors loaded successfully');
+            if (!$authors->count()) {
+                $result = Result::reject(Maybe::flat($authors), 'Authors not found');
+            } else {
+                $result = Result::accept(Maybe::flat($authors), 'Authors loaded successfully');
+            }
+        } catch (\Exception $e) {
+            $result = Result::reject(Maybe::just([]), $e->getMessage());
         }
-
 
         return $result;
     }

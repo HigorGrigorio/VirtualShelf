@@ -15,6 +15,11 @@ class Country extends Model
         'code'
     ];
 
+    protected function getIconAttribute()
+    {
+        return asset('images/countries/flags/256x192/' . strtolower($this->code) . '.png');
+    }
+
     public static function factory(): CountryFactory
     {
         return new CountryFactory();

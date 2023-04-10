@@ -16,14 +16,17 @@ class AuthorController extends Controller
 
     public function index(Request $request)
     {
-        $options = $request->all();
+        $options = [
+            'page' => $request->page ?? 1,
+            'limit' => $request->limit ?? 10,
+            'search' => $request->search ?? ''
+        ];
 
         $result = $this->loadAuthors->execute($options);
 
         if ($result->isRejected()) {
-            $this->danger($result->getMessage());
+            $this->danger($result->getMessage(), 'Internal Server Error');
             $view = view('pages.author.index');
-            dd($result);
         } else {
             $view = view('pages.author.index')->with([
                 'pagination' => $result->get(),

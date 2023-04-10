@@ -5,67 +5,34 @@ namespace App\Http\Database\Repositories;
 use App\Core\Logic\Maybe;
 use App\Interfaces\ICountryRepository;
 use App\Models\Country;
-use Illuminate\Pagination\LengthAwarePaginator;
 
-class CountryRepository implements ICountryRepository
+
+class CountryRepository extends Repository implements ICountryRepository
 {
     public function __construct(
-        private readonly Country $dao
+        readonly Country $dao
     )
     {
+        parent::__construct($dao);
     }
 
-    public function getAll($options): LengthAwarePaginator
+    /**
+     * @param string $name
+     *
+     * @return Maybe<Country>
+     */
+    public function getByName(string $name): Maybe
     {
-        $offset = ($options['page'] - 1) * $options['limit'];
-        $builder = $this->dao
-            ->where(function ($query) use ($options) {
-                if (isset($options['search'])) {
-                    $query->where('name', 'like', "%{$options['search']}%");
-                    $query->orWhere('code', 'like', "%{$options['search']}%");
-                }
-            })
-            ->offset($offset)
-            ->limit($options['limit']);
-
-        return $builder->paginate($options['limit']);
+        return $this->getBy('name', $name);
     }
 
-    public function findById(int $id): Maybe
+    /**
+     * @param string $code
+     *
+     * @return Maybe<Country>
+     */
+    public function getByCode(string $code): Maybe
     {
-        return Maybe::flat($this->dao->find($id));
-    }
-
-    public function create(array $data): int
-    {
-        return $this->dao->create($data)->id;
-    }
-
-    public function update(int $id, array $data): bool
-    {
-        $user = $this->dao->find($id);
-
-        if ($user) {
-            $user->update($data);
-            return true;
-        }
-
-        return false;
-    }
-
-    public function delete(array $columns): int
-    {
-        $users = $this->dao->where($columns)->get();
-
-        if ($users) {
-            $c = count($users);
-
-            foreach ($users as $user) {
-                $user->delete();
-            }
-
-            return $c;
-        }
-        return 0;
+        return $this->getBy('code', $code);
     }
 }

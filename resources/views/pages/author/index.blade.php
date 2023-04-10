@@ -1,5 +1,4 @@
 <x-app>
-    <x-modal-confirm/>
     <div class="container px-0">
         <div class="pt-4 pb-3 container-fluid d-flex flex-row justify-content-between px-0">
             <div>
@@ -32,13 +31,14 @@
             'name' => 'Name',
             'surname' => 'Surname',
             'actions' => [
+                'label' => 'Actions',
                 'edit' => [
                     'route' => 'table.author.index',
                     'params' => ['id' => 'id']
                 ],
                 'delete' => [
                     'route' => 'table.author.index',
-                    'params' => ['id' => 'id']
+                    'params' => ['id' => 'id'],
                 ]
             ]
         ]"/>

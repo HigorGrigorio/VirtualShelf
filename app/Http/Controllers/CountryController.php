@@ -46,12 +46,11 @@ class CountryController extends Controller
 
             $view = view('pages.country.index');
         } else {
-            if (count($result->get()) == 0) {
+            if ($result->get()->count() == 0) {
                 $this->info('No countries found');
             }
-
             $view = view('pages.country.index')->with([
-                'collection' => $result->get(),
+                'pagination' => $result->get(),
             ]);
         }
 

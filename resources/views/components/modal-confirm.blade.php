@@ -6,10 +6,10 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to remove the country</p>
+                <p>Are you sure you want to remove the register </p>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-dark" id="confirm-btn"   >Confirm</a>
+                <a href="#" class="btn btn-dark" id="confirm-btn">Confirm</a>
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
             </div>
         </div>
