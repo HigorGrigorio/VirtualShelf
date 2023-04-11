@@ -41,11 +41,11 @@
             'actions' => [
                 'label' => 'Actions',
                 'edit' => [
-                    'route' => 'table.author.index',
+                    'route' => 'pages.country.edit',
                     'params' => ['id' => 'id']
                 ],
                 'delete' => [
-                    'route' => 'table.author.index',
+                    'route' => 'pages.country.destroy',
                     'params' => ['id' => 'id']
                 ]
             ]

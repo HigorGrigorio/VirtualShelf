@@ -15,7 +15,7 @@ abstract class Repository implements IRepository
     {
     }
 
-    public function create(array $data): array
+    public function create(array $data): Model
     {
         return $this->dao->create($data);
     }
@@ -103,11 +103,15 @@ abstract class Repository implements IRepository
     public function update(array $data, array $columns): int
     {
         $models = $this->dao->where($columns)->get();
+
         $affectedRows = 0;
 
         if ($models) {
             for ($i = 0; $i < count($models); $i++) {
-                $affectedRows += $models[$i]->update($data);
+                if($models[$i]->update($data)) {
+                    $models[$i]->save();
+                    $affectedRows++;
+                }
             }
         }
 

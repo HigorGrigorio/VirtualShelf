@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface IRepository
 {
-    public function create(array $data): array;
+    public function create(array $data): Model;
 
     public function delete(array $columns): int;
 

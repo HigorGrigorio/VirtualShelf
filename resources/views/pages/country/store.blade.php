@@ -2,7 +2,7 @@
     <div class="pt-lg-5 d-flex align-items-center">
         <div class="container-sm d-flex flex-column w-75">
             <div>
-                <h1 class="text-smoke">Add Country</h1>
+                <h1 class="text-smoke">Inserting Country</h1>
             </div>
             <form action="{{url('table/country')}}" method="POST">
                 @csrf

@@ -105,7 +105,7 @@ class CountryController extends Controller
         ]);
     }
 
-    public function update(UpdateCountryRequest $request, int $id): LaravelApplication|Redirector|RedirectResponse|Application
+    public function update(int $id, UpdateCountryRequest $request): LaravelApplication|Redirector|RedirectResponse|Application
     {
         $raw = [
             'id' => $id,
@@ -118,7 +118,7 @@ class CountryController extends Controller
 
         if ($result->isRejected()) {
             $this->danger($result->getMessage());
-            return redirect('pages.country.edit');
+            return redirect()->back();
         }
 
         $this->success($result->getMessage());

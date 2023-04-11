@@ -33,11 +33,11 @@
             'actions' => [
                 'label' => 'Actions',
                 'edit' => [
-                    'route' => 'table.author.index',
+                    'route' => 'pages.author.edit',
                     'params' => ['id' => 'id']
                 ],
                 'delete' => [
-                    'route' => 'table.author.index',
+                    'route' => 'pages.author.destroy',
                     'params' => ['id' => 'id'],
                 ]
             ]

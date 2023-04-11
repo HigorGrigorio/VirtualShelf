@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Domain\UseCases\Country;
+namespace App\Domain\UseCases\Author;
 
+use App\Core\Domain\UseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
-use App\Interfaces\ICountryRepository;
+use App\Interfaces\IAuthorRepository;
 
-class LoadCountryById implements \App\Core\Domain\UseCase
+class LoadAuthorById implements UseCase
 {
     public function __construct(
-        private readonly ICountryRepository $countryRepository
+        private readonly IAuthorRepository $authorRepository
     )
     {
     }
@@ -20,9 +21,9 @@ class LoadCountryById implements \App\Core\Domain\UseCase
             $id = $options['id'] ?? null;
 
             if (is_null($id))
-                $result = Result::reject(Maybe::nothing(), 'Invalid country id');
+                $result = Result::reject(Maybe::nothing(), 'Invalid author id');
             else {
-                $maybe = $this->countryRepository->getById($id);
+                $maybe = $this->authorRepository->getById($id);
 
                 if ($maybe->isNothing())
                     $result = Result::reject(Maybe::nothing(), 'Country not found');

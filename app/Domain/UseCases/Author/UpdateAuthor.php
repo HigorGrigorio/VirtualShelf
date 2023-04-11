@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Domain\UseCases\Country;
+namespace App\Domain\UseCases\Author;
 
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
-use App\Interfaces\ICountryRepository;
+use App\Interfaces\IAuthorRepository;
 
-class UpdateCountry implements \App\Core\Domain\UseCase
+class UpdateAuthor implements \App\Core\Domain\UseCase
 {
 
     public function __construct(
-        private readonly ICountryRepository $countryRepository,
+        private readonly IAuthorRepository $authorRepository,
     )
     {
     }
@@ -21,28 +21,27 @@ class UpdateCountry implements \App\Core\Domain\UseCase
             if (!isset($options['id']))
                 $result = Result::reject(
                     Maybe::nothing(),
-                    'Country id is required'
+                    'Author id is required'
                 );
             else {
                 $raw = [
-                    'name' => $options['name'],
-                    'code' => $options['code'],
+                    'name' => $options['name'] ?? null,
+                    'surname' => $options['surname'] ?? null,
                 ];
 
                 $id = $options['id'];
 
-
-                if (!$this->countryRepository->update($raw, compact('id')))
+                if (!$this->authorRepository->update($raw, compact('id')))
                     $result = Result::reject(
                         Maybe::nothing(),
-                        'Country not found'
+                        'Author not found'
                     );
                 else
                     $result = Result::accept(
                         Maybe::just(
-                            $this->countryRepository->getById($id)
+                            $this->authorRepository->getById($id)
                         ),
-                        'Country updated successfully'
+                        'Author updated successfully'
                     );
             }
 
