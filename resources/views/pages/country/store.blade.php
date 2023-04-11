@@ -4,7 +4,7 @@
             <div>
                 <h1 class="text-smoke">Inserting Country</h1>
             </div>
-            <form action="{{url('table/country')}}" method="POST">
+            <form action="{{ route('tables.country.store') }}" method="POST">
                 @csrf
 
                 <x-input-group type="text" id="name " name="name" label="Country Name"
@@ -16,7 +16,7 @@
                 <div class="d-flex align-items-center justify-content-around" role="group"
                      aria-label="Basic example">
                     <button type="submit" class="btn btn-dark" style="width: 15%">Send</button>
-                    <a href="{{ url('table/countries') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
+                    <a href="{{ route('tables.country.index') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
                 </div>
             </form>
         </div>

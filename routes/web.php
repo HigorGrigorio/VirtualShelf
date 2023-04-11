@@ -18,36 +18,37 @@ use App\Http\Controllers\CountryController;
 /**
  * Tables routes
  */
-Route::prefix('/table')->group(function () {
+Route::get('/tables', [CountryController::class, 'index'])->name('tables');
+
+Route::prefix('/tables')->group(function () {
 
     /**
      * Country
      */
-    Route::get('/countries', [CountryController::class, 'index'])->name('pages.country.index');
+    Route::get('/countries', [CountryController::class, 'index'])->name('tables.country.index');
 
     Route::prefix('country')->group(function () {
-        Route::get('/store', [CountryController::class, 'create'])->name('table.country.create');
-        Route::post('/', [CountryController::class, 'store'])->name('pages.country.store');
+        Route::get('/store', [CountryController::class, 'create'])->name('tables.country.create');
+        Route::post('/', [CountryController::class, 'store'])->name('tables.country.store');
 
-        Route::get('/edit/{id}', [CountryController::class, 'edit'])->name('pages.country.edit');
-        Route::post('/update/{id}', [CountryController::class, 'update'])->name('pages.country.update');
+        Route::get('/edit/{id}', [CountryController::class, 'edit'])->name('tables.country.edit');
+        Route::post('/update/{id}', [CountryController::class, 'update'])->name('tables.country.update');
 
-        Route::get('/delete/{id}', [CountryController::class, 'destroy'])->name('pages.country.destroy');
+        Route::get('/delete/{id}', [CountryController::class, 'destroy'])->name('tables.country.destroy');
     });
 
     /**
      * Author
      */
-
-    Route::get('/authors', [AuthorController::class, 'index'])->name('pages.author.index');
+    Route::get('/authors', [AuthorController::class, 'index'])->name('tables.author.index');
 
     Route::prefix('author')->group(function () {
-        Route::get('/store', [AuthorController::class, 'create'])->name('pages.author.create');
-        Route::post('/', [AuthorController::class, 'store'])->name('pages.author.store');
+        Route::get('/store', [AuthorController::class, 'create'])->name('tables.author.create');
+        Route::post('/', [AuthorController::class, 'store'])->name('tables.author.store');
 
-        Route::get('/edit/{id}', [AuthorController::class, 'edit'])->name('pages.author.edit');
-        Route::post('/update/{id}', [AuthorController::class, 'update'])->name('pages.author.update');
+        Route::get('/edit/{id}', [AuthorController::class, 'edit'])->name('tables.author.edit');
+        Route::post('/update/{id}', [AuthorController::class, 'update'])->name('tables.author.update');
 
-        Route::get('/delete/{id}', [AuthorController::class, 'destroy'])->name('pages.author.destroy');
+        Route::get('/delete/{id}', [AuthorController::class, 'destroy'])->name('tables.author.destroy');
     });
 });

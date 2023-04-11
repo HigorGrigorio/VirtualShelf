@@ -12,10 +12,15 @@
                     @foreach($currentPage as $word)
                         @if($loop->index == count($currentPage) - 1)
                             <span class="fw-bold">
-                                {{$word}}
+                                    {{$word['name']}}
                             </span>
+                        @elseif($word['route'] != null)
+                            <a href="{{$word['route']}}" class="link-dark text-decoration-underline">
+                                {{$word['name']}}
+                            </a>
+                            >
                         @else
-                            {{$word}} /
+                            {{$word['name']}} >
                         @endif
                     @endforeach
                 </span>

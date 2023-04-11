@@ -41,16 +41,11 @@ class SideNav extends Component
 
     private function getTablesInSingularName(): array
     {
-        $all = $this->getTables();
-
-        $tables = array_diff(
-            array_column($all, 'Tables_in_' . env('DB_DATABASE')),
-            ['migrations', 'failed_jobs', 'password_reset_tokens', 'personal_access_tokens']
-        );
+        $tables = $this->getTables();
 
         return array_map(function ($table) {
             return [
-                'route' => '/table/' . $table,
+                'route' => '/tables/' . $table,
                 'name' => Str::singular(Str::studly($table))
             ]; // singular and capitalize words
         }, $tables);
@@ -60,7 +55,7 @@ class SideNav extends Component
     {
         $currentRoute = request()->route()->getName();
 
-        if (Str::contains($currentRoute, 'table')) {
+        if (Str::contains($currentRoute, 'tables')) {
             $raw = Str::before(Str::after($currentRoute, 'table.'), '.');
 
             // singular and capitalize word

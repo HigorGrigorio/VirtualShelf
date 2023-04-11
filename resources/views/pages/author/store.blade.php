@@ -4,7 +4,7 @@
             <div>
                 <h1 class="text-smoke">Inserting Author</h1>
             </div>
-            <form action="{{url('table/author')}}" method="POST">
+            <form action="{{route('tables.author.store')}}" method="POST">
                 @csrf
                 <x-input-group type="text" id="name " name="name" label="Author Name"
                                help="make sure the author name is not registered"/>
@@ -14,7 +14,7 @@
                 <div class="d-flex align-items-center justify-content-around" role="group"
                      aria-label="Basic example">
                     <button type="submit" class="btn btn-dark" style="width: 15%">Send</button>
-                    <a href="{{ url('table/authors') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
+                    <a href="{{ route('tables.author.index') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
                 </div>
             </form>
         </div>

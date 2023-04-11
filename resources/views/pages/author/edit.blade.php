@@ -6,7 +6,7 @@
                         {{$model['name']}} {{$model['surname']}}
                     @endif.</h1>
             </div>
-            <form action="{{url('table/author/update/' . $model['id'])}}" method="POST">
+            <form action="{{route('tables.author.index', ['id' => $model['id']])}}" method="POST">
                 @csrf
 
                 <x-input-group type="text"
@@ -25,7 +25,7 @@
                 <div class="d-flex align-items-center justify-content-around" role="group"
                      aria-label="Basic example">
                     <button type="submit" class="btn btn-dark" style="width: 15%">Send</button>
-                    <a href="{{ url('table/authors') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
+                    <a href="{{ route('tables.author.index') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
                 </div>
             </form>
         </div>

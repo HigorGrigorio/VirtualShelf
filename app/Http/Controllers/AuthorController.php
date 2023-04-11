@@ -10,6 +10,8 @@ use App\Domain\UseCases\Author\UpdateAuthor;
 use App\Http\Requests\AuthorRequest;
 use App\Http\Requests\UpdateAuthorRequest;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,7 +30,7 @@ class AuthorController extends Controller
     {
     }
 
-    public function index(Request $request)
+    public function index(Request $request): View|LaravelApplication|Factory|Application
     {
         $options = [
             'page' => $request->page ?? 1,
@@ -57,7 +59,7 @@ class AuthorController extends Controller
         return $view;
     }
 
-    public function create(): \Illuminate\Contracts\View\View|LaravelApplication|\Illuminate\Contracts\View\Factory|Application
+    public function create(): View|LaravelApplication|Factory|Application
     {
         return view('pages.author.store');
     }
@@ -80,7 +82,7 @@ class AuthorController extends Controller
         return redirect()->route('pages.author.index');
     }
 
-    public function edit($id): \Illuminate\Contracts\View\View|LaravelApplication|\Illuminate\Contracts\View\Factory|Application
+    public function edit($id): View|LaravelApplication|Factory|Application
     {
         $result = $this->loadAuthor->execute(['id' => $id]);
 
@@ -124,11 +126,11 @@ class AuthorController extends Controller
 
         if ($result->isRejected()) {
             $this->danger($result->getMessage());
-            return redirect('table/authors');
+            return redirect()->back();
         }
 
         $this->success($result->getMessage());
 
-        return redirect('table/authors');
+        return redirect()->route('pages.author.index');
     }
 }

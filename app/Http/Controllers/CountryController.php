@@ -80,12 +80,12 @@ class CountryController extends Controller
 
         if ($result->isRejected()) {
             $this->danger($result->getMessage());
-            return redirect('pages.country.store');
+            return redirect('tables.country.store');
         }
 
         $this->success($result->getMessage());
 
-        return redirect('table/countries');
+        return redirect()->route('pages.countries.index');
     }
 
     public function edit(int $id): Application|Factory|View|LaravelApplication
@@ -95,7 +95,7 @@ class CountryController extends Controller
 
         if ($result->isRejected()) {
             $this->danger($result->getMessage());
-            return redirect('table/countries');
+            return redirect()->back();
         }
 
         $country = $result->get();
@@ -123,7 +123,7 @@ class CountryController extends Controller
 
         $this->success($result->getMessage());
 
-        return redirect('table/countries');
+        return redirect()->route('tables.country.index');
     }
 
     public function destroy(int $id): LaravelApplication|Redirector|RedirectResponse|Application
@@ -132,11 +132,11 @@ class CountryController extends Controller
 
         if ($result->isRejected()) {
             $this->danger($result->getMessage());
-            return redirect('table/countries');
+            return redirect()->back();
         }
 
         $this->success($result->getMessage());
 
-        return redirect('table/countries');
+        return redirect()->route('tables.country.index');
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\View\Components;
 
+use App\Interfaces\IDataBase;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
@@ -13,12 +15,11 @@ class NavBar extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public array $currentPage = [],
+        public IDataBase $dataBase,
+        public array     $breadCrumb = [],
     )
     {
-
-        $this->currentPage = $this->getCurrentRoute();
-
+        $this->breadCrumb = $this->getBreadCrumb();
     }
 
     /**
@@ -29,18 +30,48 @@ class NavBar extends Component
         return view('components.nav-bar');
     }
 
-    private function getCurrentRoute(): array
+    public function getBreadCrumb()
     {
-        $raw = request()->route()->uri;
+        $routeName = Route::currentRouteName();
 
-        // filter the args from the uri
-        $raw = array_filter(explode('/', $raw), function ($item) {
-            return !Str::contains($item, '{');
-        });
+        $routePath = Route::getCurrentRoute()->uri();
 
-        return array_map(function ($route) {
-            // capitalize first letter of each word
-            return Str::ucfirst($route);
-        }, $raw);
+        $nameParts = explode('.', $routeName);
+        $pathParts = explode('/', $routePath);
+
+        $breadCrumb = [];
+
+        $cache = [];
+        $partialRoute = '';
+        $tables = $this->dataBase->getTables();
+
+        for ($i = 0; $i < count($pathParts); $i++) {
+
+            // To routes like: /tables/{table}*s
+            $nameParts[$i] = Str::lcfirst($nameParts[$i]);
+
+            if (in_array(Str::plural(Str::plural($nameParts[$i])), $tables)) {
+                // parse table name from route
+                $route = $partialRoute . '/' . Str::plural($nameParts[$i]);
+
+            } else {
+                $route = $partialRoute . '/' . $pathParts[$i];
+            }
+
+            $partialRoute .= '/' . $pathParts[$i];
+
+            $breadCrumbItem = [
+                'name' => ucfirst($nameParts[$i]),
+                'route' => $route
+            ];
+
+            if ($i == count($nameParts) - 1) {
+                $breadCrumbItem['route'] = null;
+            }
+
+            $breadCrumb[] = $breadCrumbItem;
+        }
+
+        return $breadCrumb;
     }
 }
