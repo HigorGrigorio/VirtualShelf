@@ -9,5 +9,5 @@ use App\Core\Logic\Result;
  */
 interface UseCase
 {
-    public function execute($options): Result;
+    public function execute($data): Result;
 }

@@ -14,10 +14,15 @@ class CreateAuthor implements \App\Core\Domain\UseCase
     {
     }
 
-    public function execute($options): Result
+    public function execute($data): Result
     {
         try {
-            $id = $this->authorRepository->create($options);
+            $raw = [
+                'name' => $data['name'],
+                'surname' => $data['surname'],
+            ];
+
+            $id = $this->authorRepository->create($raw);
             $result = Result::accept(Maybe::flat($id), 'Author created successfully');
         } catch (\Throwable $e) {
             $result = Result::reject(Maybe::nothing(), $e->getMessage());

@@ -15,14 +15,14 @@ class LoadAuthors implements \App\Core\Domain\UseCase
     {
     }
 
-    public function execute($options): Result
+    public function execute($data): Result
     {
         try {
-            $search = $options['search'] ?? null;
+            $search = $data['search'] ?? null;
 
 
-            $page = $options['page'] ?? 1;
-            $limit = $options['limit'] ?? Config::get('app.pagination.per_page');
+            $page = $data['page'] ?? 1;
+            $limit = $data['limit'] ?? Config::get('app.pagination.per_page');
 
             $authors = $this->authorRepository->paginate($page, $search, $limit);
 

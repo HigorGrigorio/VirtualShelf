@@ -15,10 +15,10 @@ class LoadAuthorById implements UseCase
     {
     }
 
-    public function execute($options): Result
+    public function execute($data): Result
     {
         try {
-            $id = $options['id'] ?? null;
+            $id = $data['id'] ?? null;
 
             if (is_null($id))
                 $result = Result::reject(Maybe::nothing(), 'Invalid author id');

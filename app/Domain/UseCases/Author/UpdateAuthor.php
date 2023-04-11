@@ -15,21 +15,21 @@ class UpdateAuthor implements \App\Core\Domain\UseCase
     {
     }
 
-    public function execute($options): Result
+    public function execute($data): Result
     {
         try {
-            if (!isset($options['id']))
+            if (!isset($data['id']))
                 $result = Result::reject(
                     Maybe::nothing(),
                     'Author id is required'
                 );
             else {
                 $raw = [
-                    'name' => $options['name'] ?? null,
-                    'surname' => $options['surname'] ?? null,
+                    'name' => $data['name'] ?? null,
+                    'surname' => $data['surname'] ?? null,
                 ];
 
-                $id = $options['id'];
+                $id = $data['id'];
 
                 if (!$this->authorRepository->update($raw, compact('id')))
                     $result = Result::reject(

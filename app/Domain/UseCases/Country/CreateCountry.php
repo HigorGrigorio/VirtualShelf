@@ -16,6 +16,11 @@ class CreateCountry implements UseCase
     public function execute($data): Result
     {
         try {
+            $data = [
+                'name' => $data['name'],
+                'code' => $data['code'],
+            ];
+
             $id = $this->repository->create($data);
 
             return Result::accept(Maybe::flat($id), 'Country created successfully');
