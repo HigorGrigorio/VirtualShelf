@@ -7,7 +7,7 @@ use App\Core\Logic\Result;
 use App\Interfaces\IAuthorRepository;
 use Illuminate\Support\Facades\Config;
 
-class LoadAuthors implements \App\Core\Domain\UseCase
+class LoadAuthors implements \App\Core\Domain\IUseCase
 {
     public function __construct(
         private IAuthorRepository $authorRepository

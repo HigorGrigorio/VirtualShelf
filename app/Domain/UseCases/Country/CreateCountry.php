@@ -2,12 +2,12 @@
 
 namespace App\Domain\UseCases\Country;
 
-use App\Core\Domain\UseCase;
+use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Interfaces\ICountryRepository;
 
-class CreateCountry implements UseCase
+class CreateCountry implements IUseCase
 {
     public function __construct(private readonly ICountryRepository $repository)
     {

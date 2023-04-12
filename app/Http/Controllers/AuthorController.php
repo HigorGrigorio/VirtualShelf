@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\UseCases\Author\CreateLanguage;
-use App\Domain\UseCases\Author\DeleteLanguageById;
-use App\Domain\UseCases\Author\LoadLanguageById;
-use App\Domain\UseCases\Author\LoadLanguage;
-use App\Domain\UseCases\Author\UpdateLanguage;
+use App\Domain\UseCases\Author\CreateAuthor;
+use App\Domain\UseCases\Author\DeleteAuthorById;
+use App\Domain\UseCases\Author\LoadAuthorById;
+use App\Domain\UseCases\Author\LoadAuthors;
+use App\Domain\UseCases\Author\UpdateAuthor;
 use App\Http\Requests\StoreAuthorRequest;
 use App\Http\Requests\UpdateAuthorRequest;
 use Illuminate\Contracts\Foundation\Application;
@@ -21,11 +21,11 @@ use Illuminate\Support\Facades\Config;
 class AuthorController extends Controller
 {
     public function __construct(
-        private readonly LoadLanguage       $loadAuthors,
-        private readonly CreateLanguage     $createAuthor,
-        private readonly UpdateLanguage     $updateAuthor,
-        private readonly LoadLanguageById   $loadAuthor,
-        private readonly DeleteLanguageById $deleteAuthor,
+        private readonly LoadAuthors       $loadAuthors,
+        private readonly CreateAuthor     $createAuthor,
+        private readonly UpdateAuthor     $updateAuthor,
+        private readonly LoadAuthorById   $loadAuthor,
+        private readonly DeleteAuthorById $deleteAuthor,
     )
     {
     }

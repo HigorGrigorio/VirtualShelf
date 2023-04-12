@@ -6,7 +6,7 @@ use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Interfaces\IAuthorRepository;
 
-class UpdateAuthor implements \App\Core\Domain\UseCase
+class UpdateAuthor implements \App\Core\Domain\IUseCase
 {
 
     public function __construct(

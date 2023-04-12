@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountryController;
@@ -53,6 +54,9 @@ Route::prefix('/tables')->group(function () {
         Route::get('/delete/{id}', [AuthorController::class, 'destroy'])->name('tables.author.destroy');
     });
 
+    /**
+     * Language
+     */
     Route::get('/languages', [LanguageController::class, 'index'])->name('tables.language.index');
 
     Route::prefix('language')->group(function () {
@@ -63,5 +67,20 @@ Route::prefix('/tables')->group(function () {
         Route::post('/update/{id}', [LanguageController::class, 'update'])->name('tables.language.update');
 
         Route::get('/delete/{id}', [LanguageController::class, 'destroy'])->name('tables.language.destroy');
+    });
+
+    /**
+     * Category
+     */
+    Route::get('/categories', [CategoryController::class, 'index'])->name('tables.category.index');
+
+    Route::prefix('category')->group(function () {
+        Route::get('/store', [CategoryController::class, 'create'])->name('tables.category.create');
+        Route::post('/', [CategoryController::class, 'store'])->name('tables.category.store');
+
+        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('tables.category.edit');
+        Route::post('/update/{id}', [CategoryController::class, 'update'])->name('tables.category.update');
+
+        Route::get('/delete/{id}', [CategoryController::class, 'destroy'])->name('tables.category.destroy');
     });
 });

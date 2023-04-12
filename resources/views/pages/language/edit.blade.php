@@ -9,14 +9,14 @@
             <form action="{{url('tables/language/update/' . $model['id'])}}" method="POST">
                 @csrf
 
-                <x-input-group type="text"
+                <x-input type="text"
                                id="name"
                                name="name"
                                label="Language"
                                help="if you change a name, the language will be registered as a new one"
                                :value="isset($model) ? $model['name'] : null"/>
 
-                <x-input-group type="text"
+                <x-input type="text"
                                id="acronym"
                                name="acronym"
                                label="Language Acronym"

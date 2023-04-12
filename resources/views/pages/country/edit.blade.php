@@ -9,19 +9,21 @@
             <form action="{{url('tables/country/update/' . $model['id'])}}" method="POST">
                 @csrf
 
-                <x-input-group type="text"
-                               id="name"
-                               name="name"
-                               label="Country Name"
-                               help="if you change a name, the country will be registered as a new one"
-                               :value="isset($model) ? $model['name'] : null"/>
+                <x-input type="text"
+                         id="name"
+                         name="name"
+                         label="Country Name"
+                         aria-describedby="nameHelp"
+                         help="if you change a name, the country will be registered as a new one"
+                         :value="isset($model) ? $model['name'] : null"/>
 
-                <x-input-group type="text"
-                               id="code"
-                               name="code"
-                               label="Country Code"
-                               help="must contain a maximum of 3 characters and must be unique"
-                               :value="isset($model) ? $model['code'] : null"/>
+                <x-input type="text"
+                         id="code"
+                         name="code"
+                         label="Country Code"
+                         aria-describedby="codeHelp"
+                         help="must contain a maximum of 3 characters and must be unique"
+                         :value="isset($model) ? $model['code'] : null"/>
 
                 <div class="d-flex align-items-center justify-content-around" role="group"
                      aria-label="Basic example">

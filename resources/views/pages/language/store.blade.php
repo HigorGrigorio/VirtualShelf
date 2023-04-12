@@ -2,15 +2,15 @@
     <div class="pt-lg-5 d-flex align-items-center">
         <div class="container-sm d-flex flex-column w-75">
             <div>
-                <h1 class="text-smoke">Inserting Country</h1>
+                <h1 class="text-smoke">Inserting Language</h1>
             </div>
             <form action="{{ route('tables.language.store') }}" method="POST">
                 @csrf
 
-                <x-input-group type="text" id="name " name="name" label="Language"
+                <x-input type="text" id="name " name="name" label="Language"
                                help="make sure the language is not registered"/>
 
-                <x-input-group type="text" id="acronym" name="acronym" label="Language Acronym"
+                <x-input type="text" id="acronym" name="acronym" label="Language Acronym"
                                help="The acronym language must be 2 characters long in accordance with ISO 639-1:2002"/>
 
                 <div class="d-flex align-items-center justify-content-around" role="group"

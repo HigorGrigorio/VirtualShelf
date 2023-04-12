@@ -7,7 +7,7 @@ use App\Core\Logic\Result;
 /**
  * A base interface for services.
  */
-interface UseCase
+interface IUseCase
 {
     public function execute($data): Result;
 }

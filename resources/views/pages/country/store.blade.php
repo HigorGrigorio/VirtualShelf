@@ -7,10 +7,10 @@
             <form action="{{ route('tables.country.store') }}" method="POST">
                 @csrf
 
-                <x-input-group type="text" id="name " name="name" label="Country Name"
+                <x-input type="text" id="name " name="name" label="Country Name"
                                help="make sure the country is not registered"/>
 
-                <x-input-group type="text" id="code" name="code" label="Country Code"
+                <x-input type="text" id="code" name="code" label="Country Code"
                                help="must contain a maximum of 3 characters"/>
 
                 <div class="d-flex align-items-center justify-content-around" role="group"

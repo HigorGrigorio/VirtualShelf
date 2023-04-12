@@ -6,10 +6,10 @@
             </div>
             <form action="{{route('tables.author.store')}}" method="POST">
                 @csrf
-                <x-input-group type="text" id="name " name="name" label="Author Name"
+                <x-input type="text" id="name " name="name" label="Author Name"
                                help="make sure the author name is not registered"/>
 
-                <x-input-group type="text" id="surname" name="surname" label="Author Surname"/>
+                <x-input type="text" id="surname" name="surname" label="Author Surname"/>
 
                 <div class="d-flex align-items-center justify-content-around" role="group"
                      aria-label="Basic example">

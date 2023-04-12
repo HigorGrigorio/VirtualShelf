@@ -2,12 +2,12 @@
 
 namespace App\Domain\UseCases\Author;
 
-use App\Core\Domain\UseCase;
+use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Interfaces\IAuthorRepository;
 
-class LoadAuthorById implements UseCase
+class LoadAuthorById implements IUseCase
 {
     public function __construct(
         private readonly IAuthorRepository $authorRepository

@@ -7,7 +7,6 @@ use App\Domain\UseCases\Language\DeleteLanguageById;
 use App\Domain\UseCases\Language\LoadLanguageById;
 use App\Domain\UseCases\Language\LoadLanguages;
 use App\Domain\UseCases\Language\UpdateLanguage;
-use App\Http\Requests\LanguageRequest;
 use App\Http\Requests\UpdateLanguageRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -21,7 +20,7 @@ use Illuminate\Support\Facades\Config;
 class LanguageController extends Controller
 {
     public function __construct(
-        private readonly LoadLanguages      $loadLanguages,
+        private readonly LoadLanguages     $loadLanguages,
         private readonly CreateLanguage     $createLanguage,
         private readonly UpdateLanguage     $updateLanguage,
         private readonly LoadLanguageById   $loadLanguage,

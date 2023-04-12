@@ -12,6 +12,7 @@ class Input extends Component
      * Create a new component instance.
      */
     public function __construct(
+        public        $id,
         /**
          * The input type.
          */
@@ -19,25 +20,19 @@ class Input extends Component
         /**
          * The input name.
          */
-        public string $name ,
+        public string $name,
         /**
          * The help text displayed below the input.
          */
-        public $help = null,
+        public        $help = null,
         /**
          * The input value.
          */
-        public string $value = '',
-        /**
-         * The input placeholder.
-         */
-        public string $placeholder = '',
+        public        $value = null,
         /**
          * The input label.
          */
-        public $label = null,
-
-        public string $ariaDescribedBy = '',
+        public        $label = null,
     )
     {
         //

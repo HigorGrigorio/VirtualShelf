@@ -6,7 +6,7 @@ use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Interfaces\ICountryRepository;
 
-class UpdateCountry implements \App\Core\Domain\UseCase
+class UpdateCountry implements \App\Core\Domain\IUseCase
 {
 
     public function __construct(

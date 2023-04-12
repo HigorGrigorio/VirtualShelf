@@ -9,14 +9,14 @@
             <form action="{{route('tables.author.index', ['id' => $model['id']])}}" method="POST">
                 @csrf
 
-                <x-input-group type="text"
+                <x-input type="text"
                                id="name"
                                name="name"
                                label="Author Name"
                                help="if you change a name, the first name of author will be registered as a new one"
                                :value="isset($model) ? $model['name'] : null"/>
 
-                <x-input-group type="text"
+                <x-input type="text"
                                id="surname"
                                name="surname"
                                label="Author surname"

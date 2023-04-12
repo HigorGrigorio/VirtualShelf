@@ -2,13 +2,13 @@
 
 namespace App\Domain\UseCases\Language;
 
-use App\Core\Domain\UseCase;
+use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Interfaces\IAuthorRepository;
 use App\Interfaces\ILanguageRepository;
 
-class LoadLanguageById implements UseCase
+class LoadLanguageById implements IUseCase
 {
     public function __construct(
         private readonly ILanguageRepository $languageRepository
