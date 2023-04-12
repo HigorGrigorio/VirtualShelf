@@ -19,7 +19,7 @@ class CreateLanguage implements \App\Core\Domain\UseCase
         try {
             $data = [
                 'name' => $data['name'],
-                'acronym' => $data['surname'],
+                'acronym' => $data['acronym'],
             ];
 
             $id = $this->authorRepository->create($data);

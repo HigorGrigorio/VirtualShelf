@@ -16,16 +16,6 @@ class AuthorRepository extends Repository implements IAuthorRepository
     }
 
     /**
-     * @param int $id
-     *
-     * @return Maybe<Author>
-     */
-    public function getAuthorById(int $id): Maybe
-    {
-        return $this->getBy('id', $id);
-    }
-
-    /**
      * @param string $name
      *
      * @return Maybe<array<int,Author>>

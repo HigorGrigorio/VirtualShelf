@@ -8,7 +8,7 @@ use App\Interfaces\IAuthorRepository;
 use App\Interfaces\ILanguageRepository;
 use Illuminate\Support\Facades\Config;
 
-class LoadLanguage implements \App\Core\Domain\UseCase
+class LoadLanguages implements \App\Core\Domain\UseCase
 {
     public function __construct(
         private readonly ILanguageRepository $languageRepository

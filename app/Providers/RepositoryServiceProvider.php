@@ -4,15 +4,18 @@ namespace App\Providers;
 
 use App\Http\Database\Repositories\AuthorRepository;
 use App\Http\Database\Repositories\CountryRepository;
+use App\Http\Database\Repositories\LanguageRepository;
 use App\Interfaces\IAuthorRepository;
 use App\Interfaces\ICountryRepository;
+use App\Interfaces\ILanguageRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
     private array $repositories = [
         ICountryRepository::class => CountryRepository::class,
-        IAuthorRepository::class => AuthorRepository::class
+        IAuthorRepository::class => AuthorRepository::class,
+        ILanguageRepository::class => LanguageRepository::class,
     ];
 
     /**

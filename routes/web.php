@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountryController;
 
@@ -50,5 +51,17 @@ Route::prefix('/tables')->group(function () {
         Route::post('/update/{id}', [AuthorController::class, 'update'])->name('tables.author.update');
 
         Route::get('/delete/{id}', [AuthorController::class, 'destroy'])->name('tables.author.destroy');
+    });
+
+    Route::get('/languages', [LanguageController::class, 'index'])->name('tables.language.index');
+
+    Route::prefix('language')->group(function () {
+        Route::get('/store', [LanguageController::class, 'create'])->name('tables.language.create');
+        Route::post('/', [LanguageController::class, 'store'])->name('tables.language.store');
+
+        Route::get('/edit/{id}', [LanguageController::class, 'edit'])->name('tables.language.edit');
+        Route::post('/update/{id}', [LanguageController::class, 'update'])->name('tables.language.update');
+
+        Route::get('/delete/{id}', [LanguageController::class, 'destroy'])->name('tables.language.destroy');
     });
 });

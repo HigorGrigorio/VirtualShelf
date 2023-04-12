@@ -26,7 +26,7 @@ class UpdateLanguage implements \App\Core\Domain\UseCase
             else {
                 $raw = [
                     'name' => $data['name'] ?? null,
-                    'surname' => $data['surname'] ?? null,
+                    'acronym' => $data['acronym'] ?? null,
                 ];
 
                 $id = $data['id'];

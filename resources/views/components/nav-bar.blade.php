@@ -9,8 +9,8 @@
                     <i class="fas fa-bars p-0 m-0"></i>
                 </a>
                 <span class="text-dark">
-                    @foreach($currentPage as $word)
-                        @if($loop->index == count($currentPage) - 1)
+                    @foreach($breadCrumb as $word)
+                        @if($loop->index == count($breadCrumb) - 1)
                             <span class="fw-bold">
                                     {{$word['name']}}
                             </span>

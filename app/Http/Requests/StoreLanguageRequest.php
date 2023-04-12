@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CountryRequest extends FormRequest
+class StoreLanguageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,8 @@ class CountryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:50|unique:countries',
-            'code' => 'required|string|max:3'
+            'name' => 'required|string|max:255',
+            'acronym' => 'required|string|max:2|unique:languages',
         ];
     }
 }

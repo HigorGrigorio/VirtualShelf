@@ -8,7 +8,8 @@
                     <span class="ms-2">Add</span>
                 </a>
             </div>
-            <form action="{{route('tables.country.index')}}" method="get" class="d-flex flex-row w-75 gap-3 align-items-center">
+            <form action="{{route('tables.country.index')}}" method="get"
+                  class="d-flex flex-row w-75 gap-3 align-items-center">
                 <div>
                     <select name="limit" class="form-select" aria-label="Limit of exhibition..." style="width: 5rem">
                         @foreach($limits as $op)
@@ -30,25 +31,31 @@
         <?php $make_icon = function ($item): string {
             return '<img src="' . $item->icon . '" alt="icon" style="width: 35px; object-fit: cover;">';
         } ?>
-        <x-table :pagination="$pagination ?? null" :columns="[
-            'id' => '#',
-            'icon' => [
-                    'label' => 'Icon',
-                    'value' => $make_icon,
+        @if(isset($pagination))
+            <x-table :pagination=" $pagination" :columns="[
+                'id' => '#',
+                'icon' => [
+                        'label' => 'Icon',
+                        'value' => $make_icon,
+                        ],
+                'name' => 'Name',
+                'code' => 'Code',
+                'actions' => [
+                    'label' => 'Actions',
+                    'edit' => [
+                        'route' => 'tables.country.edit',
+                        'params' => ['id' => 'id']
                     ],
-            'name' => 'Name',
-            'code' => 'Code',
-            'actions' => [
-                'label' => 'Actions',
-                'edit' => [
-                    'route' => 'tables.country.edit',
-                    'params' => ['id' => 'id']
-                ],
-                'delete' => [
-                    'route' => 'tables.country.destroy',
-                    'params' => ['id' => 'id']
+                    'delete' => [
+                        'route' => 'tables.country.destroy',
+                        'params' => ['id' => 'id']
+                    ]
                 ]
-            ]
-        ]"/>
+            ]"/>
+        @else
+            <div class="alert alert-danger">
+                There is no data to show
+            </div>
+        @endif
     </div>
 </x-app>

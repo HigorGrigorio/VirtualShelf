@@ -47,8 +47,4 @@
     <div class="mt-2">
         {{ $pagination->links() }}
     </div>
-@else
-    <div class="alert alert-danger">
-        There is no data to show
-    </div>
 @endif

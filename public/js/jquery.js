@@ -10437,7 +10437,7 @@
 
 
     /**
-     * Load a url into a page
+     * LoadModel.php a url into a page
      */
     jQuery.fn.load = function( url, params, callback ) {
         var selector, type, response,

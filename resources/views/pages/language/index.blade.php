@@ -1,13 +1,14 @@
 <x-app>
+    <x-modal-confirm/>
     <div class="container px-0">
         <div class="pt-4 pb-3 container-fluid d-flex flex-row justify-content-between px-0">
             <div>
-                <a href="{{route('tables.author.create')}}" class="btn btn-dark">
+                <a href="{{route('tables.language.create')}}" class="btn btn-dark">
                     <i class="fas fa-plus"></i>
                     <span class="ms-2">Add</span>
                 </a>
             </div>
-            <form action="{{route('tables.country.index')}}" method="get"
+            <form action="{{route('tables.language.index')}}" method="get"
                   class="d-flex flex-row w-75 gap-3 align-items-center">
                 <div>
                     <select name="limit" class="form-select" aria-label="Limit of exhibition..." style="width: 5rem">
@@ -27,21 +28,23 @@
                 </div>
             </form>
         </div>
-
+        <?php $make_icon = function ($item): string {
+            return '<img src="' . $item->icon . '" alt="icon" style="width: 35px; object-fit: cover;">';
+        } ?>
         @if(isset($pagination))
             <x-table :pagination=" $pagination" :columns="[
                 'id' => '#',
+                'acronym' => 'Acronym',
                 'name' => 'Name',
-                'surname' => 'Surname',
                 'actions' => [
                     'label' => 'Actions',
                     'edit' => [
-                        'route' => 'tables.author.edit',
+                        'route' => 'tables.language.edit',
                         'params' => ['id' => 'id']
                     ],
                     'delete' => [
-                        'route' => 'tables.author.destroy',
-                        'params' => ['id' => 'id'],
+                        'route' => 'tables.language.destroy',
+                        'params' => ['id' => 'id']
                     ]
                 ]
             ]"/>

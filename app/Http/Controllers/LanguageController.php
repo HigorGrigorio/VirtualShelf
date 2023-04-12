@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\UseCases\Author\CreateLanguage;
-use App\Domain\UseCases\Author\DeleteLanguageById;
-use App\Domain\UseCases\Author\LoadLanguageById;
-use App\Domain\UseCases\Author\LoadLanguage;
-use App\Domain\UseCases\Author\UpdateLanguage;
-use App\Http\Requests\StoreAuthorRequest;
-use App\Http\Requests\UpdateAuthorRequest;
+use App\Domain\UseCases\Language\CreateLanguage;
+use App\Domain\UseCases\Language\DeleteLanguageById;
+use App\Domain\UseCases\Language\LoadLanguageById;
+use App\Domain\UseCases\Language\LoadLanguages;
+use App\Domain\UseCases\Language\UpdateLanguage;
+use App\Http\Requests\LanguageRequest;
+use App\Http\Requests\UpdateLanguageRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -18,14 +18,14 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Config;
 
-class AuthorController extends Controller
+class LanguageController extends Controller
 {
     public function __construct(
-        private readonly LoadLanguage       $loadAuthors,
-        private readonly CreateLanguage     $createAuthor,
-        private readonly UpdateLanguage     $updateAuthor,
-        private readonly LoadLanguageById   $loadAuthor,
-        private readonly DeleteLanguageById $deleteAuthor,
+        private readonly LoadLanguages      $loadLanguages,
+        private readonly CreateLanguage     $createLanguage,
+        private readonly UpdateLanguage     $updateLanguage,
+        private readonly LoadLanguageById   $loadLanguage,
+        private readonly DeleteLanguageById $deleteLanguage,
     )
     {
     }
@@ -38,9 +38,9 @@ class AuthorController extends Controller
             'search' => $request->search ?? ''
         ];
 
-        $result = $this->loadAuthors->execute($options);
+        $result = $this->loadLanguages->execute($options);
 
-        $view = view('pages.author.index');
+        $view = view('pages.language.index');
 
         if ($result->isRejected()) {
             $this->danger($result->getMessage(), 'Internal Server Error');
@@ -61,17 +61,17 @@ class AuthorController extends Controller
 
     public function create(): View|LaravelApplication|Factory|Application
     {
-        return view('pages.author.store');
+        return view('pages.language.store');
     }
 
-    public function store(StoreAuthorRequest $request): RedirectResponse
+    public function store(LanguageRequest $request): RedirectResponse
     {
         $options = [
             'name' => $request->name,
-            'surname' => $request->surname,
+            'acronym' => $request->acronym,
         ];
 
-        $result = $this->createAuthor->execute($options);
+        $result = $this->createLanguage->execute($options);
 
         if ($result->isRejected()) {
             $this->danger($result->getMessage(), 'Internal Server Error');
@@ -79,35 +79,35 @@ class AuthorController extends Controller
         }
 
         $this->success($result->getMessage(), 'Success');
-        return redirect()->route('pages.author.index');
+        return redirect()->route('tables.language.index');
     }
 
     public function edit($id): View|LaravelApplication|Factory|Application
     {
-        $result = $this->loadAuthor->execute(['id' => $id]);
+        $result = $this->loadLanguage->execute(['id' => $id]);
 
 
         if ($result->isRejected()) {
             $this->danger($result->getMessage());
-            return redirect('table/authors');
+            return redirect('table/languages');
         }
 
-        $author = $result->get();
+        $language = $result->get();
 
-        return view('pages.author.edit')->with([
-            'model' => $author,
+        return view('pages.language.edit')->with([
+            'model' => $language,
         ]);
     }
 
-    public function update($id, UpdateAuthorRequest $request): LaravelApplication|Redirector|RedirectResponse|Application
+    public function update($id, UpdateLanguageRequest $request): LaravelApplication|Redirector|RedirectResponse|Application
     {
         $raw = [
             'id' => $id,
             'name' => $request->input('name'),
-            'surname' => $request->input('surname'),
+            'acronym' => $request->input('acronym'),
         ];
 
-        $result = $this->updateAuthor
+        $result = $this->updateLanguage
             ->execute($raw);
 
         if ($result->isRejected()) {
@@ -117,12 +117,12 @@ class AuthorController extends Controller
 
         $this->success($result->getMessage());
 
-        return redirect()->route('pages.author.index');
+        return redirect()->route('tables.language.index');
     }
 
     public function destroy(int $id): LaravelApplication|Redirector|RedirectResponse|Application
     {
-        $result = $this->deleteAuthor->execute(['id' => $id]);
+        $result = $this->deleteLanguage->execute(['id' => $id]);
 
         if ($result->isRejected()) {
             $this->danger($result->getMessage());
@@ -131,6 +131,6 @@ class AuthorController extends Controller
 
         $this->success($result->getMessage());
 
-        return redirect()->route('pages.author.index');
+        return redirect()->route('tables.language.index');
     }
 }

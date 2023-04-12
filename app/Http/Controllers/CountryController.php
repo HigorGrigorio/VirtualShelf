@@ -7,7 +7,7 @@ use App\Domain\UseCases\Country\DeleteCountryById;
 use App\Domain\UseCases\Country\LoadCountries;
 use App\Domain\UseCases\Country\LoadCountryById;
 use App\Domain\UseCases\Country\UpdateCountry;
-use App\Http\Requests\CountryRequest;
+use App\Http\Requests\StoreCountryRequest;
 use App\Http\Requests\UpdateCountryRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -68,7 +68,7 @@ class CountryController extends Controller
         return view('pages.country.store');
     }
 
-    public function store(CountryRequest $request): Application|LaravelApplication|RedirectResponse|Redirector
+    public function store(StoreCountryRequest $request): Application|LaravelApplication|RedirectResponse|Redirector
     {
         $raw = [
             'name' => $request->input('name'),
@@ -88,7 +88,7 @@ class CountryController extends Controller
         return redirect()->route('pages.countries.index');
     }
 
-    public function edit(int $id): Application|Factory|View|LaravelApplication
+    public function edit(int $id): RedirectResponse|Application|Factory|View|LaravelApplication
     {
         $result = $this->loadCountry->execute(['id' => $id]);
 

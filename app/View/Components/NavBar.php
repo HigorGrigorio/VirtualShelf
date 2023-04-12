@@ -46,6 +46,9 @@ class NavBar extends Component
         $tables = $this->dataBase->getTables();
 
         for ($i = 0; $i < count($pathParts); $i++) {
+            if (count($nameParts) - 1 < $i) {
+                break;
+            }
 
             // To routes like: /tables/{table}*s
             $nameParts[$i] = Str::lcfirst($nameParts[$i]);
