@@ -4,13 +4,14 @@ namespace App\Domain\UseCases\Author;
 
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
+use App\Domain\UseCases\Record\LoadRecords;
 use App\Interfaces\IAuthorRepository;
 use Illuminate\Support\Facades\Config;
 
-class LoadAuthors implements \App\Core\Domain\IUseCase
+class LoadAuthors extends LoadRecords
 {
     public function __construct(
-        private IAuthorRepository $authorRepository
+        private IAuthorRepository $repository
     )
     {
     }
@@ -24,7 +25,7 @@ class LoadAuthors implements \App\Core\Domain\IUseCase
             $page = $data['page'] ?? 1;
             $limit = $data['limit'] ?? Config::get('app.pagination.per_page');
 
-            $authors = $this->authorRepository->paginate($page, $search, $limit);
+            $authors = $this->repository->paginate($page, $search, $limit);
 
             if (!$authors->count()) {
                 $result = Result::reject(Maybe::flat($authors), 'Authors not found');

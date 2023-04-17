@@ -4,35 +4,15 @@ namespace App\Domain\UseCases\Country;
 
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
+use App\Domain\UseCases\Record\LoadRecordById;
 use App\Interfaces\ICountryRepository;
 
-class LoadCountryById implements \App\Core\Domain\IUseCase
+class LoadCountryById extends LoadRecordById
 {
     public function __construct(
-        private readonly ICountryRepository $countryRepository
+        readonly ICountryRepository $repository
     )
     {
-    }
-
-    public function execute($options): Result
-    {
-        try {
-            $id = $options['id'] ?? null;
-
-            if (is_null($id))
-                $result = Result::reject(Maybe::nothing(), 'Invalid country id');
-            else {
-                $maybe = $this->countryRepository->getById($id);
-
-                if ($maybe->isNothing())
-                    $result = Result::reject(Maybe::nothing(), 'Country not found');
-                else
-                    $result = Result::accept($maybe);
-            }
-        } catch (\Exception $e) {
-            $result = Result::from($e);
-        }
-
-        return $result;
+        parent::__construct($repository);
     }
 }

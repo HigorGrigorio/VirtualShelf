@@ -5,41 +5,15 @@ namespace App\Domain\UseCases\Country;
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
+use App\Domain\UseCases\Record\DeleteRecord;
 use App\Interfaces\ICountryRepository;
 
-class DeleteCountryById implements IUseCase
+class DeleteCountryById extends DeleteRecord
 {
     public function __construct(
-        private readonly ICountryRepository $countryRepository,
+        readonly ICountryRepository $repository,
     )
     {
-    }
-
-    public function execute($data): Result
-    {
-        try {
-            $id = $data['id'] ?? null;
-            if (is_null($id))
-                $result = Result::reject(
-                    Maybe::nothing(),
-                    'Invalid country id'
-                );
-            else {
-                if ($this->countryRepository->delete(['id' => $id]) == 0)
-                    $result = Result::reject(
-                        Maybe::nothing(),
-                        'Country not found'
-                    );
-                else
-                    $result = Result::accept(
-                        Maybe::just(1),
-                        'Country deleted successfully'
-                    );
-            }
-        } catch (\Exception $e) {
-            return Result::from($e);
-        }
-
-        return $result;
+        parent::__construct($this->repository);
     }
 }

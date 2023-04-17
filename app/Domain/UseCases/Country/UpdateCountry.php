@@ -2,54 +2,15 @@
 
 namespace App\Domain\UseCases\Country;
 
-use App\Core\Logic\Maybe;
-use App\Core\Logic\Result;
+use App\Domain\UseCases\Record\UpdateRecord;
 use App\Interfaces\ICountryRepository;
 
-class UpdateCountry implements \App\Core\Domain\IUseCase
+class UpdateCountry extends UpdateRecord
 {
-
     public function __construct(
-        private readonly ICountryRepository $countryRepository,
+        readonly ICountryRepository $repository,
     )
     {
-    }
-
-    public function execute($options): Result
-    {
-        try {
-            if (!isset($options['id']))
-                $result = Result::reject(
-                    Maybe::nothing(),
-                    'Country id is required'
-                );
-            else {
-                $raw = [
-                    'name' => $options['name'],
-                    'code' => $options['code'],
-                ];
-
-                $id = $options['id'];
-
-
-                if (!$this->countryRepository->update($raw, compact('id')))
-                    $result = Result::reject(
-                        Maybe::nothing(),
-                        'Country not found'
-                    );
-                else
-                    $result = Result::accept(
-                        Maybe::just(
-                            $this->countryRepository->getById($id)
-                        ),
-                        'Country updated successfully'
-                    );
-            }
-
-        } catch (\Exception $e) {
-            $result = Result::from($e);
-        }
-
-        return $result;
+        parent::__construct($this->repository);
     }
 }

@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Domain\UseCases\Country;
+namespace App\Domain\UseCases\User;
 
-use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\Record\CreateRecord;
-use App\Interfaces\ICountryRepository;
+use App\Interfaces\IUserRepository;
 
-class CreateCountry extends CreateRecord
+class CreateUser extends CreateRecord
 {
     public function __construct(
-        readonly ICountryRepository $repository
+        readonly IUserRepository $repository
     )
     {
         parent::__construct($repository);

@@ -5,13 +5,14 @@ namespace App\Domain\UseCases\Country;
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
+use App\Domain\UseCases\Record\LoadRecords;
 use App\Interfaces\ICountryRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Config;
 
-class LoadCountries implements IUseCase
+class LoadCountries extends LoadRecords
 {
-    public function __construct(private readonly ICountryRepository $countryRepository)
+    public function __construct(readonly ICountryRepository $countryRepository)
     {
     }
 
