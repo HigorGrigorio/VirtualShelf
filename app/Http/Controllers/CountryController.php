@@ -7,19 +7,69 @@ use App\Domain\UseCases\Country\DeleteCountryById;
 use App\Domain\UseCases\Country\LoadCountries;
 use App\Domain\UseCases\Country\LoadCountryById;
 use App\Domain\UseCases\Country\UpdateCountry;
+use App\Http\Controllers\Traits\DestroysRecords;
+use App\Http\Controllers\Traits\EditsRecords;
+use App\Http\Controllers\Traits\HandlesRecords;
+use App\Http\Controllers\Traits\LoadsRecords;
+use App\Http\Controllers\Traits\StoresRecords;
 use App\Http\Requests\StoreCountryRequest;
 use App\Http\Requests\UpdateCountryRequest;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application as LaravelApplication;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 class CountryController extends Controller
 {
+    use LoadsRecords, StoresRecords, EditsRecords, DestroysRecords, HandlesRecords;
+
+    public string $table = 'countries';
+
+    /**
+     * The columns that will be displayed in the table.
+     *
+     * @var array $columns
+     */
+    public array $columns = [
+        'id' => '#',
+        'icon' => [
+            'label' => 'Icon',
+            'type' => 'html',
+            'bind' => ['icon'],
+            'value' => '<img src="${icon}" alt="icon" style="width: 35px; object-fit: cover;">',
+        ],
+        'name' => 'Name',
+        'code' => 'Code',
+        'actions' => [
+            'label' => 'Actions',
+            'edit' => [
+                'route' => 'tables.country.edit',
+                'params' => ['id' => 'id']
+            ],
+            'delete' => [
+                'route' => 'tables.country.destroy',
+                'params' => ['id' => 'id']
+            ]
+        ]
+    ];
+
+    /**
+     * Helps for fillable fields.
+     *
+     * @var array $helps
+     */
+    public array $helps = [
+        'name' => 'Make sure the country is not registered',
+        'acronym' => 'The acronym country must be 2 characters long in accordance with ISO 3166-1:2002',
+        'edit' => [
+            'name' => 'if modified, make sure the country is not registered',
+        ],
+    ];
+
     public function __construct(
         private readonly CreateCountry     $createCountry,
         private readonly LoadCountries     $loadCountries,
@@ -28,115 +78,60 @@ class CountryController extends Controller
         private readonly DeleteCountryById $deleteCountry,
     )
     {
-    }
-
-    public function index(Request $request): Application|Factory|View|LaravelApplication|JsonResponse
-    {
-        $options = [
-            'page' => $request->page ?? 1,
-            'limit' => $request->limit ?? 10,
-            'search' => $request->search ?? ''
-        ];
-
-        $result = $this->loadCountries
-            ->execute($options);
-
-        if ($result->isRejected()) {
-            $this->danger($result->getMessage(), 'Internal Server Error');
-
-            $view = view('pages.country.index');
-        } else {
-            if ($result->get()->count() == 0) {
-                $this->info('No countries found');
-            }
-            $view = view('pages.country.index')->with([
-                'pagination' => $result->get(),
-            ]);
-        }
-
-        $view->with([
-            'search' => $options['search'],
-            'limit' => $options['limit'],
-            'limits' => [10, 25, 50, 100],
-        ]);
-
-        return $view;
-    }
-
-    public function create(): Application|Factory|View|LaravelApplication
-    {
-        return view('pages.country.store');
-    }
-
-    public function store(StoreCountryRequest $request): Application|LaravelApplication|RedirectResponse|Redirector
-    {
-        $raw = [
-            'name' => $request->input('name'),
-            'code' => $request->input('code'),
-        ];
-
-        $result = $this->createCountry
-            ->execute($raw);
-
-        if ($result->isRejected()) {
-            $this->danger($result->getMessage());
-            return redirect('tables.country.store');
-        }
-
-        $this->success($result->getMessage());
-
-        return redirect()->route('pages.countries.index');
-    }
-
-    public function edit(int $id): RedirectResponse|Application|Factory|View|LaravelApplication
-    {
-        $result = $this->loadCountry->execute(['id' => $id]);
-
-
-        if ($result->isRejected()) {
-            $this->danger($result->getMessage());
-            return redirect()->back();
-        }
-
-        $country = $result->get();
-
-        return view('pages.country.edit')->with([
-            'model' => $country,
+        $this->setUseCases([
+            'index' => $this->loadCountries,
+            'store' => $this->createCountry,
+            'update' => $this->updateCountry,
+            'load' => $this->loadCountry,
+            'destroy' => $this->deleteCountry,
         ]);
     }
 
-    public function update(int $id, UpdateCountryRequest $request): LaravelApplication|Redirector|RedirectResponse|Application
+    /**
+     * @throws Exception
+     */
+    public function index(Request $request): LaravelApplication|Factory|View|RedirectResponse|Application
     {
-        $raw = [
-            'id' => $id,
-            'name' => $request->input('name'),
-            'code' => $request->input('code'),
-        ];
-
-        $result = $this->updateCountry
-            ->execute($raw);
-
-        if ($result->isRejected()) {
-            $this->danger($result->getMessage());
-            return redirect()->back();
-        }
-
-        $this->success($result->getMessage());
-
-        return redirect()->route('tables.country.index');
+        return $this->indexImpl($request);
     }
 
-    public function destroy(int $id): LaravelApplication|Redirector|RedirectResponse|Application
+    /**
+     * @throws Exception
+     */
+    public function create(Request $request): Factory|View|Application
     {
-        $result = $this->deleteCountry->execute(['id' => $id]);
+        return $this->createImpl($request);
+    }
 
-        if ($result->isRejected()) {
-            $this->danger($result->getMessage());
-            return redirect()->back();
-        }
+    /**
+     * @throws Exception
+     */
+    public function edit(Request $request, $id): Factory|View|Application
+    {
+        return $this->editImpl($request, $id);
+    }
 
-        $this->success($result->getMessage());
+    /**
+     * @throws Exception
+     */
+    public function destroy(Request $request, int $id): LaravelApplication|Redirector|RedirectResponse|Application
+    {
+        return $this->destroyImpl($request, $id);
+    }
 
-        return redirect()->route('tables.country.index');
+    /**
+     * @throws Exception
+     */
+    public function store(StoreCountryRequest $request): RedirectResponse|Factory|View|Application|LaravelApplication
+    {
+        return $this->storeImpl($request);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function update(UpdateCountryRequest $request, $id): RedirectResponse|Factory|View|Application|LaravelApplication
+    {
+        return $this->updateImpl($request, $id);
     }
 }

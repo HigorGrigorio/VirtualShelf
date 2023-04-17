@@ -7,8 +7,14 @@ use App\Domain\UseCases\Category\DeleteCategoryById;
 use App\Domain\UseCases\Category\LoadCategories;
 use App\Domain\UseCases\Category\LoadCategoryById;
 use App\Domain\UseCases\Category\UpdateCategory;
+use App\Http\Controllers\Traits\DestroysRecords;
+use App\Http\Controllers\Traits\EditsRecords;
+use App\Http\Controllers\Traits\HandlesRecords;
+use App\Http\Controllers\Traits\LoadsRecords;
+use App\Http\Controllers\Traits\StoresRecords;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -20,6 +26,33 @@ use Illuminate\Routing\Redirector;
 
 class CategoryController extends Controller
 {
+    use LoadsRecords, StoresRecords, EditsRecords, DestroysRecords, HandlesRecords;
+
+    public string $table = 'categories';
+
+    /**
+     * The columns that will be displayed in the table.
+     *
+     * @var array $columns
+     */
+    public array $columns = [
+        'id' => '#',
+        'name' => 'Name',
+        'slug' => 'Slug',
+        'description' => 'Description',
+        'actions' => [
+            'label' => 'Actions',
+            'edit' => [
+                'route' => 'tables.category.edit',
+                'params' => ['id' => 'id']
+            ],
+            'delete' => [
+                'route' => 'tables.category.destroy',
+                'params' => ['id' => 'id']
+            ]
+        ]
+    ];
+
     public function __construct(
         private readonly CreateCategory     $createCategory,
         private readonly LoadCategories     $loadCategories,
@@ -28,118 +61,60 @@ class CategoryController extends Controller
         private readonly DeleteCategoryById $deleteCategory,
     )
     {
-    }
-
-    public function index(Request $request): Application|Factory|View|LaravelApplication|JsonResponse
-    {
-        $options = [
-            'page' => $request->page ?? 1,
-            'limit' => $request->limit ?? 10,
-            'search' => $request->search ?? ''
-        ];
-
-        $result = $this->loadCategories
-            ->execute($options);
-
-        if ($result->isRejected()) {
-            $this->danger($result->getMessage(), 'Internal Server Error');
-
-            $view = view('pages.category.index');
-        } else {
-            if ($result->get()->count() == 0) {
-                $this->info('No categories found');
-            }
-            $view = view('pages.category.index')->with([
-                'pagination' => $result->get(),
-            ]);
-        }
-
-        $view->with([
-            'search' => $options['search'],
-            'limit' => $options['limit'],
-            'limits' => [10, 25, 50, 100],
+        $this->setUseCases([
+            'create' => $this->createCategory,
+            'index' => $this->loadCategories,
+            'load' => $this->loadCategory,
+            'update' => $this->updateCategory,
+            'delete' => $this->deleteCategory,
         ]);
-
-        return $view;
     }
 
-    public function create(): Application|Factory|View|LaravelApplication
+    /**
+     * @throws Exception
+     */
+    public function index(Request $request): LaravelApplication|Factory|View|RedirectResponse|Application
     {
-        return view('pages.category.store');
+        return $this->indexImpl($request);
     }
 
+    /**
+     * @throws Exception
+     */
+    public function create(Request $request): Factory|View|Application
+    {
+        return $this->createImpl($request);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function edit(Request $request, $id): Factory|View|Application
+    {
+        return $this->editImpl($request, $id);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function destroy(Request $request, int $id): LaravelApplication|Redirector|RedirectResponse|Application
+    {
+        return $this->destroyImpl($request, $id);
+    }
+
+    /**
+     * @throws Exception
+     */
     public function store(StoreCategoryRequest $request): Application|LaravelApplication|RedirectResponse|Redirector
     {
-        $raw = [
-            'name' => $request->input('name'),
-            'slug' => $request->input('slug'),
-            'description' => $request->input('description'),
-        ];
-
-
-        $result = $this->createCategory
-            ->execute($raw);
-
-        if ($result->isRejected()) {
-            $this->danger($result->getMessage());
-            return redirect('tables.category.store');
-        }
-
-        $this->success($result->getMessage());
-
-        return redirect()->route('pages.category.index');
+        return $this->storeImpl($request);
     }
 
-    public function edit(int $id): RedirectResponse|Application|Factory|View|LaravelApplication
+    /**
+     * @throws Exception
+     */
+    public function update(UpdateCategoryRequest $request, int $id): LaravelApplication|Redirector|RedirectResponse|Application
     {
-        $result = $this->loadCategory->execute(['id' => $id]);
-
-
-        if ($result->isRejected()) {
-            $this->danger($result->getMessage());
-            return redirect()->back();
-        }
-
-        $category = $result->get();
-
-        return view('pages.category.edit')->with([
-            'model' => $category,
-        ]);
-    }
-
-    public function update(int $id, UpdateCategoryRequest $request): LaravelApplication|Redirector|RedirectResponse|Application
-    {
-        $raw = [
-            'id' => $id,
-            'name' => $request->input('name'),
-            'slug' => $request->input('slug'),
-            'description' => $request->input('description'),
-        ];
-
-        $result = $this->updateCategory
-            ->execute($raw);
-
-        if ($result->isRejected()) {
-            $this->danger($result->getMessage());
-            return redirect()->back();
-        }
-
-        $this->success($result->getMessage());
-
-        return redirect()->route('tables.category.index');
-    }
-
-    public function destroy(int $id): LaravelApplication|Redirector|RedirectResponse|Application
-    {
-        $result = $this->deleteCategory->execute(['id' => $id]);
-
-        if ($result->isRejected()) {
-            $this->danger($result->getMessage());
-            return redirect()->back();
-        }
-
-        $this->success($result->getMessage());
-
-        return redirect()->route('tables.category.index');
+        return $this->updateImpl($request, $id);
     }
 }

@@ -46,11 +46,14 @@
                     <i class="fas fa-angle-down rotate-icon"></i>
                 </span>
                     <ul class="sub-links text-dark">
-                        @foreach($tables as $table)
+                        @foreach($tables as $item)
+                            @if($table  && $table == $item['singular'])
+                                @continue
+                            @endif
                             <li>
-                                <a href="{{url($table['route'] ?? '#')}}"
-                                   class="sidenav-btn sidenav-link text-dark @if($currentEditingTable  && $currentEditingTable == $table) active @endif">
-                                    <span>{{$table['name']}}</span>
+                                <a href="{{route($item['index'] ?? '#')}}"
+                                   class="sidenav-btn sidenav-link text-dark">
+                                    <span>{{$item['name']}}</span>
                                 </a>
                             </li>
                         @endforeach

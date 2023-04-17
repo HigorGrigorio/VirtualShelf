@@ -33,12 +33,12 @@
 </head>
 <body>
 
-<x-side-nav/>
+<x-side-nav :tables="$tables" :table="$table"/>
 
-<main id="main-content" class="p-2 pb-0 inactive">
+<main id="main-content" class="p-2 pb-0 inactive h-100">
     <div class="h-100">
         <x-nav-bar/>
-        <section class="container-fluid content-wrapper mt-2 primary-shadow rounded-3">
+        <section class="container-fluid content-wrapper mt-2 primary-shadow rounded-3 h-100">
             {{ $slot }}
         </section>
     </div>

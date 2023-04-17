@@ -217,6 +217,7 @@ return [
     ])->toArray(),
 
     'pagination' => [
+        'default_index_page' => 1,
         'per_page' => 10,
         'limits' => [
             10,

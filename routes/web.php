@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\LanguageController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\Language\StoresLanguage;
+use App\Http\Controllers\Language\LoadLanguagesController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,5 +85,20 @@ Route::prefix('/tables')->group(function () {
         Route::post('/update/{id}', [CategoryController::class, 'update'])->name('tables.category.update');
 
         Route::get('/delete/{id}', [CategoryController::class, 'destroy'])->name('tables.category.destroy');
+    });
+
+    /**
+     * User
+     */
+    Route::get('/users', [UserController::class, 'index'])->name('tables.user.index');
+
+    Route::prefix('user')->group(function () {
+        Route::get('/store', [UserController::class, 'create'])->name('tables.user.create');
+        Route::post('/', [UserController::class, 'store'])->name('tables.user.store');
+
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('tables.user.edit');
+        Route::post('/update/{id}', [UserController::class, 'update'])->name('tables.user.update');
+
+        Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('tables.user.destroy');
     });
 });

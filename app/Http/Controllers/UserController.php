@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\UseCases\Language\CreateLanguage;
-use App\Domain\UseCases\Language\DeleteLanguageById;
-use App\Domain\UseCases\Language\LoadLanguageById;
-use App\Domain\UseCases\Language\LoadLanguages;
-use App\Domain\UseCases\Language\UpdateLanguage;
+use App\Domain\UseCases\User\CreateUser;
+use App\Domain\UseCases\User\DeleteUserById;
+use App\Domain\UseCases\User\LoadUserById;
+use App\Domain\UseCases\User\LoadUsers;
+use App\Domain\UseCases\User\UpdateUser;
 use App\Http\Controllers\Traits\DestroysRecords;
 use App\Http\Controllers\Traits\EditsRecords;
 use App\Http\Controllers\Traits\HandlesRecords;
 use App\Http\Controllers\Traits\LoadsRecords;
 use App\Http\Controllers\Traits\StoresRecords;
-use App\Http\Requests\StoreLanguageRequest;
-use App\Http\Requests\UpdateLanguageRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -23,23 +23,16 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
-class LanguageController extends Controller
+class UserController extends Controller
 {
     use LoadsRecords, StoresRecords, EditsRecords, DestroysRecords, HandlesRecords;
 
-    public string $table = 'languages';
+    public string $table = 'users';
 
-    /**
-     * Helps for fillable fields.
-     *
-     * @var array $helps
-     */
-    public array $helps = [
-        'name' => 'Make sure the language is not registered',
-        'acronym' => 'The acronym language must be 2 characters long in accordance with ISO 639-1:2002',
-        'edit' => [
-            'name' => 'If modified, make sure the language is not registered',
-        ],
+    public array $showable = [
+        'name',
+        'email',
+        'photo'
     ];
 
     /**
@@ -49,35 +42,52 @@ class LanguageController extends Controller
      */
     public array $columns = [
         'id' => '#',
-        'name' => 'Name',
-        'acronym' => 'Acronym',
+        'user' => [
+            'label' => 'User',
+            'type' => 'html',
+            'bind' => ['icon', 'name', 'email'],
+            'value' => '<div class="d-flex">
+                            <div>
+                                <img src="/images/default-photo.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">${name}</h6>
+                                <p class="text-xs text-secondary mb-0">${email}</p>
+                            </div>
+                        </div>',
+        ],
         'actions' => [
             'label' => 'Actions',
             'edit' => [
-                'route' => 'tables.language.edit',
+                'route' => 'tables.user.edit',
                 'params' => ['id' => 'id']
             ],
             'delete' => [
-                'route' => 'tables.language.destroy',
+                'route' => 'tables.user.destroy',
                 'params' => ['id' => 'id']
             ]
         ],
     ];
 
+    public array $helps = [
+        'name' => 'The name of the user. This is the name that will be displayed in the application.',
+        'email' => 'The email of the user.',
+    ];
+
     public function __construct(
-        private readonly LoadLanguages      $loadLanguages,
-        private readonly CreateLanguage     $createLanguage,
-        private readonly UpdateLanguage     $updateLanguage,
-        private readonly LoadLanguageById   $loadLanguage,
-        private readonly DeleteLanguageById $deleteLanguage,
+        private readonly LoadUsers      $loadUsers,
+        private readonly CreateUser     $createUser,
+        private readonly UpdateUser     $updateUser,
+        private readonly LoadUserById   $loadUser,
+        private readonly DeleteUserById $deleteUser,
     )
     {
         $this->setUseCases([
-            'index' => $this->loadLanguages,
-            'store' => $this->createLanguage,
-            'update' => $this->updateLanguage,
-            'load' => $this->loadLanguage,
-            'destroy' => $this->deleteLanguage,
+            'index' => $this->loadUsers,
+            'create' => $this->createUser,
+            'update' => $this->updateUser,
+            'load' => $this->loadUser,
+            'delete' => $this->deleteUser,
         ]);
     }
 
@@ -116,16 +126,15 @@ class LanguageController extends Controller
     /**
      * @throws Exception
      */
-    public function store(StoreLanguageRequest $request): LaravelApplication|Redirector|RedirectResponse|Application
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         return $this->storeImpl($request);
     }
 
-
     /**
      * @throws Exception
      */
-    public function update(UpdateLanguageRequest $request, $id): LaravelApplication|Redirector|RedirectResponse|Application
+    public function update(UpdateUserRequest $request, int $id): LaravelApplication|Redirector|RedirectResponse|Application
     {
         return $this->updateImpl($request, $id);
     }

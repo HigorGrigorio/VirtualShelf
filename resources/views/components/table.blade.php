@@ -17,7 +17,7 @@
             @foreach($data as $row)
                 <tr>
                     @foreach($row as $key => $column)
-                            <th {{ $key == 'id' ? 'scope="row"' : '' }} >{!! $column !!}</th>
+                        <th {{ $key == 'id' ? 'scope="row"' : '' }} >{!! $column !!}</th>
                     @endforeach
                     <td>
                         @foreach($actions as $key => $option)

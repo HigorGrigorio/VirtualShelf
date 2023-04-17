@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use App\Interfaces\IDataBase;
+use App\Helpers\DBHelper;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
@@ -15,7 +15,6 @@ class NavBar extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public IDataBase $dataBase,
         public array     $breadCrumb = [],
     )
     {
@@ -30,7 +29,7 @@ class NavBar extends Component
         return view('components.nav-bar');
     }
 
-    public function getBreadCrumb()
+    public function getBreadCrumb(): array
     {
         $routeName = Route::currentRouteName();
 
@@ -41,9 +40,8 @@ class NavBar extends Component
 
         $breadCrumb = [];
 
-        $cache = [];
         $partialRoute = '';
-        $tables = $this->dataBase->getTables();
+        $tables = DBHelper::getInstance()->getTables();
 
         for ($i = 0; $i < count($pathParts); $i++) {
             if (count($nameParts) - 1 < $i) {

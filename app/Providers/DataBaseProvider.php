@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Interfaces\IDataBase;
-use App\Utils\DataBase;
+use App\Helpers\DBHelper;
 use Illuminate\Support\ServiceProvider;
 
 class DataBaseProvider extends ServiceProvider
@@ -15,7 +15,7 @@ class DataBaseProvider extends ServiceProvider
     {
         $this->app->bind(
             IDataBase::class,
-            DataBase::class
+            DBHelper::class
         );
     }
 
