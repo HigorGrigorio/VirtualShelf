@@ -4,7 +4,7 @@ namespace App\Domain\UseCases\Language;
 
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
-use App\Domain\UseCases\Record\LoadRecords;
+use App\Domain\UseCases\Base\LoadRecords;
 use App\Interfaces\IAuthorRepository;
 use App\Interfaces\ILanguageRepository;
 use Illuminate\Support\Facades\Config;

@@ -1,5 +1,5 @@
 @if(isset($pagination))
-    <x-modal-confirm/>
+    <x-modal-delete/>
     <div class="d-block scrollable-y table-bordered" style="height: calc(100vh - 220px)">
         <table class="table align-middle mb-0 bg-white">
             <thead
@@ -36,6 +36,13 @@
                                     class="btn btn-link btn-rounded btn-sm fw-bold">
                                     <i class="fa fa-trash"></i>
                                 </button>
+                            @elseif($key == 'show')
+                                <a href="{{ route($option['route'], array_map(function($param) use($row) { return $row[$param]; }, $option['params'])) }}"
+                                   role="button"
+                                   class="btn btn-link btn-rounded btn-sm fw-bold"
+                                   data-mdb-ripple-color="dark">
+                                    <i class="fa fa-eye"></i>
+                                </a>
                             @endif
                         @endforeach
                     </td>

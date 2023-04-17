@@ -2,81 +2,91 @@
 
 namespace App\Http\Controllers;
 
-use App\Core\Domain\IUseCase;
 use App\Core\Logic\Result;
+use App\Core\Logic\ResultStatus;
 use App\Helpers\DBHelper;
-use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    private ?Request $request = null;
+    private Request $request;
 
-    /**
-     * @var array<string,IUseCase> $useCases
-     */
-    protected array $useCases = [];
-
-    /**
-     * @throws Exception
-     */
-    public function getUseCase(string $name): IUseCase
-    {
-        if (!key_exists($name, $this->useCases)) {
-            throw new Exception("Use case '$name' not defined");
-        }
-
-        return $this->useCases[$name];
-    }
-
-    public function setUseCase(string $name, IUseCase $useCase): void
-    {
-        $this->useCases[$name] = $useCase;
-    }
-
-    public function setUseCases(array $useCases): void
-    {
-        $this->useCases = array_merge($this->useCases, $useCases);
-    }
-
-    public function getUseCases(): array
-    {
-        return $this->useCases;
-    }
-
-    public function removeUseCase(string $name): void
-    {
-        if (key_exists($name, $this->useCases))
-            unset($this->useCases[$name]);
-    }
+    private Result $result;
 
     public function setRequest(Request $request): void
     {
         $this->request = $request;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function getRequest(): Request
+    public function getRequest(): ?Request
     {
-        if (!isset($this->request))
-            throw new Exception('Request not defined');
-
         return $this->request;
     }
 
-    /**
-     * @throws Exception
-     */
+    public function setResult(Result $result): void
+    {
+        $this->result = $result;
+    }
+
+
+    public function getResult(): Result|null
+    {
+        return $this->result;
+    }
+
+    public function getTable(): string
+    {
+        return $this->table ?? '';
+    }
+
+    protected function getTablePlural(): string
+    {
+        return Str::plural($this->getTable());
+    }
+
+    public function getColumns(): array
+    {
+        return $this->columns ?? [];
+    }
+
+    protected
+    function getTableSingular(): string
+    {
+        return Str::singular($this->getTable());
+    }
+
+    protected function getRouteName(): string
+    {
+        return 'tables.' . $this->getTableSingular();
+    }
+
+    protected function getRoute(string $name): string
+    {
+        return $this->getRouteName() . '.' . $name;
+    }
+
+    protected function getViewFolderPath(): string
+    {
+        return 'layout.' . $this->getTableSingular();
+    }
+
+    protected function getViewPath(string $name): string
+    {
+        return $this->getViewFolderPath() . '.' . $name;
+    }
+
     protected function getPaginationParams(): array
     {
         return array_merge(
@@ -90,13 +100,28 @@ class Controller extends BaseController
         );
     }
 
-    /**
-     * @throws Exception
-     */
+    public function getRecordParams(): array
+    {
+        return [
+            'tables' => array_map(
+                fn($table) => [
+                    'name' => $table,
+                    'singular' => Str::singular($table),
+                    'plural' => Str::plural($table),
+                    'index' => 'tables.' . Str::singular($table) . '.index',
+                ],
+                DBHelper::getInstance()->getTables(),
+            ),
+            'table' => $this->getTable(),
+            'singular' => $this->getTableSingular(),
+            'plural' => $this->getTablePlural(),
+            'index' => 'tables.' . $this->getTableSingular() . '.index',
+        ];
+    }
+
     public function getParams(array...$params): array
     {
         return array_merge(
-            $this->getPaginationParams(),
             ...$params
         );
     }
@@ -125,23 +150,94 @@ class Controller extends BaseController
         Session::put($key, $storage);
     }
 
-    public function success(Result $result): void
+    protected function success(Result $result): void
     {
         $this->pushAlertNotification('success', $result->getMessage(), 'Success', 200, 5000);
     }
 
-    public function danger(Result $result): void
+    protected function danger(Result $result): void
     {
         $this->pushAlertNotification('danger', $result->getMessage(), 'Error', 500, 5000);
     }
 
-    public function warning(Result $result): void
+    protected function warning(Result $result): void
     {
         $this->pushAlertNotification('warning', $result->getMessage(), 'Warning', 200, 5000);
     }
 
-    public function info(Result $result): void
+    protected function info(Result $result): void
     {
         $this->pushAlertNotification('info', $result->getMessage(), 'Info', 200, 5000);
+    }
+
+    protected function resolve(): void
+    {
+        $result = $this->getResult();
+
+        switch ($result->status()) {
+            case ResultStatus::ACCEPTED:
+                $this->success($result);
+                break;
+            case ResultStatus::DANGER:
+                $this->danger($result);
+                break;
+            case ResultStatus::WARNING:
+                $this->warning($result);
+                break;
+        }
+    }
+
+    protected function makeView(string $name, ...$params): Application|Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|RedirectResponse
+    {
+        // check if exists the view into table folder
+        $folder = $this->getViewPath($name);
+
+        if (View::exists($folder)) {
+            $path = $this->getViewPath($name);
+        }
+
+        if (!isset($path))
+            $path = 'layout.' . '404';
+
+
+        $args = $this->getRecordParams();
+
+        if ($name === 'index') {
+            $result = $this->getResult();
+            if ($result && $result->isAccepted()) {
+                $args = array_merge($this->getPaginationParams(), $args);
+                $args['pagination'] = $this->getResult()->get();
+            } else {
+                return $this->redirect('back');
+            }
+            $this->resolve();
+        } elseif ($name == 'edit' || $name == 'show') {
+            $result = $this->getResult();
+            if ($result->isAccepted()) {
+                $args['record'] = $this->getResult()->get();
+            } else {
+                return $this->redirect('back');
+            }
+            $this->resolve();
+        }
+
+        return view($path)->with(
+            $this->getParams($args, ...$params)
+        );
+    }
+
+    public function redirect(string $name = 'back', array...$params): RedirectResponse
+    {
+        $this->resolve();
+
+        if ($this->getResult()->isAccepted() && $name !== 'back') {
+            $route = $this->getRoute($name);
+            $params = $this->getParams(...$params);
+            $redirect = redirect()->route($route, $params);
+        } else {
+            $redirect = back();
+        }
+
+        return $redirect;
     }
 }

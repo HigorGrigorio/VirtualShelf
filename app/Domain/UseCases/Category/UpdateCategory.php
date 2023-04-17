@@ -5,7 +5,7 @@ namespace App\Domain\UseCases\Category;
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
-use App\Domain\UseCases\Record\UpdateRecord;
+use App\Domain\UseCases\Base\UpdateRecord;
 use App\Interfaces\ICategoryRepository;
 
 class UpdateCategory extends UpdateRecord

@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\Logic\Result;
 use App\Domain\UseCases\Category\CreateCategory;
 use App\Domain\UseCases\Category\DeleteCategoryById;
 use App\Domain\UseCases\Category\LoadCategories;
 use App\Domain\UseCases\Category\LoadCategoryById;
 use App\Domain\UseCases\Category\UpdateCategory;
-use App\Http\Controllers\Traits\DestroysRecords;
-use App\Http\Controllers\Traits\EditsRecords;
-use App\Http\Controllers\Traits\HandlesRecords;
-use App\Http\Controllers\Traits\LoadsRecords;
-use App\Http\Controllers\Traits\StoresRecords;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use Exception;
@@ -19,39 +15,13 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application as LaravelApplication;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 class CategoryController extends Controller
 {
-    use LoadsRecords, StoresRecords, EditsRecords, DestroysRecords, HandlesRecords;
-
     public string $table = 'categories';
-
-    /**
-     * The columns that will be displayed in the table.
-     *
-     * @var array $columns
-     */
-    public array $columns = [
-        'id' => '#',
-        'name' => 'Name',
-        'slug' => 'Slug',
-        'description' => 'Description',
-        'actions' => [
-            'label' => 'Actions',
-            'edit' => [
-                'route' => 'tables.category.edit',
-                'params' => ['id' => 'id']
-            ],
-            'delete' => [
-                'route' => 'tables.category.destroy',
-                'params' => ['id' => 'id']
-            ]
-        ]
-    ];
 
     public function __construct(
         private readonly CreateCategory     $createCategory,
@@ -61,60 +31,108 @@ class CategoryController extends Controller
         private readonly DeleteCategoryById $deleteCategory,
     )
     {
-        $this->setUseCases([
-            'create' => $this->createCategory,
-            'index' => $this->loadCategories,
-            'load' => $this->loadCategory,
-            'update' => $this->updateCategory,
-            'delete' => $this->deleteCategory,
-        ]);
     }
 
-    /**
-     * @throws Exception
-     */
-    public function index(Request $request): LaravelApplication|Factory|View|RedirectResponse|Application
+    public function index(Request $request): View|RedirectResponse
     {
-        return $this->indexImpl($request);
+        try {
+            $this->setRequest($request);
+            $this->setResult($this->loadCategories->execute($this->getPaginationParams()));
+            $view = $this->makeView('index');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $view = $this->redirect('back');
+        }
+        return $view;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function create(Request $request): Factory|View|Application
+    public function create(): Application|Factory|View|LaravelApplication
     {
-        return $this->createImpl($request);
+        return $this->makeView('store');
     }
 
-    /**
-     * @throws Exception
-     */
-    public function edit(Request $request, $id): Factory|View|Application
+    public function store(StoreCategoryRequest $request): RedirectResponse
     {
-        return $this->editImpl($request, $id);
+        try {
+            $args = [
+                'name' => $request->input('name'),
+                'slug' => $request->input('slug'),
+                'description' => $request->input('description'),
+            ];
+            $this->setRequest($request);
+            $result = $this->createCategory->execute($args);
+            $this->setResult($result);
+            $redirect = $this->redirect('index');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $redirect = $this->redirect('back');
+        }
+        return $redirect;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function destroy(Request $request, int $id): LaravelApplication|Redirector|RedirectResponse|Application
+    public function edit(Request $request): Application|Factory|View|LaravelApplication|RedirectResponse
     {
-        return $this->destroyImpl($request, $id);
+        try {
+            $args = [
+                'id' => $request->route('id'),
+            ];
+            $this->setRequest($request);
+            $this->setResult($this->loadCategory->execute($args));
+            $this->setResult($this->loadCategory->execute($args));
+            $view = $this->makeView('edit');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $view = $this->redirect('back');
+        }
+        return $view;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function store(StoreCategoryRequest $request): Application|LaravelApplication|RedirectResponse|Redirector
+    public function show(Request $request): Application|Factory|View|LaravelApplication|RedirectResponse
     {
-        return $this->storeImpl($request);
+        try {
+            $args = [
+                'id' => $request->route('id'),
+            ];
+            $this->setRequest($request);
+            $this->setResult($this->loadCategory->execute($args));
+            $view = $this->makeView('show');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $view = $this->redirect('back');
+        }
+        return $view;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function update(UpdateCategoryRequest $request, int $id): LaravelApplication|Redirector|RedirectResponse|Application
+    public function update(UpdateCategoryRequest $request):Application|Factory|View|LaravelApplication|RedirectResponse
     {
-        return $this->updateImpl($request, $id);
+        try{
+            $args = [
+                'id' => $request->route('id') ,
+                'name' => $request->input('name'),
+                'slug' => $request->input('slug'),
+                'description' => $request->input('description'),
+            ];
+            $this->setRequest($request);
+            $this->setResult($this->updateCategory->execute($args));
+            $redirect = $this->redirect('index');
+        }  catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $redirect = $this->redirect('back');
+        }
+        return $redirect;
+    }
+
+    public function destroy(Request $request): Application|Factory|View|LaravelApplication|RedirectResponse
+    {
+        try {
+            $id = $request->route('id');
+            $this->setRequest($request);
+            $this->setResult($this->deleteCategory->execute(['id' => $id]));
+            $redirect = $this->redirect('index');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $redirect = $this->redirect('back');
+        }
+        return $redirect;
     }
 }

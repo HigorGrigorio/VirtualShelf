@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\Logic\Result;
 use App\Domain\UseCases\Language\CreateLanguage;
 use App\Domain\UseCases\Language\DeleteLanguageById;
 use App\Domain\UseCases\Language\LoadLanguageById;
 use App\Domain\UseCases\Language\LoadLanguages;
 use App\Domain\UseCases\Language\UpdateLanguage;
-use App\Http\Controllers\Traits\DestroysRecords;
-use App\Http\Controllers\Traits\EditsRecords;
-use App\Http\Controllers\Traits\HandlesRecords;
-use App\Http\Controllers\Traits\LoadsRecords;
-use App\Http\Controllers\Traits\StoresRecords;
 use App\Http\Requests\StoreLanguageRequest;
 use App\Http\Requests\UpdateLanguageRequest;
 use Exception;
@@ -25,44 +21,7 @@ use Illuminate\Routing\Redirector;
 
 class LanguageController extends Controller
 {
-    use LoadsRecords, StoresRecords, EditsRecords, DestroysRecords, HandlesRecords;
-
     public string $table = 'languages';
-
-    /**
-     * Helps for fillable fields.
-     *
-     * @var array $helps
-     */
-    public array $helps = [
-        'name' => 'Make sure the language is not registered',
-        'acronym' => 'The acronym language must be 2 characters long in accordance with ISO 639-1:2002',
-        'edit' => [
-            'name' => 'If modified, make sure the language is not registered',
-        ],
-    ];
-
-    /**
-     * The columns that will be displayed in the table.
-     *
-     * @var array $columns
-     */
-    public array $columns = [
-        'id' => '#',
-        'name' => 'Name',
-        'acronym' => 'Acronym',
-        'actions' => [
-            'label' => 'Actions',
-            'edit' => [
-                'route' => 'tables.language.edit',
-                'params' => ['id' => 'id']
-            ],
-            'delete' => [
-                'route' => 'tables.language.destroy',
-                'params' => ['id' => 'id']
-            ]
-        ],
-    ];
 
     public function __construct(
         private readonly LoadLanguages      $loadLanguages,
@@ -72,61 +31,106 @@ class LanguageController extends Controller
         private readonly DeleteLanguageById $deleteLanguage,
     )
     {
-        $this->setUseCases([
-            'index' => $this->loadLanguages,
-            'store' => $this->createLanguage,
-            'update' => $this->updateLanguage,
-            'load' => $this->loadLanguage,
-            'destroy' => $this->deleteLanguage,
-        ]);
     }
 
-    /**
-     * @throws Exception
-     */
-    public function index(Request $request): LaravelApplication|Factory|View|RedirectResponse|Application
+    public function index(Request $request): View|RedirectResponse
     {
-        return $this->indexImpl($request);
+        try {
+            $this->setRequest($request);
+            $this->setResult($this->loadLanguages->execute($this->getPaginationParams()));
+            $view = $this->makeView('index');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $view = $this->redirect('back');
+        }
+        return $view;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function create(Request $request): Factory|View|Application
+    public function create(): View|LaravelApplication|Factory|Application
     {
-        return $this->createImpl($request);
+        return $this->makeView('store');
     }
 
-    /**
-     * @throws Exception
-     */
-    public function edit(Request $request, $id): Factory|View|Application
+    public function store(StoreLanguageRequest $request): RedirectResponse
     {
-        return $this->editImpl($request, $id);
+        try {
+            $args = [
+                'name' => $request->input('name'),
+                'acronym' => $request->input('slug'),
+            ];
+            $this->setRequest($request);
+            $result = $this->createLanguage->execute($args);
+            $this->setResult($result);
+            $redirect = $this->redirect('index');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $redirect = $this->redirect('back');
+        }
+        return $redirect;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function destroy(Request $request, int $id): LaravelApplication|Redirector|RedirectResponse|Application
+    public function edit(Request $request): Application|Factory|View|LaravelApplication|RedirectResponse
     {
-        return $this->destroyImpl($request, $id);
+        try {
+            $args = [
+                'id' => $request->route('id'),
+            ];
+            $this->setRequest($request);
+            $this->setResult($this->loadLanguage->execute($args));
+            $this->setResult($this->loadLanguage->execute($args));
+            $view = $this->makeView('edit');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $view = $this->redirect('back');
+        }
+        return $view;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function store(StoreLanguageRequest $request): LaravelApplication|Redirector|RedirectResponse|Application
+    public function show(Request $request): Application|Factory|View|LaravelApplication|RedirectResponse
     {
-        return $this->storeImpl($request);
+        try {
+            $args = [
+                'id' => $request->route('id'),
+            ];
+            $this->setRequest($request);
+            $this->setResult($this->loadLanguage->execute($args));
+            $view = $this->makeView('show');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $view = $this->redirect('back');
+        }
+        return $view;
     }
 
-
-    /**
-     * @throws Exception
-     */
-    public function update(UpdateLanguageRequest $request, $id): LaravelApplication|Redirector|RedirectResponse|Application
+    public function update(UpdateLanguageRequest $request): LaravelApplication|Redirector|RedirectResponse|Application
     {
-        return $this->updateImpl($request, $id);
+        try {
+            $args = [
+                'id' => $request->route('id'),
+                'name' => $request->input('name'),
+                'acronym' => $request->input('acronym'),
+            ];
+            $this->setRequest($request);
+            $this->setResult($this->updateLanguage->execute($args));
+            $redirect = $this->redirect('index');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $redirect = $this->redirect('back');
+        }
+        return $redirect;
+    }
+
+    public function destroy(Request $request): LaravelApplication|Redirector|RedirectResponse|Application
+    {
+        try {
+            $id = $request->route('id');
+            $this->setRequest($request);
+            $this->setResult($this->deleteLanguage->execute(['id' => $id]));
+            $redirect = $this->redirect('index');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $redirect = $this->redirect('back');
+        }
+        return $redirect;
     }
 }

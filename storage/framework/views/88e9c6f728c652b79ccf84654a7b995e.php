@@ -1,0 +1,1 @@
+<?php /**PATH C:\Users\higor\PhpstormProjects\VirtualShelf\resources\views/pages/country/index.blade.php ENDPATH**/ ?>

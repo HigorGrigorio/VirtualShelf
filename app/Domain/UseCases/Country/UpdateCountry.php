@@ -2,7 +2,7 @@
 
 namespace App\Domain\UseCases\Country;
 
-use App\Domain\UseCases\Record\UpdateRecord;
+use App\Domain\UseCases\Base\UpdateRecord;
 use App\Interfaces\ICountryRepository;
 
 class UpdateCountry extends UpdateRecord

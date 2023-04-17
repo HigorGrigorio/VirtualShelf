@@ -26,41 +26,6 @@ class Table extends Component
         $this->init();
     }
 
-    /**
-     *
-     * private function getValue($item, $column, $key, $alias)
-     * {
-     * if(is_array($column)) {
-     * return $this->getValue($item, $column[$alias], $key, $alias);
-     * }
-     *
-     * if(is_callable($column)) {
-     * return $column($item);
-     * }
-     *
-     * return $item->{$key};
-     * }
-     *
-     * private function init(): void
-     * {
-     * $this->actions = $this->columns['actions'] ?? [];
-     *
-     * foreach ($this->pagination->items() as $item) {
-     * $row = [];
-     * foreach ($this->columns as $key => $column) {
-     * if($key == 'actions') {
-     * continue;
-     * }
-     *
-     * $row[$key] = $this->getValue($item, $column, $key, 'value');
-     * }
-     * $this->data[] = $row;
-     * }
-     *
-     *
-     * }
-     */
-
     protected function getActions(): array
     {
         return $this->actions ?? $this->columns['actions'] ?? [];

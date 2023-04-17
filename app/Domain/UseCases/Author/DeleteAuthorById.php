@@ -5,7 +5,7 @@ namespace App\Domain\UseCases\Author;
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
-use App\Domain\UseCases\Record\DeleteRecord;
+use App\Domain\UseCases\Base\DeleteRecord;
 use App\Interfaces\IAuthorRepository;
 
 class DeleteAuthorById extends DeleteRecord

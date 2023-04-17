@@ -5,7 +5,7 @@ namespace App\Domain\UseCases\Language;
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
-use App\Domain\UseCases\Record\LoadRecordById;
+use App\Domain\UseCases\Base\LoadRecordById;
 use App\Interfaces\IAuthorRepository;
 use App\Interfaces\ILanguageRepository;
 

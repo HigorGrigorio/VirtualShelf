@@ -4,7 +4,7 @@ namespace App\Domain\UseCases\Country;
 
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
-use App\Domain\UseCases\Record\LoadRecordById;
+use App\Domain\UseCases\Base\LoadRecordById;
 use App\Interfaces\ICountryRepository;
 
 class LoadCountryById extends LoadRecordById

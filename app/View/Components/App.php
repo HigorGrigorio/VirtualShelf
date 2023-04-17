@@ -12,11 +12,10 @@ class App extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public array $tables,
+        public array  $tables,
         public string $table,
     )
     {
-        //
     }
 
     /**

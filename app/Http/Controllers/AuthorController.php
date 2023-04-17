@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\Logic\Result;
 use App\Domain\UseCases\Author\CreateAuthor;
 use App\Domain\UseCases\Author\DeleteAuthorById;
 use App\Domain\UseCases\Author\LoadAuthorById;
 use App\Domain\UseCases\Author\LoadAuthors;
 use App\Domain\UseCases\Author\UpdateAuthor;
-use App\Http\Controllers\Traits\DestroysRecords;
-use App\Http\Controllers\Traits\EditsRecords;
-use App\Http\Controllers\Traits\HandlesRecords;
-use App\Http\Controllers\Traits\LoadsRecords;
-use App\Http\Controllers\Traits\StoresRecords;
 use App\Http\Requests\StoreAuthorRequest;
-use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateAuthorRequest;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -23,35 +18,10 @@ use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Config;
 
 class AuthorController extends Controller
 {
-    use LoadsRecords, StoresRecords, EditsRecords, DestroysRecords, HandlesRecords;
-
     public string $table = 'authors';
-
-    /**
-     * The columns that will be displayed in the table.
-     *
-     * @var array $columns
-     */
-    public array $columns = [
-        'id' => '#',
-        'name' => 'Name',
-        'surname' => 'Surname',
-        'actions' => [
-            'label' => 'Actions',
-            'edit' => [
-                'route' => 'tables.author.edit',
-                'params' => ['id' => 'id']
-            ],
-            'delete' => [
-                'route' => 'tables.author.destroy',
-                'params' => ['id' => 'id']
-            ]
-        ]
-    ];
 
     public function __construct(
         private readonly LoadAuthors      $loadAuthors,
@@ -61,60 +31,106 @@ class AuthorController extends Controller
         private readonly DeleteAuthorById $deleteAuthor,
     )
     {
-        $this->setUseCases([
-            'index' => $this->loadAuthors,
-            'create' => $this->createAuthor,
-            'update' => $this->updateAuthor,
-            'load' => $this->loadAuthor,
-            'delete' => $this->deleteAuthor,
-        ]);
     }
 
-    /**
-     * @throws Exception
-     */
-    public function index(Request $request): LaravelApplication|Factory|View|RedirectResponse|Application
+    public function index(Request $request): View|RedirectResponse
     {
-        return $this->indexImpl($request);
+        try {
+            $this->setRequest($request);
+            $this->setResult($this->loadAuthors->execute($this->getPaginationParams()));
+            $view = $this->makeView('index');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $view = $this->redirect('back');
+        }
+        return $view;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function create(Request $request): Factory|View|Application
+    public function create(): View|LaravelApplication|Factory|Application
     {
-        return $this->createImpl($request);
+        return $this->makeView('store');
     }
 
-    /**
-     * @throws Exception
-     */
-    public function edit(Request $request, $id): Factory|View|Application
+    public function store(StoreAuthorRequest $request): Application|Factory|View|LaravelApplication|RedirectResponse
     {
-        return $this->editImpl($request, $id);
+        try {
+            $params = [
+                'name' => $request->input('name'),
+                'surname' => $request->input('surname'),
+            ];
+            $this->setRequest($request);
+            $result = $this->createAuthor->execute($params);
+            $this->setResult($result);
+            $redirect = $this->redirect('index');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $redirect = $this->redirect('back');
+        }
+        return $redirect;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function destroy(Request $request, int $id): LaravelApplication|Redirector|RedirectResponse|Application
+    public function edit(Request $request): Application|Factory|View|LaravelApplication|RedirectResponse
     {
-        return $this->destroyImpl($request, $id);
+        try {
+            $args = [
+                'id' => $request->route('id'),
+            ];
+            $this->setRequest($request);
+            $this->setResult($this->loadAuthor->execute($args));
+            $this->setResult($this->loadAuthor->execute($args));
+            $view = $this->makeView('edit');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $view = $this->redirect('back');
+        }
+        return $view;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function store(StoreAuthorRequest $request): Application|LaravelApplication|RedirectResponse|Redirector
+    public function show(Request $request): Application|Factory|View|LaravelApplication|RedirectResponse
     {
-        return $this->storeImpl($request);
+        try {
+            $args = [
+                'id' => $request->route('id'),
+            ];
+            $this->setRequest($request);
+            $this->setResult($this->loadAuthor->execute($args));
+            $view = $this->makeView('show');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $view = $this->redirect('back');
+        }
+        return $view;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function update(UpdateAuthorRequest $request, int $id): LaravelApplication|Redirector|RedirectResponse|Application
+    public function update(UpdateAuthorRequest $request): LaravelApplication|Redirector|RedirectResponse|Application
     {
-        return $this->updateImpl($request, $id);
+        try {
+            $args = [
+                'id' => $request->route('id'),
+                'name' => $request->input('name'),
+                'surname' => $request->input('surname'),
+            ];
+            $this->setRequest($request);
+            $this->setResult($this->updateAuthor->execute($args));
+            $redirect = $this->redirect('index');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $redirect = $this->redirect('back');
+        }
+        return $redirect;
+    }
+
+    public function destroy(Request $request): LaravelApplication|Redirector|RedirectResponse|Application
+    {
+        try {
+            $id = $request->route('id');
+            $this->setRequest($request);
+            $this->setResult($this->deleteAuthor->execute(['id' => $id]));
+            $redirect = $this->redirect('index');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $redirect = $this->redirect('back');
+        }
+        return $redirect;
     }
 }
