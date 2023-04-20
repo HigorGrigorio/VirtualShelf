@@ -2,12 +2,8 @@
 
 namespace App\View\Components;
 
-use App\Interfaces\IDataBase;
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 class SideNav extends Component

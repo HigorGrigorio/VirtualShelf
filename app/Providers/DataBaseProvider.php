@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Interfaces\IDataBase;
-use App\Helpers\DBHelper;
+use App\Presentation\Helpers\DBHelper;
+use App\Presentation\Helpers\Interfaces\IDataBase;
 use Illuminate\Support\ServiceProvider;
 
 class DataBaseProvider extends ServiceProvider

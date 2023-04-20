@@ -2,7 +2,7 @@
 
 namespace App\View\Components;
 
-use App\Helpers\DBHelper;
+use App\Presentation\Helpers\DBHelper;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;

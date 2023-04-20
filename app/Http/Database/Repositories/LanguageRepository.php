@@ -3,8 +3,8 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
-use App\Interfaces\ILanguageRepository;
 use App\Models\Language;
+use App\Presentation\Interfaces\ILanguageRepository;
 
 class LanguageRepository extends Repository implements ILanguageRepository
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Presentation\Helpers;
 
-use App\Helpers\Traits\Singleton;
-use App\Interfaces\IDataBase;
+use App\Presentation\Helpers\Interfaces\IDataBase;
+use App\Presentation\Traits\Singleton;
 use Illuminate\Support\Facades\DB;
 
 class DBHelper implements IDataBase

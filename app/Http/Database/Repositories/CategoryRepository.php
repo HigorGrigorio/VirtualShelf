@@ -3,8 +3,8 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
-use App\Interfaces\ICategoryRepository;
 use App\Models\Category;
+use App\Presentation\Interfaces\ICategoryRepository;
 
 class CategoryRepository extends Repository implements ICategoryRepository
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces;
+namespace App\Presentation\Interfaces;
 
 use App\Core\Logic\Maybe;
 

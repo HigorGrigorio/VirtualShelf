@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presentation\Interfaces;
+namespace App\Presentation\Helpers\Interfaces;
 
 interface IDataBase
 {

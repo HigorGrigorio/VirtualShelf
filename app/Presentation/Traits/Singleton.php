@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Presentation\Helpers\Traits;
+namespace App\Presentation\Traits;
 
 use Exception;
 
 trait Singleton
 {
     /**
-     * The Singleton class defines the `GetInstance` method that serves as an
+     * The Singleton class defines the `getInstance` method that serves as an
      * alternative to constructor and lets clients access the same instance of this
      * class over and over.
      */

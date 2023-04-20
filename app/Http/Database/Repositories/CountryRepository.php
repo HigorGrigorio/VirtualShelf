@@ -3,8 +3,8 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
-use App\Interfaces\ICountryRepository;
 use App\Models\Country;
+use App\Presentation\Interfaces\ICountryRepository;
 
 
 class CountryRepository extends Repository implements ICountryRepository

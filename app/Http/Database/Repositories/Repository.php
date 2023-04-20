@@ -3,7 +3,7 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
-use App\Interfaces\IRepository;
+use App\Presentation\Interfaces\IRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 

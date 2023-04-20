@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Interfaces;
+namespace App\Presentation\Interfaces;
 
 use App\Core\Logic\Maybe;
 use App\Models\Country;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 interface ICountryRepository extends IRepository
 {

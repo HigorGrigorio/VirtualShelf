@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\Logic\Result;
 use App\Core\Logic\ResultStatus;
-use App\Helpers\DBHelper;
+use App\Presentation\Helpers\DBHelper;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
