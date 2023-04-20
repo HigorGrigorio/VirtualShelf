@@ -4,7 +4,7 @@
             <div>
                 <h1 class="text-smoke">Inserting Country</h1>
             </div>
-            <form action="{{ route('tables.country.store') }}" method="POST">
+            <form action="{{ route('tables.' . $singular . '.store') }}" method="POST">
                 @csrf
 
                 <x-input type="text" id="name " name="name" label="Country Name"

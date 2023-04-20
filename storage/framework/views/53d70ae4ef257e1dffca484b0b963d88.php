@@ -19,15 +19,11 @@ unset($__errorArgs, $__bag); ?>"/>
 
             </span>
         <?php endif; ?>
-    <?php endif; ?>
-
-    <?php if($errors->has($name)): ?>
-        <?php $__currentLoopData = $errors->get($name); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $message): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <span class="form-helper" style="color: var(--mdb-danger)">
-            <?php echo e($message); ?>
+    <?php else: ?>
+        <span class="form-helper" style="color: var(--mdb-danger);">
+            <?php echo e($errors->get($name)[0]); ?>
 
         </span>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     <?php endif; ?>
 </div>
 

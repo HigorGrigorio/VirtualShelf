@@ -12,7 +12,7 @@ class TextArea extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public  $id,
+        public        $id,
         /**
          * The input name.
          */
@@ -37,6 +37,10 @@ class TextArea extends Component
          * The number of rows.
          */
         public int    $rows = 3,
+/**
+         * The number max of characters.
+         */
+        public int    $max = 0,
     )
     {
         //

@@ -1,6 +1,11 @@
 <div class="form-outline mb-5">
     <textarea id="{{$id}}" name="{{$name}}"
-              class="form-control @error($name) is-invalid @enderror" rows="{{$rows}}">{{ $value ?? old($name) }}</textarea>
+              @if($max>0)
+                  data-mdb-showcounter="true"
+                  maxlength="{{$max}}"
+              @endif
+              class="form-control @error($name) is-invalid @enderror"
+              rows="{{$rows}}">{{ $value ?? old($name) }}</textarea>
     @if(isset($label))
         {{-- if label is set --}}
         <label class="form-label" for="{{$name}}">{{$label}}</label>

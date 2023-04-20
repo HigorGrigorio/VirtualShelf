@@ -10,12 +10,12 @@
     <div class="container px-0">
         <div class="pt-4 pb-3 container-fluid d-flex flex-row justify-content-between px-0">
             <div>
-                <a href="<?php echo e(route('tables.author.create')); ?>" class="btn btn-dark">
+                <a href="<?php echo e(route('tables.user.create')); ?>" class="btn btn-dark">
                     <i class="fas fa-plus"></i>
                     <span class="ms-2">Add</span>
                 </a>
             </div>
-            <form action="<?php echo e(route('tables.author.index')); ?>" method="get"
+            <form action="<?php echo e(route('tables.user.index')); ?>" method="get"
                   class="d-flex flex-row w-75 gap-3 align-items-center">
                 <div>
                     <select name="limit" class="form-select" aria-label="Limit of exhibition..." style="width: 5rem">
@@ -35,7 +35,6 @@
                 </div>
             </form>
         </div>
-
         <?php if(isset($pagination)): ?>
             <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.modal-delete','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
@@ -53,15 +52,14 @@
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
             <div class="d-block scrollable-y table-bordered" style="height: calc(100vh - 220px)">
-                <table class="table align-middle mb-0 bg-white">
+                <table class="table table-sm align-middle mb-0 bg-white">
                     <thead style="  position: sticky;
                                  background: var(--bs-gray-200);
                                  top: 0;
                                  z-index: 100;">
                     <tr class="text-dark">
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Surname</th>
+                        <th scope="col">User</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
@@ -69,23 +67,33 @@
                     <?php $__currentLoopData = $pagination; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <th scope="row"><?php echo e($row->id); ?></th>
-                            <th><?php echo e($row->name); ?></th>
-                            <th><?php echo e($row->surname); ?></th>
                             <td>
-                                <a href="<?php echo e(route('tables.author.edit', ['id' => $row->id])); ?>"
+                                <div class="d-flex px-2 py-1">
+                                    <div>
+                                        <img src="<?php echo e(url($row->photo ?? 'images/default-photo.jpg')); ?>"
+                                             class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm"><?php echo e($row->name); ?></h6>
+                                        <p class="text-xs text-secondary mb-0"><?php echo e($row->email); ?></p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="<?php echo e(route('tables.user.edit', ['id' => $row->id])); ?>"
                                    role="button"
                                    class="btn btn-link btn-rounded btn-sm fw-bold"
                                    data-mdb-ripple-color="dark">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <button
-                                    data-href="<?php echo e(route('tables.author.destroy', ['id' => $row->id])); ?>"
+                                    data-href="<?php echo e(route('tables.user.destroy', ['id' => $row->id])); ?>"
                                     data-mdb-toggle="modal"
                                     data-mdb-target="#confirm-modal"
                                     class="btn btn-link btn-rounded btn-sm fw-bold">
                                     <i class="fa fa-trash"></i>
                                 </button>
-                                <a href="<?php echo e(route('tables.author.show', ['id' => $row->id])); ?>"
+                                <a href="<?php echo e(route('tables.user.show', ['id' => $row->id])); ?>"
                                    role="button"
                                    class="btn btn-link btn-rounded btn-sm fw-bold"
                                    data-mdb-ripple-color="dark">
@@ -97,6 +105,10 @@
                     </tbody>
                 </table>
             </div>
+            <div class="mt-1">
+                <?php echo e($pagination->links()); ?>
+
+            </div>
         <?php else: ?>
             <h3>There is no data to show</h3>
         <?php endif; ?>
@@ -107,4 +119,4 @@
 <?php $component = $__componentOriginal165f8e34452936f6da18fceb86497519; ?>
 <?php unset($__componentOriginal165f8e34452936f6da18fceb86497519); ?>
 <?php endif; ?>
-<?php /**PATH C:\Users\higor\PhpstormProjects\VirtualShelf\resources\views/layout/author/index.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\higor\PhpstormProjects\VirtualShelf\resources\views/layout/user/index.blade.php ENDPATH**/ ?>

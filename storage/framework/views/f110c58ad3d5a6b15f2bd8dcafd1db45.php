@@ -16,8 +16,7 @@
 <?php endif; ?>
     <div class="d-block scrollable-y table-bordered" style="height: calc(100vh - 220px)">
         <table class="table align-middle mb-0 bg-white">
-            <thead
-                style="  position: sticky;
+            <thead style="  position: sticky;
                                  background: var(--bs-gray-200);
                                  top: 0;
                                  z-index: 100;">

@@ -2,12 +2,12 @@
     <div class="container px-0">
         <div class="pt-4 pb-3 container-fluid d-flex flex-row justify-content-between px-0">
             <div>
-                <a href="{{route('tables.category.create')}}" class="btn btn-dark">
+                <a href="{{route('tables.user.create')}}" class="btn btn-dark">
                     <i class="fas fa-plus"></i>
                     <span class="ms-2">Add</span>
                 </a>
             </div>
-            <form action="{{route('tables.category.index')}}" method="get"
+            <form action="{{route('tables.user.index')}}" method="get"
                   class="d-flex flex-row w-75 gap-3 align-items-center">
                 <div>
                     <select name="limit" class="form-select" aria-label="Limit of exhibition..." style="width: 5rem">
@@ -30,41 +30,48 @@
         @if(isset($pagination))
             <x-modal-delete/>
             <div class="d-block scrollable-y table-bordered" style="height: calc(100vh - 220px)">
-                <table class="table align-middle mb-0 bg-white">
+                <table class="table table-sm align-middle mb-0 bg-white">
                     <thead style="  position: sticky;
                                  background: var(--bs-gray-200);
                                  top: 0;
                                  z-index: 100;">
                     <tr class="text-dark">
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Slug</th>
-                        <th scope="col">Description</th>
+                        <th scope="col">User</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($pagination as $row)
                         <tr>
-                            <th scope="row">{{ $row->id }}</th>
-                            <th>{{ $row->name }}</th>
-                            <th>{{ $row->slug }}</th>
-                            <th>{{ $row->description }}</th>
+                            <th scope="row">{{$row->id}}</th>
                             <td>
-                                <a href="{{ route('tables.category.edit', ['id' => $row->id]) }}"
+                                <div class="d-flex px-2 py-1">
+                                    <div>
+                                        <img src="{{url($row->photo ?? 'images/default-photo.jpg')}}"
+                                             class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">{{$row->name}}</h6>
+                                        <p class="text-xs text-secondary mb-0">{{$row->email}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="{{ route('tables.user.edit', ['id' => $row->id]) }}"
                                    role="button"
                                    class="btn btn-link btn-rounded btn-sm fw-bold"
                                    data-mdb-ripple-color="dark">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <button
-                                    data-href="{{ route('tables.category.destroy', ['id' => $row->id]) }}"
+                                    data-href="{{ route('tables.user.destroy', ['id' => $row->id]) }}"
                                     data-mdb-toggle="modal"
                                     data-mdb-target="#confirm-modal"
                                     class="btn btn-link btn-rounded btn-sm fw-bold">
                                     <i class="fa fa-trash"></i>
                                 </button>
-                                <a href="{{ route('tables.category.show', ['id' => $row->id]) }}"
+                                <a href="{{ route('tables.user.show', ['id' => $row->id]) }}"
                                    role="button"
                                    class="btn btn-link btn-rounded btn-sm fw-bold"
                                    data-mdb-ripple-color="dark">

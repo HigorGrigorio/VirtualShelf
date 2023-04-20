@@ -1,11 +1,4 @@
 <x-app :tables="$tables" :table="$table">
-    <style>
-        .gradient-custom {
-            background: #f6d365;
-            background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
-            background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
-        }
-    </style>
     <div class="row d-flex justify-content-center h-100 w-100 align-items-center ">
         <div class="col col-lg-7 mb-4 mb-lg-0">
             <div class="card" style="border-radius: .5rem;">

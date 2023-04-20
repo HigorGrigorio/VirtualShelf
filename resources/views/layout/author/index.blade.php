@@ -29,30 +29,57 @@
         </div>
 
         @if(isset($pagination))
-            <x-table :pagination=" $pagination" :columns="[
-                'id' => '#',
-                'name' => 'Name',
-                'surname' => 'Surname',
-                'actions' => [
-                    'label' => 'Actions',
-                    'edit' => [
-                        'route' => 'tables.author.edit',
-                        'params' => ['id' => 'id']
-                    ],
-                    'delete' => [
-                        'route' => 'tables.author.destroy',
-                        'params' => ['id' => 'id'],
-                    ],
-                    'show' => [
-                        'route' => 'tables.author.show',
-                        'params' => ['id' => 'id'],
-                    ]
-                ]
-            ]"/>
-        @else
-            <div class="alert alert-danger">
-                There is no data to show
+            <x-modal-delete/>
+            <div class="d-block scrollable-y table-bordered" style="height: calc(100vh - 220px)">
+                <table class="table align-middle mb-0 bg-white">
+                    <thead style="  position: sticky;
+                                 background: var(--bs-gray-200);
+                                 top: 0;
+                                 z-index: 100;">
+                    <tr class="text-dark">
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Surname</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($pagination as $row)
+                        <tr>
+                            <th scope="row">{{ $row->id }}</th>
+                            <th>{{ $row->name }}</th>
+                            <th>{{ $row->surname }}</th>
+                            <td>
+                                <a href="{{ route('tables.author.edit', ['id' => $row->id]) }}"
+                                   role="button"
+                                   class="btn btn-link btn-rounded btn-sm fw-bold"
+                                   data-mdb-ripple-color="dark">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <button
+                                    data-href="{{ route('tables.author.destroy', ['id' => $row->id]) }}"
+                                    data-mdb-toggle="modal"
+                                    data-mdb-target="#confirm-modal"
+                                    class="btn btn-link btn-rounded btn-sm fw-bold">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                                <a href="{{ route('tables.author.show', ['id' => $row->id]) }}"
+                                   role="button"
+                                   class="btn btn-link btn-rounded btn-sm fw-bold"
+                                   data-mdb-ripple-color="dark">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
+            <div class="mt-1">
+                {{ $pagination->links() }}
+            </div>
+        @else
+            <h3>There is no data to show</h3>
         @endif
     </div>
 </x-app>

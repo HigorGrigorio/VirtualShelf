@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Core\Logic\Result;
-use App\Domain\UseCases\Language\CreateLanguage;
-use App\Domain\UseCases\Language\DeleteLanguageById;
-use App\Domain\UseCases\Language\LoadLanguageById;
-use App\Domain\UseCases\Language\LoadLanguages;
-use App\Domain\UseCases\Language\UpdateLanguage;
-use App\Http\Requests\StoreLanguageRequest;
-use App\Http\Requests\UpdateLanguageRequest;
+use App\Domain\UseCases\User\CreateUser;
+use App\Domain\UseCases\User\DeleteUserById;
+use App\Domain\UseCases\User\LoadUserById;
+use App\Domain\UseCases\User\LoadUsers;
+use App\Domain\UseCases\User\UpdateUser;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -19,16 +19,16 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
-class LanguageController extends Controller
+class UserController extends Controller
 {
-    public string $table = 'languages';
+    public string $table = 'users';
 
     public function __construct(
-        private readonly LoadLanguages      $loadLanguages,
-        private readonly CreateLanguage     $createLanguage,
-        private readonly UpdateLanguage     $updateLanguage,
-        private readonly LoadLanguageById   $loadLanguage,
-        private readonly DeleteLanguageById $deleteLanguage,
+        private readonly LoadUsers      $loadUsers,
+        private readonly CreateUser     $createUser,
+        private readonly UpdateUser     $updateUser,
+        private readonly LoadUserById   $loadUser,
+        private readonly DeleteUserById $deleteUser,
     )
     {
     }
@@ -37,7 +37,7 @@ class LanguageController extends Controller
     {
         try {
             $this->setRequest($request);
-            $this->setResult($this->loadLanguages->execute($this->getPaginationParams()));
+            $this->setResult($this->loadUsers->execute($this->getPaginationParams()));
             $view = $this->makeView('index');
         } catch (Exception $e) {
             $this->setResult(Result::from($e));
@@ -51,15 +51,18 @@ class LanguageController extends Controller
         return $this->makeView('store');
     }
 
-    public function store(StoreLanguageRequest $request): RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         try {
             $args = [
                 'name' => $request->input('name'),
-                'acronym' => $request->input('acronym'),
+                'email' => $request->input('email'),
+                'password' => $request->input('password'),
+                'photo' => $request->file('photo'),
+                'password_confirmation' => $request->input('password_confirmation'),
             ];
             $this->setRequest($request);
-            $result = $this->createLanguage->execute($args);
+            $result = $this->createUser->execute($args);
             $this->setResult($result);
             $redirect = $this->redirect('index');
         } catch (Exception $e) {
@@ -69,23 +72,6 @@ class LanguageController extends Controller
         return $redirect;
     }
 
-    public function edit(Request $request): Application|Factory|View|LaravelApplication|RedirectResponse
-    {
-        try {
-            $args = [
-                'id' => $request->route('id'),
-            ];
-            $this->setRequest($request);
-            $this->setResult($this->loadLanguage->execute($args));
-            $this->setResult($this->loadLanguage->execute($args));
-            $view = $this->makeView('edit');
-        } catch (Exception $e) {
-            $this->setResult(Result::from($e));
-            $view = $this->redirect('back');
-        }
-        return $view;
-    }
-
     public function show(Request $request): Application|Factory|View|LaravelApplication|RedirectResponse
     {
         try {
@@ -93,7 +79,7 @@ class LanguageController extends Controller
                 'id' => $request->route('id'),
             ];
             $this->setRequest($request);
-            $this->setResult($this->loadLanguage->execute($args));
+            $this->setResult($this->loadUser->execute($args));
             $view = $this->makeView('show');
         } catch (Exception $e) {
             $this->setResult(Result::from($e));
@@ -102,16 +88,35 @@ class LanguageController extends Controller
         return $view;
     }
 
-    public function update(UpdateLanguageRequest $request): LaravelApplication|Redirector|RedirectResponse|Application
+    public function edit(Request $request): Application|Factory|View|LaravelApplication|RedirectResponse
+    {
+        try {
+            $args = [
+                'id' => $request->route('id'),
+            ];
+            $this->setRequest($request);
+            $this->setResult($this->loadUser->execute($args));
+            $this->setResult($this->loadUser->execute($args));
+            $view = $this->makeView('edit');
+        } catch (Exception $e) {
+            $this->setResult(Result::from($e));
+            $view = $this->redirect('back');
+        }
+        return $view;
+    }
+
+    public function update(UpdateUserRequest $request): LaravelApplication|Redirector|RedirectResponse|Application
     {
         try {
             $args = [
                 'id' => $request->route('id'),
                 'name' => $request->input('name'),
-                'acronym' => $request->input('acronym'),
+                'photo' => $request->file('photo'),
+                'email' => $request->input('email'),
+                'remove_photo' => (bool)$request->input('remove_photo'),
             ];
             $this->setRequest($request);
-            $this->setResult($this->updateLanguage->execute($args));
+            $this->setResult($this->updateUser->execute($args));
             $redirect = $this->redirect('index');
         } catch (Exception $e) {
             $this->setResult(Result::from($e));
@@ -125,7 +130,7 @@ class LanguageController extends Controller
         try {
             $id = $request->route('id');
             $this->setRequest($request);
-            $this->setResult($this->deleteLanguage->execute(['id' => $id]));
+            $this->setResult($this->deleteUser->execute(['id' => $id]));
             $redirect = $this->redirect('index');
         } catch (Exception $e) {
             $this->setResult(Result::from($e));

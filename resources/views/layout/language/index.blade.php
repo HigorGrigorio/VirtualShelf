@@ -27,34 +27,59 @@
                 </div>
             </form>
         </div>
-        <?php $make_icon = function ($item): string {
-            return '<img src="' . $item->icon . '" alt="icon" style="width: 35px; object-fit: cover;">';
-        } ?>
         @if(isset($pagination))
-            <x-table :pagination=" $pagination" :columns="[
-                'id' => '#',
-                'acronym' => 'Acronym',
-                'name' => 'Name',
-                'actions' => [
-                    'label' => 'Actions',
-                    'edit' => [
-                        'route' => 'tables.language.edit',
-                        'params' => ['id' => 'id']
-                    ],
-                    'delete' => [
-                        'route' => 'tables.language.destroy',
-                        'params' => ['id' => 'id']
-                    ],
-                    'show' => [
-                        'route' => 'tables.language.show',
-                        'params' => ['id' => 'id']
-                    ],
-                ]
-            ]"/>
-        @else
-            <div class="alert alert-danger">
-                There is no data to show
+            <x-modal-delete/>
+            <div class="d-block scrollable-y table-bordered" style="height: calc(100vh - 220px)">
+                <table class="table align-middle mb-0 bg-white">
+                    <thead style="  position: sticky;
+                                 background: var(--bs-gray-200);
+                                 top: 0;
+                                 z-index: 100;">
+                    <tr class="text-dark">
+                        <th scope="col">#</th>
+                        <th scope="col">Acronym</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($pagination as $row)
+                        <tr>
+                            <th scope="row">{{ $row->id }}</th>
+                            <th>{{ $row->acronym }}</th>
+                            <th>{{ $row->name }}</th>
+                            <td>
+                                <a href="{{ route('tables.language.edit', ['id' => $row->id]) }}"
+                                   role="button"
+                                   class="btn btn-link btn-rounded btn-sm fw-bold"
+                                   data-mdb-ripple-color="dark">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <button
+                                    data-href="{{ route('tables.language.destroy', ['id' => $row->id]) }}"
+                                    data-mdb-toggle="modal"
+                                    data-mdb-target="#confirm-modal"
+                                    class="btn btn-link btn-rounded btn-sm fw-bold">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                                <a href="{{ route('tables.language.show', ['id' => $row->id]) }}"
+                                   role="button"
+                                   class="btn btn-link btn-rounded btn-sm fw-bold"
+                                   data-mdb-ripple-color="dark">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
+            <div class="mt-1">
+                {{ $pagination->links() }}
+            </div>
+        @else
+            <h3>There is no data to show</h3>
         @endif
     </div>
 </x-app>

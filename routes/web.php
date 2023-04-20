@@ -94,4 +94,21 @@ Route::prefix('/tables')->group(function () {
 
         Route::get('/delete/{id}', [CategoryController::class, 'destroy'])->name('tables.category.destroy');
     });
+
+    /**
+     * User
+     */
+    Route::get('/users', [UserController::class, 'index'])->name('tables.user.index');
+
+    Route::prefix('user')->group(function () {
+        Route::get('/store', [UserController::class, 'create'])->name('tables.user.create');
+        Route::post('/', [UserController::class, 'store'])->name('tables.user.store');
+
+        Route::get('/show/{id}', [UserController::class, 'show'])->name('tables.user.show');
+
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('tables.user.edit');
+        Route::post('/update/{id}', [UserController::class, 'update'])->name('tables.user.update');
+
+        Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('tables.user.destroy');
+    });
 });

@@ -11,14 +11,10 @@
                 {{$help}}
             </span>
         @endif
-    @endif
-
-    @if($errors->has($name))
-        @foreach($errors->get($name) as $message)
-            <span class="form-helper" style="color: var(--mdb-danger)">
-            {{$message}}
+    @else
+        <span class="form-helper" style="color: var(--mdb-danger);">
+            {{ $errors->get($name)[0]}}
         </span>
-        @endforeach
     @endif
 </div>
 
