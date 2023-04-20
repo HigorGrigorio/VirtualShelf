@@ -5,7 +5,8 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
-use App\Interfaces\IRepository;
+use App\Presentation\Interfaces\IRepository;
+use App\Presentation\Traits\HasBuilder;
 use Exception;
 
 class UpdateRecord implements IUseCase
@@ -48,5 +49,10 @@ class UpdateRecord implements IUseCase
         }
 
         return $result;
+    }
+
+    public static function create(IRepository $repository): UpdateRecord
+    {
+        return new self($repository);
     }
 }

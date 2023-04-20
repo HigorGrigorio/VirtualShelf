@@ -3,11 +3,9 @@
 namespace App\Domain\UseCases\User;
 
 use App\Core\Domain\IUseCase;
-use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
-use App\Domain\UseCases\Base\CreateRecord;
 use App\Domain\UseCases\Base\UpdateRecord;
-use App\Interfaces\IUserRepository;
+use App\Presentation\Interfaces\IUserRepository;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -46,8 +44,7 @@ class UpdateUser implements IUseCase
                 $data['photo'] = str_replace('public', 'storage', $data['photo']->storeAs('public/profile/images', $filename));
             }
 
-            // TODO: replace this with builder pattern
-            $result = (new UpdateRecord($this->repository))->execute($data);
+            $result = UpdateRecord::create($this->repository)->execute($data);
         } catch (Exception $e) {
             $result = Result::from($e);
         }

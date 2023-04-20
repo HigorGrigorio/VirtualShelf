@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Traits;
+namespace App\Presentation\Helpers\Traits;
 
 use Exception;
 

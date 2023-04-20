@@ -2,10 +2,8 @@
 
 namespace App\Domain\UseCases\Author;
 
-use App\Core\Logic\Maybe;
-use App\Core\Logic\Result;
 use App\Domain\UseCases\Base\UpdateRecord;
-use App\Interfaces\IAuthorRepository;
+use App\Presentation\Interfaces\IAuthorRepository;
 
 class UpdateAuthor extends UpdateRecord
 {

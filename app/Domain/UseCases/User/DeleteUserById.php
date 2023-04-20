@@ -3,10 +3,9 @@
 namespace App\Domain\UseCases\User;
 
 use App\Core\Domain\IUseCase;
-use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\Base\DeleteRecord;
-use App\Interfaces\IUserRepository;
+use App\Presentation\Interfaces\IUserRepository;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,7 +34,7 @@ class DeleteUserById implements IUseCase
                 }
             }
 
-            $result = (new DeleteRecord($this->repository))->execute($data);
+            $result = DeleteRecord::create($this->repository)->execute($data);
         } catch (Exception $e) {
             $result = Result::from($e);
         }

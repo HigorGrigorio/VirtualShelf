@@ -2,10 +2,8 @@
 
 namespace App\Domain\UseCases\Category;
 
-use App\Core\Logic\Maybe;
-use App\Core\Logic\Result;
 use App\Domain\UseCases\Base\CreateRecord;
-use App\Interfaces\ICategoryRepository;
+use App\Presentation\Interfaces\ICategoryRepository;
 
 class CreateCategory extends CreateRecord
 {

@@ -5,8 +5,7 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
-use App\Interfaces\IRepository;
-use Illuminate\Database\QueryException;
+use App\Presentation\Interfaces\IRepository;
 use Illuminate\Support\Facades\Config;
 use Throwable;
 

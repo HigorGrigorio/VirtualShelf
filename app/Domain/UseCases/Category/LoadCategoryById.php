@@ -2,11 +2,8 @@
 
 namespace App\Domain\UseCases\Category;
 
-use App\Core\Domain\IUseCase;
-use App\Core\Logic\Maybe;
-use App\Core\Logic\Result;
 use App\Domain\UseCases\Base\LoadRecordById;
-use App\Interfaces\ICategoryRepository;
+use App\Presentation\Interfaces\ICategoryRepository;
 
 class LoadCategoryById extends LoadRecordById
 {

@@ -5,7 +5,7 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
-use App\Interfaces\IRepository;
+use App\Presentation\Interfaces\IRepository;
 use Throwable;
 
 class CreateRecord implements IUseCase
@@ -26,5 +26,10 @@ class CreateRecord implements IUseCase
         }
 
         return $result;
+    }
+
+    public static function create(IRepository $repository): CreateRecord
+    {
+        return new CreateRecord($repository);
     }
 }

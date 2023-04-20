@@ -5,7 +5,7 @@ namespace App\Domain\UseCases\Author;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\Base\LoadRecords;
-use App\Interfaces\IAuthorRepository;
+use App\Presentation\Interfaces\IAuthorRepository;
 use Illuminate\Support\Facades\Config;
 
 class LoadAuthors extends LoadRecords

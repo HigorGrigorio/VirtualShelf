@@ -2,13 +2,8 @@
 
 namespace App\Domain\UseCases\User;
 
-use App\Core\Domain\IUseCase;
-use App\Core\Logic\Maybe;
-use App\Core\Logic\Result;
 use App\Domain\UseCases\Base\LoadRecords;
-use App\Interfaces\IAuthorRepository;
-use App\Interfaces\IUserRepository;
-use Illuminate\Support\Facades\Config;
+use App\Presentation\Interfaces\IUserRepository;
 
 class LoadUsers extends LoadRecords
 {

@@ -2,11 +2,10 @@
 
 namespace App\Domain\UseCases\Country;
 
-use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\Base\LoadRecords;
-use App\Interfaces\ICountryRepository;
+use App\Presentation\Interfaces\ICountryRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Config;
 

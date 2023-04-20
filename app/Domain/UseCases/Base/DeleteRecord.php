@@ -5,7 +5,7 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
-use App\Interfaces\IRepository;
+use App\Presentation\Interfaces\IRepository;
 use Exception;
 use Throwable;
 
@@ -40,5 +40,10 @@ class DeleteRecord implements IUseCase
         }
 
         return $result;
+    }
+
+    public static function create(IRepository $repository): DeleteRecord
+    {
+        return new DeleteRecord($repository);
     }
 }
