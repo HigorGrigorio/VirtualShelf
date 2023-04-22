@@ -1,16 +1,15 @@
 <aside class="position-fixed h-100 p-2 inactive" id="side-nav">
     <div class="container-fluid h-100 rounded-3 p-0 primary-shadow">
-        <header class="bg-dark side-header"
-                style="">
+        <header class="bg-dark-ocean side-header">
             <div class="d-flex flex-column justify-content-center align-items-center px-0 position-relative">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                <img src="{{asset($user->photo??'images/default-photo.jpg')}}"
                      alt="Generic placeholder image" class="img-fluid img-thumbnail mt-3 mb-2 rounded-3"
                      style="width: 150px; z-index: 1">
-                <a href="#" class="btn text-dark profile-edit">
+                <a href="#" class="btn text-yellow profile-edit">
                     <i class="fas fa-pencil"></i>
                 </a>
-                <span class="fw-bold text-dark">John Newman </span>
-                <span class="fw-light">john@gmail.com</span>
+                <span class="fw-bold text-black">{{$user->name??''}}</span>
+                <span class="fw-light">{{$user->email??''}}</span>
             </div>
         </header>
         <ul class="pl-0 border-top border-1 links">
@@ -45,14 +44,14 @@
                     <span>Tables</span>
                     <i class="fas fa-angle-down rotate-icon"></i>
                 </span>
-                    <ul class="sub-links text-dark">
+                    <ul class="sub-links text-primary">
                         @foreach($tables as $item)
                             @if($table  && $table == $item['singular'])
                                 @continue
                             @endif
-                            <li>
+                            <li class="h-100">
                                 <a href="{{route($item['index'] ?? '#')}}"
-                                   class="sidenav-btn sidenav-link text-dark">
+                                   class="sidenav-btn sidenav-link text-black text-primary h-75">
                                     <span>{{$item['name']}}</span>
                                 </a>
                             </li>
@@ -62,7 +61,7 @@
             @endif
         </ul>
         <footer class="d-flex justify-content-center align-items-center sidebar-footer" style="height: max-content">
-            <span class="fw-light text-dark"> © <span
+            <span class="fw-light text-black"> © <span
                     class="fw-bold">{{date('Y')}}</span>, made by Higor Grigorio.</span>
         </footer>
     </div>

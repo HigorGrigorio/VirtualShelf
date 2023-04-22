@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\User;
 use App\Presentation\Helpers\DBHelper;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -15,6 +16,7 @@ class NavBar extends Component
      * Create a new component instance.
      */
     public function __construct(
+        public User $user,
         public array     $breadCrumb = [],
     )
     {

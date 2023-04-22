@@ -30,7 +30,7 @@
 
         <div class="d-flex align-items-center justify-content-between w-100">
             <div>
-                <p class="fw-light text-dark">
+                <p class="fw-light text-black">
                     <?php echo __('Showing'); ?>
 
                     <span class="fw-bold"><?php echo e($paginator->firstItem()); ?></span>
@@ -72,7 +72,7 @@
                             <?php $__currentLoopData = $element; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page => $url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <?php if($page == $paginator->currentPage()): ?>
                                     <li class="page-item" aria-current="page">
-                                        <span class="page-link bg-dark text-white"><?php echo e($page); ?></span></li>
+                                        <span class="page-link bg-dark-ocean text-white"><?php echo e($page); ?></span></li>
                                 <?php else: ?>
                                     <li class="page-item"><a class="page-link" href="<?php echo e($url); ?>"><?php echo e($page); ?></a></li>
                                 <?php endif; ?>

@@ -34,7 +34,7 @@
 <body>
 
 <?php if (isset($component)) { $__componentOriginaldac64de4d1d704f5435f354724334ae8 = $component; } ?>
-<?php $component = App\View\Components\SideNav::resolve(['tables' => $tables,'table' => $table] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component = App\View\Components\SideNav::resolve(['tables' => $tables,'table' => $table,'user' => Auth::user()] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('side-nav'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
@@ -59,7 +59,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(App\View\Components\NavBar::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes([]); ?>
+<?php $component->withAttributes(['user' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(Auth::user())]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__componentOriginalf59c6f96767458fe6aff06a16aa4d53a)): ?>
@@ -71,21 +71,6 @@
 
         </section>
     </div>
-    <?php if (isset($component)) { $__componentOriginal30d4a08879b1443dbdd8ff5d59aeb2c6 = $component; } ?>
-<?php $component = App\View\Components\AlertContainer::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
-<?php $component->withName('alert-container'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(App\View\Components\AlertContainer::class))->getConstructor()): ?>
-<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
-<?php endif; ?>
-<?php $component->withAttributes([]); ?>
-<?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal30d4a08879b1443dbdd8ff5d59aeb2c6)): ?>
-<?php $component = $__componentOriginal30d4a08879b1443dbdd8ff5d59aeb2c6; ?>
-<?php unset($__componentOriginal30d4a08879b1443dbdd8ff5d59aeb2c6); ?>
-<?php endif; ?>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

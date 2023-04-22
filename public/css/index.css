@@ -17,6 +17,55 @@ body {
     --bs-blue-smoke: #6F877C;
     --bs-blue-smoke-dark: #5C6F6A;
     --bs-heave-metal: #1C201D;
+    --bs-dark-ocean:#1795A8;
+    --bs-ocean-disabled: #1795A8;
+    --bs-ocean: #24afc1;
+    --bs-myellow: #fccf47;
+}
+
+.bs-ocean {
+    background-color: var(--bs-ocean) !important;
+}
+
+.bs-dark-ocean {
+    background-color: var(--bs-dark-ocean) !important;
+}
+
+.btn-ocean {
+    background-color: var(--bs-ocean) !important;
+    color: #fff !important;
+}
+
+.btn-ocean:hover {
+    background-color: var(--bs-dark-ocean) !important;
+    color: #fff !important;
+}
+
+.btn-ocean:focus {
+    background-color: var(--bs-dark-ocean) !important;
+    color: #fff !important;
+}
+
+.btn-ocean:active {
+    background-color: var(--bs-dark-ocean) !important;
+    color: #fff !important;
+}
+
+.btn-ocean:disabled {
+    background-color: var(--bs-ocean-disabled) !important;
+    color: #fff !important;
+}
+
+.text-ocean {
+    color: var(--bs-ocean) !important;
+}
+
+.text-dark-ocean {
+    color: var(--bs-dark-ocean) !important;
+}
+
+.bg-dark-ocean {
+    background-color: var(--bs-dark-ocean) !important;
 }
 
 .primary-shadow {

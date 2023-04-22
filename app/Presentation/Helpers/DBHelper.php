@@ -12,9 +12,12 @@ class DBHelper implements IDataBase
 
     public function getTables(): array
     {
-        return array_diff(
-            array_column(DB::select('SHOW TABLES'), 'Tables_in_' . env('DB_DATABASE')),
-            ['migrations', 'failed_jobs', 'password_reset_tokens', 'personal_access_tokens']
+        $all = array_column(DB::select('SHOW TABLES'), 'Tables_in_virtual_shelf');
+
+        // remove all native tables
+        return array_filter(array_diff(
+                $all,
+                ['migrations', 'failed_jobs', 'password_reset_tokens', 'personal_access_tokens'])
         );
     }
 

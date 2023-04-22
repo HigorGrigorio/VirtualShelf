@@ -33,16 +33,15 @@
 </head>
 <body>
 
-<x-side-nav :tables="$tables" :table="$table"/>
+<x-side-nav :tables="$tables" :table="$table" :user="Auth::user()"/>
 
 <main id="main-content" class="p-2 pb-0 inactive h-100">
     <div class="h-100">
-        <x-nav-bar/>
+        <x-nav-bar :user="Auth::user()"/>
         <section class="container-fluid content-wrapper mt-2 primary-shadow rounded-3 h-100">
             {{ $slot }}
         </section>
     </div>
-    <x-alert-container/>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

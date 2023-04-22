@@ -79,7 +79,7 @@ class Controller extends BaseController
 
     protected function getViewFolderPath(): string
     {
-        return 'layout.' . $this->getTableSingular();
+        return $this->getTableSingular();
     }
 
     protected function getViewPath(string $name): string
