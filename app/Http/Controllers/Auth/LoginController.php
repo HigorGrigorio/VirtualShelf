@@ -11,10 +11,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    use HasGuard;
+
     /**
      * Create a new controller instance.
      *
@@ -38,7 +39,6 @@ class LoginController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         $remember = $request->input('remember');
-        $guard = Auth::guard();
 
         if (!$email) {
             return redirect()->intended('login')->withErrors([
@@ -52,7 +52,7 @@ class LoginController extends Controller
             ]);
         }
 
-        if ($guard->attempt(['email' => $email, 'password' => $password], $remember)) {
+        if ($this->guard()->attempt(['email' => $email, 'password' => $password], $remember)) {
             if ($request->hasSession()) {
                 $request->session()->put('auth.password_confirmed_at', time());
             }
@@ -69,7 +69,7 @@ class LoginController extends Controller
 
     public function logout(Request $request): RedirectResponse|JsonResponse|Response|Redirector
     {
-        Auth::guard()->logout();
+        $this->guard()->logout();
 
         $request->session()->invalidate();
 
