@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Support\Facades\Password;
 
-trait HasBroker
+trait HasBrokerMethods
 {
     /**
      * Get the broker to be used during password reset.
