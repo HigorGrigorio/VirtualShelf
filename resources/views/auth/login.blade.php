@@ -54,7 +54,7 @@
                                     <label class="form-check-label text-black" for="remember">Remember
                                         password</label>
                                 </div>
-                                <a href="#!">Forgot password?</a>
+                                <a href="{{route('password.reset')}}">Forgot password?</a>
                             </div>
                             <button class="btn btn-ocean btn-lg btn-block" type="submit">Login</button>
                             <hr class="my-4">
