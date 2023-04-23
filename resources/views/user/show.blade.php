@@ -10,7 +10,7 @@
                         <h2 class="pb-3">Viewing a User</h2>
                         <h6>Profile image</h6>
                         <div class="mt-3 mb-4 text-center w-100">
-                            <img src="{{ url($record['photo'] ?? 'images/default-photo.jpg') }}" class="img-fluid" style="width: 100px;">
+                            <img src="{{ url($record['photo'] ?? 'images/default-photo.jpg') }}" class="img-fluid" style="width: 100px;" alt="User Photo">
                         </div>
                         <h6>Information</h6>
                         <hr class="mt-0 mb-4">

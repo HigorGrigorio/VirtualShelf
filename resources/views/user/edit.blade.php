@@ -31,7 +31,9 @@
                     <div class="col-lg-8">
                         <div class="card mb-4 h-100">
                             <div class="card-body h-100">
-                                <input type="checkbox" name="remove_photo" style="display: none">
+                                <label>
+                                    <input type="checkbox" name="remove_photo" style="display: none">
+                                </label>
 
                                 <x-input type="text"
                                          id="name"
