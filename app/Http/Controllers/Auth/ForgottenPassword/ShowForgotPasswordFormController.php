@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth\ForgotPassword;
+namespace App\Http\Controllers\Auth\ForgottenPassword;
 
 use App\Core\Infra\IController;
 use App\Http\Controllers\Controller;

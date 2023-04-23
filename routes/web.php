@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Auth\ForgotPassword\ForgotPasswordController;
-use App\Http\Controllers\Auth\ForgotPassword\ShowForgotPasswordFormController;
+use App\Http\Controllers\Auth\ForgottenPassword\ForgotPasswordController;
+use App\Http\Controllers\Auth\ForgottenPassword\ShowForgotPasswordFormController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
