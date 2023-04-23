@@ -1,4 +1,6 @@
-<x-app :tables="$tables" :table="$table">
+@extends('layouts.app')
+
+@section('content')
     <x-modal-delete></x-modal-delete>
     <div class="row d-flex justify-content-center h-100 w-100 align-items-center ">
         <div class="col col-lg-7 mb-4 mb-lg-0">
@@ -49,4 +51,4 @@
             </div>
         </div>
     </div>
-</x-app>
+@endsection

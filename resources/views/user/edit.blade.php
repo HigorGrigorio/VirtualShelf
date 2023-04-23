@@ -1,4 +1,6 @@
-<x-app :tables="$tables" :table="$singular">
+@extends('layouts.app')
+
+@section('content')
     <div class="pt-lg-5 d-flex align-items-center">
         <div class="container-sm d-flex flex-column">
             <div>
@@ -16,7 +18,8 @@
                                     src="{{ isset($record) ? asset($record['photo'] ?? 'images/default-photo.jpg') : asset( 'images/default-photo.jpg') }}"
                                     id="avatar"
                                     alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                                <button id="remove" type="button" class="btn btn-outline-danger ms-1">Remove</button>
+                                <button id="remove" type="button" class="btn btn-outline-danger ms-1">Remove
+                                </button>
                                 <div class="d-flex flex-column justify-content-center mt-5 w-75">
                                     <label class="form-label file-label" for="input-file">Edit a user profile
                                         image</label>
@@ -28,7 +31,7 @@
                     <div class="col-lg-8">
                         <div class="card mb-4 h-100">
                             <div class="card-body h-100">
-                                <input type="checkbox" name="remove_photo"   style="display: none">
+                                <input type="checkbox" name="remove_photo" style="display: none">
 
                                 <x-input type="text"
                                          id="name"
@@ -79,6 +82,6 @@
             })
         </script>
     @endpush
-</x-app>
+@endsection
 
 

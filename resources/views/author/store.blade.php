@@ -1,4 +1,6 @@
-<x-app :table="$table" :tables="$tables">
+@extends('layouts.app')
+
+@section('content')
     <div class="pt-lg-5 d-flex align-items-center">
         <div class="container-sm d-flex flex-column w-75">
             <div>
@@ -19,4 +21,4 @@
             </form>
         </div>
     </div>
-</x-app>
+@endsection

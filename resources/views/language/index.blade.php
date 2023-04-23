@@ -1,4 +1,6 @@
-<x-app :table="$table" :tables="$tables">
+@extends('layouts.app')
+
+@section('content')
     <div class="container px-0">
         <div class="pt-4 pb-3 container-fluid d-flex flex-row justify-content-between px-0">
             <div>
@@ -82,4 +84,4 @@
             <h3>There is no data to show</h3>
         @endif
     </div>
-</x-app>
+@endsection

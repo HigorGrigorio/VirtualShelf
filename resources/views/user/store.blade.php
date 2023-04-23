@@ -1,4 +1,6 @@
-<x-app :tables="$tables" :table="$singular">
+@extends('layouts.app')
+
+@section('content')
     <div class="pt-lg-5 d-flex align-items-center">
         <div class="container-sm d-flex flex-column">
             <div>
@@ -83,6 +85,6 @@
             })
         </script>
     @endpush
-</x-app>
+@endsection
 
 

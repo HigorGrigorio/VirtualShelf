@@ -15,7 +15,7 @@ class SideNav extends Component
     public function __construct(
         public string $table,
         public array  $tables,
-        public User  $user,
+        public User|null  $user,
     )
     {
     }
