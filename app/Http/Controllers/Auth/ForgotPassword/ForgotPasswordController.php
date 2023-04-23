@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\ForgotPassword;
 
+use App\Http\Controllers\Auth\HasBrokerMethods;
+use App\Http\Controllers\Auth\HasGuardMethods;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -13,11 +15,6 @@ use Illuminate\Validation\ValidationException;
 class ForgotPasswordController extends Controller
 {
     use HasGuardMethods, HasBrokerMethods;
-
-    public function showLinkRequestForm(): \Illuminate\Contracts\View\View
-    {
-        return View::make('auth.passwords.email');
-    }
 
     protected function credentials(Request $request): array
     {
