@@ -12,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 
 class ForgotPasswordController extends Controller
 {
-    use HasGuard, HasBroker;
+    use HasGuardMethods, HasBroker;
 
     public function showLinkRequestForm(): \Illuminate\Contracts\View\View
     {

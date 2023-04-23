@@ -14,7 +14,7 @@ use Illuminate\Routing\Redirector;
 
 class LoginController extends Controller
 {
-    use HasGuard;
+    use HasGuardMethods;
 
     /**
      * Create a new controller instance.
