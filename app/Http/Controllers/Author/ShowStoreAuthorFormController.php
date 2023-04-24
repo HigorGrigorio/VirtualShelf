@@ -24,9 +24,7 @@ class ShowStoreAuthorFormController extends Controller implements IController
     {
         try {
             $return = view('author.store')->with(
-                array_merge(
-                    $this->getRecordArgs(),
-                )
+                $this->getRecordArgs(),
             );
         } catch (Exception) {
             abort(404);
