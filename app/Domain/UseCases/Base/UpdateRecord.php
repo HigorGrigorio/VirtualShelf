@@ -37,7 +37,7 @@ class UpdateRecord extends UseCase
                     );
                 else
                     $result = Result::accept(
-                        Maybe::just(
+                        Maybe::flat(
                             $this->getRepository()->getById($id)
                         ),
                         'Record updated successfully'
