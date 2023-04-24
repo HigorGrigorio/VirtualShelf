@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Auth\ForgotPassword;
+namespace App\Http\Controllers\Auth\ForgottenPassword;
 
+use App\Core\Infra\IController;
 use App\Http\Controllers\Auth\HasBrokerMethods;
 use App\Http\Controllers\Auth\HasGuardMethods;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\View;
 use Illuminate\Validation\ValidationException;
 
-class ForgotPasswordController extends Controller
+class SendResetPasswordLinkEmailController extends Controller implements IController
 {
     use HasGuardMethods, HasBrokerMethods;
 
@@ -21,9 +22,11 @@ class ForgotPasswordController extends Controller
         return $request->only('email');
     }
 
-    protected function validateEmail(Request $request): void
+    protected function rules(): array
     {
-        $request->validate(['email' => 'required|email']);
+        return [
+            'email' => 'required|email',
+        ];
     }
 
     /**
@@ -52,9 +55,9 @@ class ForgotPasswordController extends Controller
     /**
      * @throws ValidationException
      */
-    public function sendResetLinkEmail(Request $request): RedirectResponse
+    public function handle(Request $request): RedirectResponse
     {
-        $this->validateEmail($request);
+        $this->validate($request, $this->rules());
 
         $response = $this->broker()->sendResetLink(
             $this->credentials($request)

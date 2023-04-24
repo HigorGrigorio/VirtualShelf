@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\ForgottenPassword\ForgotPasswordController;
+use App\Http\Controllers\Auth\ForgottenPassword\SendResetPasswordLinkEmailController;
 use App\Http\Controllers\Auth\ForgottenPassword\ShowForgotPasswordFormController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthorController;
@@ -26,7 +26,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/password/reset', [ShowForgotPasswordFormController::class, 'handle'])->name('password.reset');
-Route::post('/password/reset', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::post('/password/reset', [SendResetPasswordLinkEmailController::class, 'handle'])->name('password.email');
 /**
  * Tables routes
  */
