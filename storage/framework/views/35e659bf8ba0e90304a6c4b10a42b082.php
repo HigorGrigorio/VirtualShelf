@@ -68,7 +68,7 @@ unset($__errorArgs, $__bag); ?>"/>
                                     <label class="form-check-label text-black" for="remember">Remember
                                         password</label>
                                 </div>
-                                <a href="#!">Forgot password?</a>
+                                <a href="<?php echo e(route('password.request')); ?>">Forgot password?</a>
                             </div>
                             <button class="btn btn-ocean btn-lg btn-block" type="submit">Login</button>
                             <hr class="my-4">

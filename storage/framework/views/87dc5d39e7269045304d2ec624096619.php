@@ -1,12 +1,4 @@
-<?php if (isset($component)) { $__componentOriginal165f8e34452936f6da18fceb86497519 = $component; } ?>
-<?php $component = App\View\Components\App::resolve(['table' => $table,'tables' => $tables] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
-<?php $component->withName('app'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(App\View\Components\App::class))->getConstructor()): ?>
-<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
-<?php endif; ?>
-<?php $component->withAttributes([]); ?>
+<?php $__env->startSection('content'); ?>
     <div class="container px-0">
         <div class="pt-4 pb-3 container-fluid d-flex flex-row justify-content-between px-0">
             <div>
@@ -113,10 +105,6 @@
             <h3>There is no data to show</h3>
         <?php endif; ?>
     </div>
- <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal165f8e34452936f6da18fceb86497519)): ?>
-<?php $component = $__componentOriginal165f8e34452936f6da18fceb86497519; ?>
-<?php unset($__componentOriginal165f8e34452936f6da18fceb86497519); ?>
-<?php endif; ?>
-<?php /**PATH C:\Users\higor\PhpstormProjects\VirtualShelf\resources\views/user/index.blade.php ENDPATH**/ ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\higor\PhpstormProjects\VirtualShelf\resources\views/user/index.blade.php ENDPATH**/ ?>
