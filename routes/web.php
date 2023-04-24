@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\ForgottenPassword\SendResetPasswordLinkEmailController;
 use App\Http\Controllers\Auth\ForgottenPassword\ShowForgotPasswordFormController;
+use App\Http\Controllers\Auth\Login\LogoutController;
+use App\Http\Controllers\Auth\Login\ShowLoginFormController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
@@ -21,9 +23,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.show');
+Route::get('/login', [ShowLoginFormController::class, 'showLoginForm'])->name('login.show');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('/logout', [LogoutController::class, 'handle'])->name('logout');
 
 Route::get('/password/reset', [ShowForgotPasswordFormController::class, 'handle'])->name('password.reset');
 Route::post('/password/reset', [SendResetPasswordLinkEmailController::class, 'handle'])->name('password.email');
