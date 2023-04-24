@@ -9,5 +9,5 @@ use App\Core\Logic\Result;
  */
 interface IUseCase
 {
-    public function execute($data): Result;
+    public function execute(): Result;
 }
