@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -65,16 +62,5 @@ class LoginController extends Controller
         return redirect()->intended('login')->withErrors([
             'email' => 'Email or password is incorrect'
         ]);
-    }
-
-    public function logout(Request $request): RedirectResponse|JsonResponse|Response|Redirector
-    {
-        $this->guard()->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect()->intended('login');
     }
 }
