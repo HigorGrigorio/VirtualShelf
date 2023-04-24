@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Auth\Login;
 
 use App\Core\Infra\IController;
+use App\Http\Controllers\Auth\HasGuardMethods;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller implements IController
 {
+    use HasGuardMethods;
+
     /**
      * Create a new controller instance.
      *

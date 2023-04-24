@@ -8,7 +8,7 @@ use App\Presentation\Interfaces\ICategoryRepository;
 class DeleteCategoryById extends DeleteRecord
 {
     public function __construct(
-        readonly ICategoryRepository $repository
+        ICategoryRepository $repository
     )
     {
         parent::__construct($repository);

@@ -8,9 +8,9 @@ use App\Presentation\Interfaces\ICategoryRepository;
 class CreateCategory extends CreateRecord
 {
     public function __construct(
-        readonly ICategoryRepository $repository
+        ICategoryRepository $repository
     )
     {
-        parent::__construct($this->repository);
+        parent::__construct($repository);
     }
 }

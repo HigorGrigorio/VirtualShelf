@@ -5,21 +5,24 @@ namespace App\Domain\UseCases\User;
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\Base\CreateRecord;
+use App\Domain\UseCases\UseCase;
 use App\Presentation\Interfaces\IUserRepository;
 use Exception;
 use Illuminate\Support\Str;
 
-class CreateUser implements IUseCase
+class CreateUser extends UseCase
 {
     public function __construct(
-        public readonly IUserRepository $repository
+        IUserRepository $repository
     )
     {
+        parent::__construct($repository);
     }
 
-    public function execute($data): Result
+    public function execute(): Result
     {
         try {
+            $data = $this->getArgs();
             $data['password'] = bcrypt($data['password']);
 
             // store user photo
@@ -28,7 +31,7 @@ class CreateUser implements IUseCase
                 $data['photo'] = str_replace('public', 'storage', $data['photo']->storeAs('public/profile/images', $filename));
             }
 
-            $result = CreateRecord::create($this->repository)->execute($data);
+            $result = CreateRecord::create($this->getRepository())->execute($data);
         } catch (Exception $e) {
             $result = Result::from($e);
         }

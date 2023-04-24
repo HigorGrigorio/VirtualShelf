@@ -5,27 +5,30 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
+use App\Domain\UseCases\UseCase;
 use App\Presentation\Interfaces\IRepository;
 use Exception;
 use Throwable;
 
-class DeleteRecord implements IUseCase
+class DeleteRecord extends UseCase
 {
     public function __construct(
-        private readonly IRepository $repository
+        IRepository $repository
     )
     {
+        parent::__construct($repository);
     }
 
-    public function execute($data): Result
+    public function execute(): Result
     {
         try {
-            if(!isset($data['id'])) {
+            if($this->getArg('id') === null) {
                 throw new Exception('Id is required');
             }
 
-            $id = $data['id'];
-            if ($this->repository->delete(['id' => $id]) === 0)
+            $id = $this->getArg('id');
+
+            if ($this->getRepository()->delete(['id' => $id]) === 0)
                 $result = Result::reject(
                     Maybe::nothing(),
                     'Record not found'
@@ -35,7 +38,7 @@ class DeleteRecord implements IUseCase
                     Maybe::just(1),
                     'Record deleted successfully'
                 );
-        } catch (Throwable $e) {
+        } catch (Exception $e) {
             $result = Result::from($e);
         }
 

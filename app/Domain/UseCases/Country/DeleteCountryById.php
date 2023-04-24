@@ -8,9 +8,9 @@ use App\Presentation\Interfaces\ICountryRepository;
 class DeleteCountryById extends DeleteRecord
 {
     public function __construct(
-        readonly ICountryRepository $repository,
+        ICountryRepository $repository,
     )
     {
-        parent::__construct($this->repository);
+        parent::__construct($repository);
     }
 }

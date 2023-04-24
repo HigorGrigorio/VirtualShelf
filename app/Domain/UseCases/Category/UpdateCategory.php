@@ -9,9 +9,9 @@ class UpdateCategory extends UpdateRecord
 {
 
     public function __construct(
-        private readonly ICategoryRepository $repository
+        ICategoryRepository $repository
     )
     {
-        parent::__construct($this->repository);
+        parent::__construct($repository);
     }
 }

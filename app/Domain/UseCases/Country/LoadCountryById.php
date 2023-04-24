@@ -8,7 +8,7 @@ use App\Presentation\Interfaces\ICountryRepository;
 class LoadCountryById extends LoadRecordById
 {
     public function __construct(
-        readonly ICountryRepository $repository
+        ICountryRepository $repository
     )
     {
         parent::__construct($repository);

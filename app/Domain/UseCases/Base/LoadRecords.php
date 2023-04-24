@@ -2,24 +2,27 @@
 
 namespace App\Domain\UseCases\Base;
 
-use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
+use App\Domain\UseCases\UseCase;
 use App\Presentation\Interfaces\IRepository;
 use Illuminate\Support\Facades\Config;
 use Throwable;
 
-class LoadRecords implements IUseCase
+class LoadRecords extends UseCase
 {
     public function __construct(
-        private readonly IRepository $repository
+        IRepository $repository
     )
     {
+        parent::__construct($repository);
     }
 
-    public function execute($data): Result
+    public function execute(): Result
     {
         try {
+            $data = $this->getArgs();
+
             if (!isset($data['page'])) {
                 $data['page'] = Config::get('app.pagination.default_index_page');
             }
@@ -33,7 +36,7 @@ class LoadRecords implements IUseCase
             }
 
             $pagination = Maybe::flat(
-                $this->repository->paginate(
+                $this->getRepository()->paginate(
                     $data['page'],
                     $data['search'],
                     $data['limit']

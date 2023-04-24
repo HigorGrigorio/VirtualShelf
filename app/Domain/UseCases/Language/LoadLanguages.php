@@ -8,7 +8,7 @@ use App\Presentation\Interfaces\ILanguageRepository;
 class LoadLanguages extends LoadRecords
 {
     public function __construct(
-        readonly ILanguageRepository $repository
+        ILanguageRepository $repository
     )
     {
         parent::__construct($repository);

@@ -8,9 +8,9 @@ use App\Presentation\Interfaces\IAuthorRepository;
 class DeleteAuthorById extends DeleteRecord
 {
     public function __construct(
-        readonly IAuthorRepository $repository,
+        IAuthorRepository $repository,
     )
     {
-        parent::__construct($this->repository);
+        parent::__construct($repository);
     }
 }

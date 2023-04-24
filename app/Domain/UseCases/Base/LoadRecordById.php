@@ -5,27 +5,29 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
+use App\Domain\UseCases\UseCase;
 use App\Presentation\Interfaces\IRepository;
 use Exception;
 
-class LoadRecordById implements IUseCase
+class LoadRecordById extends UseCase
 {
     public function __construct(
-        private readonly IRepository $repository
+       IRepository $repository
     )
     {
+        parent::__construct($repository);
     }
 
-    public function execute($data): Result
+    public function execute(): Result
     {
         try {
-            if (!isset($data['id'])) {
+            if ($this->getArg('id') === null) {
                 throw new Exception('Id is required');
             }
 
-            $id = $data['id'];
+            $id = $this->getArg('id');
 
-            $maybe = $this->repository->getById($id);
+            $maybe = $this->getRepository()->getById($id);
 
             if ($maybe->isNothing())
                 $result = Result::reject(Maybe::nothing(), "Record with '$id' not found");

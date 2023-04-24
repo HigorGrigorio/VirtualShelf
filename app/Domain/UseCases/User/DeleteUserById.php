@@ -2,39 +2,48 @@
 
 namespace App\Domain\UseCases\User;
 
-use App\Core\Domain\IUseCase;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\Base\DeleteRecord;
+use App\Domain\UseCases\UseCase;
 use App\Presentation\Interfaces\IUserRepository;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 
-class DeleteUserById implements IUseCase
+class DeleteUserById extends UseCase
 {
     public function __construct(
-        readonly IUserRepository $repository
+        IUserRepository $repository
     )
     {
+        parent::__construct($repository);
     }
 
-    public function execute($data): Result
+    public function execute(): Result
     {
         try {
-            $user = $this->repository->getById($data['id']);
+            $id = $this->getArg('id');
 
-            if($user->isNothing()) {
+            if ($id === null) {
+                throw new Exception('Id is required');
+            }
+
+            $user = $this->getRepository()->getById($id);
+
+            if ($user->isNothing()) {
                 throw new Exception('User not found');
             }
 
             // delete user photo if exists
             if ($photo = $user->get()->photo) {
                 $path = str_replace('storage', 'public', $photo);
-                if(Storage::exists($path)) {
+                if (Storage::exists($path)) {
                     Storage::delete($path);
                 }
             }
 
-            $result = DeleteRecord::create($this->repository)->execute($data);
+            $result = DeleteRecord::create($this->getRepository())
+                ->setArgs(['id' => $id])
+                ->execute();
         } catch (Exception $e) {
             $result = Result::from($e);
         }

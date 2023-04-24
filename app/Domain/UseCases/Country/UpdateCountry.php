@@ -8,9 +8,9 @@ use App\Presentation\Interfaces\ICountryRepository;
 class UpdateCountry extends UpdateRecord
 {
     public function __construct(
-        readonly ICountryRepository $repository,
+        ICountryRepository $repository,
     )
     {
-        parent::__construct($this->repository);
+        parent::__construct($repository);
     }
 }
