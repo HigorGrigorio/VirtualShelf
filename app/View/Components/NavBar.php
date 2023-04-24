@@ -16,7 +16,7 @@ class NavBar extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public User $user,
+        public User|null $user,
         public array     $breadCrumb = [],
     )
     {
