@@ -44,15 +44,15 @@ class LoadAuthorsController extends Controller implements IController
             } else {
                 $pagination = $result->get();
                 $return = view('author.index', compact('pagination'))->with(
-                    array_merge(
-                        ['success' => $result->getMessage()],
+                    $this->getParams(
+                        $request,
                         $this->getRecordArgs(),
                         $args
-                    )
+                    ),
                 );
             }
         } catch (Exception $e) {
-            $return = back()->withErrors([
+            $return = back()->with([
                 'danger' => $e->getMessage()
             ]);
         }

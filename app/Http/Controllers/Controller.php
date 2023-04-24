@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Core\Logic\Result;
 use App\Core\Logic\ResultStatus;
-use App\Presentation\Helpers\DBHelper;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -12,19 +11,32 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
 
-    public function getParams(array...$params): array
+    public function getParams(Request $request, array...$params): array
     {
+        $alerts = [];
+
+        if($request->session()->has('success'))
+            $alerts['success'] = $request->session()->get('success');
+
+        if($request->session()->has('danger'))
+            $alerts['danger'] = $request->session()->get('danger');
+
+        if($request->session()->has('warning'))
+            $alerts['warning'] = $request->session()->get('warning');
+
+        if($request->session()->has('inform'))
+            $alerts['inform'] = $request->session()->get('inform');
+
         return array_merge(
+            $alerts,
             ...$params
         );
     }
