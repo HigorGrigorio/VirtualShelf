@@ -77,9 +77,4 @@ class LoginController extends Controller
 
         return redirect()->intended('login');
     }
-
-    public function showLoginForm(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
-    {
-        return view('auth.login');
-    }
 }
