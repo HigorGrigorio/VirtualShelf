@@ -21,10 +21,13 @@ class LoadAuthorsController extends Controller implements IController
     {
     }
 
+    public function getTable(): string
+    {
+        return 'author';
+    }
+
     /**
      * @inheritDoc
-     *
-     * @throws ValidationException
      */
     public function handle(Request $request)
     {

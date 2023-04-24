@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\Login\LoginController;
 use App\Http\Controllers\Auth\Login\LogoutController;
 use App\Http\Controllers\Auth\Login\ShowLoginFormController;
 use App\Http\Controllers\Author\LoadAuthorsController;
+use App\Http\Controllers\Author\ShowStoreAuthorFormController;
+use App\Http\Controllers\Author\StoreAuthorController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CountryController;
@@ -60,8 +62,8 @@ Route::prefix('/tables')->group(function () {
     Route::get('/authors', [LoadAuthorsController::class, 'handle'])->name('tables.author.index');
 
     Route::prefix('author')->group(function () {
-        Route::get('/store', [AuthorController::class, 'create'])->name('tables.author.create');
-        Route::post('/', [AuthorController::class, 'store'])->name('tables.author.store');
+        Route::get('/create', [ShowStoreAuthorFormController::class, 'handle'])->name('tables.author.create');
+        Route::post('/', [StoreAuthorController::class, 'handle'])->name('tables.author.store');
 
         Route::get('/show/{id}', [AuthorController::class, 'show'])->name('tables.author.show');
 
