@@ -21,103 +21,6 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    private Request $request;
-
-    private Result $result;
-
-    public function setRequest(Request $request): void
-    {
-        $this->request = $request;
-    }
-
-    public function getRequest(): ?Request
-    {
-        return $this->request;
-    }
-
-    public function setResult(Result $result): void
-    {
-        $this->result = $result;
-    }
-
-
-    public function getResult(): Result|null
-    {
-        return $this->result;
-    }
-
-    public function getTable(): string
-    {
-        return $this->table ?? '';
-    }
-
-    protected function getTablePlural(): string
-    {
-        return Str::plural($this->getTable());
-    }
-
-    public function getColumns(): array
-    {
-        return $this->columns ?? [];
-    }
-
-    protected
-    function getTableSingular(): string
-    {
-        return Str::singular($this->getTable());
-    }
-
-    protected function getRouteName(): string
-    {
-        return 'tables.' . $this->getTableSingular();
-    }
-
-    protected function getRoute(string $name): string
-    {
-        return $this->getRouteName() . '.' . $name;
-    }
-
-    protected function getViewFolderPath(): string
-    {
-        return $this->getTableSingular();
-    }
-
-    protected function getViewPath(string $name): string
-    {
-        return $this->getViewFolderPath() . '.' . $name;
-    }
-
-    protected function getPaginationParams(): array
-    {
-        return array_merge(
-            [
-                'search' => '',
-                'page' => Config::get('app.pagination.default_index_page'),
-                'limit' => Config::get('app.pagination.limit'),
-                'limits' => Config::get('app.pagination.limits'),
-            ],
-            $this->getRequest()->all(['page', 'limit', 'search']),
-        );
-    }
-
-    public function getRecordParams(): array
-    {
-        return [
-            'tables' => array_map(
-                fn($table) => [
-                    'name' => $table,
-                    'singular' => Str::singular($table),
-                    'plural' => Str::plural($table),
-                    'index' => 'tables.' . Str::singular($table) . '.index',
-                ],
-                DBHelper::getInstance()->getTables(),
-            ),
-            'table' => $this->getTable(),
-            'singular' => $this->getTableSingular(),
-            'plural' => $this->getTablePlural(),
-            'index' => 'tables.' . $this->getTableSingular() . '.index',
-        ];
-    }
 
     public function getParams(array...$params): array
     {
@@ -197,7 +100,7 @@ class Controller extends BaseController
         }
 
         if (!isset($path))
-            $path = 'layout.' . '404';
+            $path = 'layouts.' . '404';
 
 
         $args = $this->getRecordParams();

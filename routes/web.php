@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ForgottenPassword\ShowForgotPasswordFormController
 use App\Http\Controllers\Auth\Login\LoginController;
 use App\Http\Controllers\Auth\Login\LogoutController;
 use App\Http\Controllers\Auth\Login\ShowLoginFormController;
+use App\Http\Controllers\Author\LoadAuthorsController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CountryController;
@@ -56,7 +57,7 @@ Route::prefix('/tables')->group(function () {
     /**
      * Author
      */
-    Route::get('/authors', [AuthorController::class, 'index'])->name('tables.author.index');
+    Route::get('/authors', [LoadAuthorsController::class, 'handle'])->name('tables.author.index');
 
     Route::prefix('author')->group(function () {
         Route::get('/store', [AuthorController::class, 'create'])->name('tables.author.create');
