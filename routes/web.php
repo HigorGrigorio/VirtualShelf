@@ -6,8 +6,10 @@ use App\Http\Controllers\Auth\Login\LoginController;
 use App\Http\Controllers\Auth\Login\LogoutController;
 use App\Http\Controllers\Auth\Login\ShowLoginFormController;
 use App\Http\Controllers\Author\LoadAuthorsController;
+use App\Http\Controllers\Author\ShowEditAuthorFormController;
 use App\Http\Controllers\Author\ShowStoreAuthorFormController;
 use App\Http\Controllers\Author\StoreAuthorController;
+use App\Http\Controllers\Author\UpdateAuthorController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CountryController;
@@ -67,8 +69,8 @@ Route::prefix('/tables')->group(function () {
 
         Route::get('/show/{id}', [AuthorController::class, 'show'])->name('tables.author.show');
 
-        Route::get('/edit/{id}', [AuthorController::class, 'edit'])->name('tables.author.edit');
-        Route::post('/update/{id}', [AuthorController::class, 'update'])->name('tables.author.update');
+        Route::get('/edit/{id}', [ShowEditAuthorFormController::class, 'handle'])->name('tables.author.edit');
+        Route::post('/update/{id}', [UpdateAuthorController::class, 'handle'])->name('tables.author.update');
 
         Route::get('/delete/{id}', [AuthorController::class, 'destroy'])->name('tables.author.destroy');
     });
