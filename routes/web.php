@@ -14,6 +14,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\User\LoadUsersController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -112,7 +113,7 @@ Route::prefix('/tables')->group(function () {
     /**
      * User
      */
-    Route::get('/users', [UserController::class, 'index'])->name('tables.user.index');
+    Route::get('/users', [LoadUsersController::class, 'handle'])->name('tables.user.index');
 
     Route::prefix('user')->group(function () {
         Route::get('/store', [UserController::class, 'create'])->name('tables.user.create');
