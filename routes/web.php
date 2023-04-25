@@ -15,6 +15,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\User\LoadUsersController;
+use App\Http\Controllers\User\ShowEditUserFormController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -119,9 +120,9 @@ Route::prefix('/tables')->group(function () {
         Route::get('/store', [UserController::class, 'create'])->name('tables.user.create');
         Route::post('/', [UserController::class, 'store'])->name('tables.user.store');
 
-        Route::get('/show/{id}', [UserController::class, 'show'])->name('tables.user.show');
+        Route::get('/show/{id}', [userController::class, 'show'])->name('tables.user.show');
 
-        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('tables.user.edit');
+        Route::get('/edit/{id}', [ShowEditUserFormController::class, 'handle'])->name('tables.user.edit');
         Route::post('/update/{id}', [UserController::class, 'update'])->name('tables.user.update');
 
         Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('tables.user.destroy');
