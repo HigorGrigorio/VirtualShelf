@@ -19,7 +19,6 @@ use App\Http\Controllers\Category\ShowEditCategoryFormController;
 use App\Http\Controllers\Category\ShowStoreCategoryFormController;
 use App\Http\Controllers\Category\StoreCategoryController;
 use App\Http\Controllers\Category\UpdateCategoryController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\User\DeleteUserController;
