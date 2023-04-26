@@ -17,6 +17,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\User\LoadUsersController;
 use App\Http\Controllers\User\ShowEditUserFormController;
 use App\Http\Controllers\User\ShowStoreUserFormController;
+use App\Http\Controllers\User\ShowUserController;
 use App\Http\Controllers\User\StoreUserController;
 use App\Http\Controllers\User\UpdateUserController;
 use App\Http\Controllers\UserController;
@@ -123,7 +124,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/store', [ShowStoreUserFormController::class, 'handle'])->name('tables.user.create');
         Route::post('/', [StoreUserController::class, 'handle'])->name('tables.user.store');
 
-        Route::get('/show/{id}', [UserController::class, 'show'])->name('tables.user.show');
+        Route::get('/show/{id}', [ShowUserController::class, 'handle'])->name('tables.user.show');
 
         Route::get('/edit/{id}', [ShowEditUserFormController::class, 'handle'])->name('tables.user.edit');
         Route::post('/update/{id}', [UpdateUserController::class, 'handle'])->name('tables.user.update');
