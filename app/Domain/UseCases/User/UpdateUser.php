@@ -28,18 +28,20 @@ class UpdateUser extends UseCase
                 throw new Exception('Id is required');
             }
 
-            $user = $this->repository->getById($id);
+            $findResult = $this->repository->getById($id);
 
-            if ($user->isNothing()) {
+            if ($findResult->isNothing()) {
                 throw new Exception('User not found');
             }
 
             $data = $this->getArgs();
 
+            $user = $findResult->get();
+
             // check for photo deletion
             if (isset($data['remove_photo']) && $data['remove_photo'] || $data['photo']) {
                 // delete old photo
-                if ($photo = $user->get()->photo) {
+                if ($photo = $user->photo) {
                     $path = str_replace('storage', 'public', $photo);
                     if (Storage::exists($path)) {
                         Storage::delete($path);
@@ -51,10 +53,14 @@ class UpdateUser extends UseCase
             if ($data['photo']) {
                 $filename = Str::uuid() . '.' . $data['photo']->extension();
                 $data['photo'] = str_replace('public', 'storage', $data['photo']->storeAs('public/profile/images', $filename));
+                $user->photo = $data['photo'];
             }
 
+            $user->name = $data['name'];
+            $user->email = $data['email'];
+
             $result = UpdateRecord::create($this->repository)
-                ->setArgs($data)
+                ->setArgs($user->toArray())
                 ->execute();
         } catch (Exception $e) {
             $result = Result::from($e);
