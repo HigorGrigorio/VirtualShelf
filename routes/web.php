@@ -1,10 +1,12 @@
 <?php
 
+use App\Domain\UseCases\Author\DeleteAuthorById;
 use App\Http\Controllers\Auth\ForgottenPassword\SendResetPasswordLinkEmailController;
 use App\Http\Controllers\Auth\ForgottenPassword\ShowForgotPasswordFormController;
 use App\Http\Controllers\Auth\Login\LoginController;
 use App\Http\Controllers\Auth\Login\LogoutController;
 use App\Http\Controllers\Auth\Login\ShowLoginFormController;
+use App\Http\Controllers\Author\DeleteAuthorController;
 use App\Http\Controllers\Author\LoadAuthorsController;
 use App\Http\Controllers\Author\ShowAuthorController;
 use App\Http\Controllers\Author\ShowEditAuthorFormController;
@@ -79,7 +81,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/edit/{id}', [ShowEditAuthorFormController::class, 'handle'])->name('tables.author.edit');
         Route::post('/update/{id}', [UpdateAuthorController::class, 'handle'])->name('tables.author.update');
 
-        Route::get('/delete/{id}', [AuthorController::class, 'destroy'])->name('tables.author.destroy');
+        Route::get('/delete/{id}', [DeleteAuthorController::class, 'handle'])->name('tables.author.destroy');
     });
 
     /**
