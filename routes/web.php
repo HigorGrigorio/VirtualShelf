@@ -23,6 +23,7 @@ use App\Http\Controllers\Country\LoadCountriesController;
 use App\Http\Controllers\Country\ShowEditCountryFormController;
 use App\Http\Controllers\Country\ShowStoreCountryFormController;
 use App\Http\Controllers\Country\StoreCountryController;
+use App\Http\Controllers\Country\UpdateCountryController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\User\DeleteUserController;
@@ -70,7 +71,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/show/{id}', [CountryController::class, 'show'])->name('tables.country.show');
 
         Route::get('/edit/{id}', [ShowEditCountryFormController::class, 'handle'])->name('tables.country.edit');
-        Route::post('/update/{id}', [CountryController::class, 'update'])->name('tables.country.update');
+        Route::post('/update/{id}', [UpdateCountryController::class, 'handle'])->name('tables.country.update');
 
         Route::get('/delete/{id}', [CountryController::class, 'destroy'])->name('tables.country.destroy');
     });
