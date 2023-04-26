@@ -13,6 +13,7 @@ use App\Http\Controllers\Author\ShowStoreAuthorFormController;
 use App\Http\Controllers\Author\StoreAuthorController;
 use App\Http\Controllers\Author\UpdateAuthorController;
 use App\Http\Controllers\Category\LoadCategoriesController;
+use App\Http\Controllers\Category\ShowStoreCategoryFormController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
@@ -106,7 +107,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index'])->name('tables.category.index');
 
     Route::prefix('category')->group(function () {
-        Route::get('/store', [CategoryController::class, 'create'])->name('tables.category.create');
+        Route::get('/store', [ShowStoreCategoryFormController::class, 'handle'])->name('tables.category.create');
         Route::post('/', [CategoryController::class, 'store'])->name('tables.category.store');
 
         Route::get('/show/{id}', [CategoryController::class, 'show'])->name('tables.category.show');
