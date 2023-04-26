@@ -18,6 +18,7 @@ use App\Http\Controllers\User\LoadUsersController;
 use App\Http\Controllers\User\ShowEditUserFormController;
 use App\Http\Controllers\User\ShowStoreUserFormController;
 use App\Http\Controllers\User\StoreUserController;
+use App\Http\Controllers\User\UpdateUserController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -125,7 +126,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/show/{id}', [UserController::class, 'show'])->name('tables.user.show');
 
         Route::get('/edit/{id}', [ShowEditUserFormController::class, 'handle'])->name('tables.user.edit');
-        Route::post('/update/{id}', [UserController::class, 'update'])->name('tables.user.update');
+        Route::post('/update/{id}', [UpdateUserController::class, 'handle'])->name('tables.user.update');
 
         Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('tables.user.destroy');
     });
