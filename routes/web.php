@@ -14,6 +14,7 @@ use App\Http\Controllers\Author\ShowStoreAuthorFormController;
 use App\Http\Controllers\Author\StoreAuthorController;
 use App\Http\Controllers\Author\UpdateAuthorController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\Category\LoadCategoriesController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
@@ -88,7 +89,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
     /**
      * Language
      */
-    Route::get('/languages', [LanguageController::class, 'index'])->name('tables.language.index');
+    Route::get('/languages', [LoadCategoriesController::class, 'handle'])->name('tables.language.index');
 
     Route::prefix('language')->group(function () {
         Route::get('/store', [LanguageController::class, 'create'])->name('tables.language.create');
