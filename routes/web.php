@@ -13,6 +13,7 @@ use App\Http\Controllers\Author\ShowStoreAuthorFormController;
 use App\Http\Controllers\Author\StoreAuthorController;
 use App\Http\Controllers\Author\UpdateAuthorController;
 use App\Http\Controllers\Category\LoadCategoriesController;
+use App\Http\Controllers\Category\ShowCategoryController;
 use App\Http\Controllers\Category\ShowEditCategoryFormController;
 use App\Http\Controllers\Category\ShowStoreCategoryFormController;
 use App\Http\Controllers\Category\StoreCategoryController;
@@ -113,7 +114,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/store', [ShowStoreCategoryFormController::class, 'handle'])->name('tables.category.create');
         Route::post('/', [StoreCategoryController::class, 'handle'])->name('tables.category.store');
 
-        Route::get('/show/{id}', [CategoryController::class, 'show'])->name('tables.category.show');
+        Route::get('/show/{id}', [ShowCategoryController::class, 'handle'])->name('tables.category.show');
 
         Route::get('/edit/{id}', [ShowEditCategoryFormController::class, 'handle'])->name('tables.category.edit');
         Route::post('/update/{id}', [UpdateCategoryController::class, 'handle'])->name('tables.category.update');
