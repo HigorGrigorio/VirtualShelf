@@ -19,6 +19,7 @@ use App\Http\Controllers\Category\ShowEditCategoryFormController;
 use App\Http\Controllers\Category\ShowStoreCategoryFormController;
 use App\Http\Controllers\Category\StoreCategoryController;
 use App\Http\Controllers\Category\UpdateCategoryController;
+use App\Http\Controllers\Country\LoadCountriesController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\User\DeleteUserController;
@@ -57,7 +58,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
     /**
      * Country
      */
-    Route::get('/countries', [CountryController::class, 'index'])->name('tables.country.index');
+    Route::get('/countries', [LoadCountriesController::class, 'handle'])->name('tables.country.index');
 
     Route::prefix('country')->group(function () {
         Route::get('/store', [CountryController::class, 'create'])->name('tables.country.create');
