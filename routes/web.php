@@ -73,7 +73,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/create', [ShowStoreAuthorFormController::class, 'handle'])->name('tables.author.create');
         Route::post('/', [StoreAuthorController::class, 'handle'])->name('tables.author.store');
 
-        Route::get('/show/{id}', [AuthorController::class, 'show'])->name('tables.author.show');
+        Route::get('/show/{id}', [Show::class, 'show'])->name('tables.author.show');
 
         Route::get('/edit/{id}', [ShowEditAuthorFormController::class, 'handle'])->name('tables.author.edit');
         Route::post('/update/{id}', [UpdateAuthorController::class, 'handle'])->name('tables.author.update');
