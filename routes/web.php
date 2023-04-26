@@ -17,6 +17,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\User\DeleteUserController;
 use App\Http\Controllers\User\LoadUsersController;
 use App\Http\Controllers\User\ShowEditUserFormController;
 use App\Http\Controllers\User\ShowStoreUserFormController;
@@ -132,6 +133,6 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/edit/{id}', [ShowEditUserFormController::class, 'handle'])->name('tables.user.edit');
         Route::post('/update/{id}', [UpdateUserController::class, 'handle'])->name('tables.user.update');
 
-        Route::get('/delete/{id}', [UserController::class, 'destroy'])->name('tables.user.destroy');
+        Route::get('/delete/{id}', [DeleteUserController::class, 'handle'])->name('tables.user.destroy');
     });
 });
