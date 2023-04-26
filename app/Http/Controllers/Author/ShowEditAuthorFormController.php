@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Author;
 
 use App\Core\Infra\IController;
-use App\Domain\UseCases\Author\UpdateAuthor;
-use App\Domain\UseCases\User\LoadUserById;
+use App\Domain\UseCases\Author\LoadAuthorById;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasRecordArguments;
 use Exception;
@@ -15,7 +14,7 @@ class ShowEditAuthorFormController extends Controller implements IController
     use HasRecordArguments;
 
     public function __construct(
-        private readonly LoadUserById $loadUserById
+        private readonly LoadAuthorById $loadUserById
     )
     {
     }
