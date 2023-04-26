@@ -20,7 +20,7 @@ class LoadCountriesController extends \App\Http\Controllers\Controller implement
 
     public function getTable(): string
     {
-        return 'categories';
+        return 'countries';
     }
 
     /**
