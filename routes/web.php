@@ -1,6 +1,5 @@
 <?php
 
-use App\Domain\UseCases\Author\DeleteAuthorById;
 use App\Http\Controllers\Auth\ForgottenPassword\SendResetPasswordLinkEmailController;
 use App\Http\Controllers\Auth\ForgottenPassword\ShowForgotPasswordFormController;
 use App\Http\Controllers\Auth\Login\LoginController;
@@ -13,7 +12,6 @@ use App\Http\Controllers\Author\ShowEditAuthorFormController;
 use App\Http\Controllers\Author\ShowStoreAuthorFormController;
 use App\Http\Controllers\Author\StoreAuthorController;
 use App\Http\Controllers\Author\UpdateAuthorController;
-use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\Category\LoadCategoriesController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CountryController;
@@ -25,7 +23,6 @@ use App\Http\Controllers\User\ShowStoreUserFormController;
 use App\Http\Controllers\User\ShowUserController;
 use App\Http\Controllers\User\StoreUserController;
 use App\Http\Controllers\User\UpdateUserController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
