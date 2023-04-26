@@ -31,7 +31,9 @@ class CreateUser extends UseCase
                 $data['photo'] = str_replace('public', 'storage', $data['photo']->storeAs('public/profile/images', $filename));
             }
 
-            $result = CreateRecord::create($this->getRepository())->execute($data);
+            $result = CreateRecord::create($this->getRepository())
+                ->setArgs($data)
+                ->execute();
         } catch (Exception $e) {
             $result = Result::from($e);
         }

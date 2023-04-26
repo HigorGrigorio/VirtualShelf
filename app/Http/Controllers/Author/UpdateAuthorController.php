@@ -2,14 +2,25 @@
 
 namespace App\Http\Controllers\Author;
 
+use App\Domain\UseCases\Author\UpdateAuthor;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class UpdateAuthorController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
 {
     public function __construct(
-        private readonly \App\Domain\UseCases\Author\UpdateAuthor $updateAuthor
+        private readonly UpdateAuthor $updateAuthor
     )
     {
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+        ];
     }
 
     /**
@@ -18,6 +29,8 @@ class UpdateAuthorController extends \App\Http\Controllers\Controller implements
     public function handle(Request $request)
     {
         try {
+            $this->validate($request, $this->rules());
+
             $result = $this->updateAuthor
                 ->setArgs([
                     'id' => $request->route('id'),
@@ -37,7 +50,11 @@ class UpdateAuthorController extends \App\Http\Controllers\Controller implements
                     ])
                 );
             }
-        } catch (\Exception) {
+        } catch (ValidationException $e) {
+            $return = back()->with([
+                'danger' => 'Validation errors',
+            ])->withErrors($e->errors());
+        } catch (Exception) {
             $return = back()->with([
                 'danger' => 'Do not possible to update this record',
             ]);
