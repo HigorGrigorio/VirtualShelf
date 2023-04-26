@@ -16,6 +16,7 @@ use App\Http\Controllers\Category\LoadCategoriesController;
 use App\Http\Controllers\Category\ShowEditCategoryFormController;
 use App\Http\Controllers\Category\ShowStoreCategoryFormController;
 use App\Http\Controllers\Category\StoreCategoryController;
+use App\Http\Controllers\Category\UpdateCategoryController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
@@ -115,7 +116,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/show/{id}', [CategoryController::class, 'show'])->name('tables.category.show');
 
         Route::get('/edit/{id}', [ShowEditCategoryFormController::class, 'handle'])->name('tables.category.edit');
-        Route::post('/update/{id}', [CategoryController::class, 'update'])->name('tables.category.update');
+        Route::post('/update/{id}', [UpdateCategoryController::class, 'handle'])->name('tables.category.update');
 
         Route::get('/delete/{id}', [CategoryController::class, 'destroy'])->name('tables.category.destroy');
     });
