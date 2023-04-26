@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <x-modal-delete></x-modal-delete>
     <div class="row d-flex justify-content-center h-100 w-100 align-items-center ">
         <div class="col col-lg-7 mb-4 mb-lg-0">
             <div class="card" style="border-radius: .5rem;">
@@ -25,14 +26,14 @@
                                    role="button"
                                    class="btn btn-link btn-rounded btn-sm fw-bold"
                                    data-mdb-ripple-color="primary">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="fa fa-eye"></i>
                                 </a>
-                                <a href="{{ route('tables.author.destroy', ['id' => $record['id']]) }}"
-                                   role="button"
-                                   class="btn btn-link btn-rounded btn-sm fw-bold"
-                                   data-mdb-ripple-color="primary">
+                                <button data-href="{{ route('tables.author.destroy', ['id' => $record['id']]) }}"
+                                        data-mdb-toggle="modal"
+                                        data-mdb-target="#confirm-modal"
+                                        class="btn btn-link btn-rounded btn-sm fw-bold">
                                     <i class="fa fa-trash"></i>
-                                </a>
+                                </button>
                             </div>
                             <a href="{{ route('tables.author.index') }}"
                                role="button"
