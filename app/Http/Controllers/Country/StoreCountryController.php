@@ -29,7 +29,7 @@ class StoreCountryController extends Controller implements IController
     {
         return [
             'name' => 'required|string|max:50|unique:countries',
-            'code' => 'required|string|max:3'
+            'code' => 'required|string|max:3|unique:countries'
         ];
     }
 
