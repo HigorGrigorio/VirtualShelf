@@ -21,6 +21,7 @@ use App\Http\Controllers\Category\StoreCategoryController;
 use App\Http\Controllers\Category\UpdateCategoryController;
 use App\Http\Controllers\Country\LoadCountriesController;
 use App\Http\Controllers\Country\ShowStoreCountryFormController;
+use App\Http\Controllers\Country\StoreCountryController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\User\DeleteUserController;
@@ -63,7 +64,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
 
     Route::prefix('country')->group(function () {
         Route::get('/store', [ShowStoreCountryFormController::class, 'handle'])->name('tables.country.create');
-        Route::post('/', [CountryController::class, 'store'])->name('tables.country.store');
+        Route::post('/', [StoreCountryController::class, 'handle'])->name('tables.country.store');
 
         Route::get('/show/{id}', [CountryController::class, 'show'])->name('tables.country.show');
 
