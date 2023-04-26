@@ -20,6 +20,7 @@ use App\Http\Controllers\Category\ShowStoreCategoryFormController;
 use App\Http\Controllers\Category\StoreCategoryController;
 use App\Http\Controllers\Category\UpdateCategoryController;
 use App\Http\Controllers\Country\LoadCountriesController;
+use App\Http\Controllers\Country\ShowEditCountryFormController;
 use App\Http\Controllers\Country\ShowStoreCountryFormController;
 use App\Http\Controllers\Country\StoreCountryController;
 use App\Http\Controllers\CountryController;
@@ -68,7 +69,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
 
         Route::get('/show/{id}', [CountryController::class, 'show'])->name('tables.country.show');
 
-        Route::get('/edit/{id}', [CountryController::class, 'edit'])->name('tables.country.edit');
+        Route::get('/edit/{id}', [ShowEditCountryFormController::class, 'handle'])->name('tables.country.edit');
         Route::post('/update/{id}', [CountryController::class, 'update'])->name('tables.country.update');
 
         Route::get('/delete/{id}', [CountryController::class, 'destroy'])->name('tables.country.destroy');
