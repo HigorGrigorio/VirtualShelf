@@ -43,13 +43,11 @@ class ShowAuthorController extends Controller implements IController
 
             $return = view('author.show')->with($this->getParams(
                 $request,
+                $this->getRecordArgs(),
                 [
-                    $this->getRecordArgs(),
-                    [
-                        'record' => $findResult->get()
-                    ]
-                ])
-            );
+                    'record' => $findResult->get()
+                ]
+            ));
         } catch (Exception) {
             $return = back()->with([
                 'danger' => "Don't is possible show author"
