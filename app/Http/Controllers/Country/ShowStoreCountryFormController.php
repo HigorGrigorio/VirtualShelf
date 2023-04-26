@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Category;
+namespace App\Http\Controllers\Country;
 
-use App\Domain\UseCases\Category\LoadCategoryById;
+use App\Core\Infra\IController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasRecordArguments;
 use Exception;
 use Illuminate\Http\Request;
 
-class ShowStoreCategoryFormController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
+class ShowStoreCountryFormController extends Controller implements IController
 {
     use HasRecordArguments;
 
     protected function getTable(): string
     {
-        return 'categories';
+        return 'countries';
     }
 
     /**
@@ -22,7 +23,7 @@ class ShowStoreCategoryFormController extends \App\Http\Controllers\Controller i
     public function handle(Request $request)
     {
         try {
-            return view('category.store', $this->getParams(
+            return view('country.store', $this->getParams(
                 $request,
                 $this->getRecordArgs()
             ));
