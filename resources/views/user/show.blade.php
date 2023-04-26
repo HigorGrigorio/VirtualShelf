@@ -32,7 +32,7 @@
                                    data-mdb-ripple-color="primary">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <button href="{{ route('tables.user.destroy', ['id' => $record['id']]) }}"
+                                <button data-href="{{ route('tables.user.destroy', ['id' => $record['id']]) }}"
                                         data-mdb-toggle="modal"
                                         data-mdb-target="#confirm-modal"
                                         class="btn btn-link btn-rounded btn-sm fw-bold">
