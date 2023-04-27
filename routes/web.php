@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgottenPassword\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgottenPassword\SendResetPasswordLinkEmailController;
 use App\Http\Controllers\Auth\ForgottenPassword\ShowForgotPasswordFormController;
+use App\Http\Controllers\Auth\ForgottenPassword\ShowResetPasswordFormController;
 use App\Http\Controllers\Auth\Login\LoginController;
 use App\Http\Controllers\Auth\Login\LogoutController;
 use App\Http\Controllers\Auth\Login\ShowLoginFormController;
@@ -50,8 +52,10 @@ Route::get('/login', [ShowLoginFormController::class, 'handle'])->name('login.sh
 Route::post('/login', [LoginController::class, 'handle'])->name('login');
 Route::post('/logout', [LogoutController::class, 'handle'])->name('logout');
 
-Route::get('/password/reset', [ShowForgotPasswordFormController::class, 'handle'])->name('password.reset');
-Route::post('/password/reset', [SendResetPasswordLinkEmailController::class, 'handle'])->name('password.email');
+Route::get('/password/forgot-password', [ShowForgotPasswordFormController::class, 'handle'])->name('password.reset');
+Route::post('/password/email', [SendResetPasswordLinkEmailController::class, 'handle'])->name('password.email');
+Route::get('/password/reset/', [ShowResetPasswordFormController::class, 'handle'])->name('password.reset.token');
+Route::post('/password/reset', [ResetPasswordController::class, 'handle'])->name('password.update');
 /**
  * Tables routes
  */
