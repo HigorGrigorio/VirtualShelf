@@ -6,6 +6,10 @@ use App\Core\Infra\IController;
 use App\Core\Infra\Traits\AlertsUser;
 use App\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ShowForgotPasswordController extends Controller implements IController
@@ -15,7 +19,7 @@ class ShowForgotPasswordController extends Controller implements IController
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $return = view('auth.passwords.email', $this->getAlerts());

@@ -7,6 +7,8 @@ use App\Core\Infra\Traits\HasBrokerMethods;
 use App\Core\Infra\Traits\HasGuardMethods;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -86,7 +88,7 @@ class ResetPasswordController extends Controller implements IController
      * @inheritDoc
      * @throws ValidationException
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         $this->validate($request, $this->rules());
 
