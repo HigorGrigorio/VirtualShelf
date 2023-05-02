@@ -15,7 +15,6 @@ interface IController
      * Handle the request and return a response
      *
      * @param Request $request
-     * @return TResponse
      */
     public function handle(Request $request);
 }
