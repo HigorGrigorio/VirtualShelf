@@ -60,7 +60,7 @@
                             <hr class="my-4">
                             <p class="small fw-bold text-black mt-4 pt-1 mb-0">
                                 Don't have an account?
-                                <a href="#!" class="link">Register</a>
+                                <a href="{{route('register')}}" class="link">Register</a>
                             </p>
                         </div>
                     </form>
@@ -83,6 +83,7 @@
             </div>
         </div>
     @endif
+    @extends('components.alert')
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
