@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Auth\ForgottenPassword;
+namespace App\Http\Controllers\Auth\ConfirmPassword;
 
 use App\Core\Infra\IController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ShowForgotPasswordFormController extends Controller implements IController
+class ConfirmPasswordController extends Controller implements IController
 {
+
     /**
      * @inheritDoc
      */
     public function handle(Request $request)
     {
-       return view('auth.passwords.email');
+        // TODO: Implement handle() method.
     }
 }
