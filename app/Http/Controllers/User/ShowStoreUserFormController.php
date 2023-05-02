@@ -4,8 +4,8 @@ namespace App\Http\Controllers\User;
 
 use App\Core\Infra\IController;
 use App\Core\Infra\Traits\AlertsUser;
+use App\Core\Infra\Traits\HasRecordArguments;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\HasRecordArguments;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

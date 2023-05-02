@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Core\Infra\Traits;
 
 use App\Presentation\Helpers\DBHelper;
 use Exception;

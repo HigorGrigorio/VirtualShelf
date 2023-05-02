@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Country;
 
 use App\Core\Infra\IController;
+use App\Core\Infra\Traits\HasPaginationArguments;
+use App\Core\Infra\Traits\HasRecordArguments;
 use App\Domain\UseCases\Country\LoadCountries;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\HasPaginationArguments;
-use App\Http\Controllers\HasRecordArguments;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
