@@ -1,12 +1,19 @@
 <?php
 
+use App\Http\Controllers\Auth\ConfirmPassword\ConfirmPasswordController;
+use App\Http\Controllers\Auth\ConfirmPassword\ShowConfirmPasswordController;
 use App\Http\Controllers\Auth\ForgottenPassword\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgottenPassword\SendResetPasswordLinkEmailController;
-use App\Http\Controllers\Auth\ForgottenPassword\ShowForgotPasswordFormController;
-use App\Http\Controllers\Auth\ForgottenPassword\ShowResetPasswordFormController;
+use App\Http\Controllers\Auth\ForgottenPassword\ShowForgotPasswordController;
+use App\Http\Controllers\Auth\ForgottenPassword\ShowResetPasswordController;
 use App\Http\Controllers\Auth\Login\LoginController;
 use App\Http\Controllers\Auth\Login\LogoutController;
-use App\Http\Controllers\Auth\Login\ShowLoginFormController;
+use App\Http\Controllers\Auth\Login\ShowLoginController;
+use App\Http\Controllers\Auth\Register\RegisterController;
+use App\Http\Controllers\Auth\Register\ShowRegistrationController;
+use App\Http\Controllers\Auth\Verification\ResendVerificationCode;
+use App\Http\Controllers\Auth\Verification\ShowVerification;
+use App\Http\Controllers\Auth\Verification\VerificationController;
 use App\Http\Controllers\Author\DeleteAuthorController;
 use App\Http\Controllers\Author\LoadAuthorsController;
 use App\Http\Controllers\Author\ShowAuthorController;
@@ -48,15 +55,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/login', [ShowLoginFormController::class, 'handle'])->name('login.show');
+Route::get('/login', [ShowLoginController::class, 'handle'])->name('login.show');
 Route::post('/login', [LoginController::class, 'handle'])->name('login');
 Route::post('/logout', [LogoutController::class, 'handle'])->name('logout');
 
-Route::get('/password/forgot-password', [ShowForgotPasswordFormController::class, 'handle'])->name('password.reset');
 Route::post('/password/email', [SendResetPasswordLinkEmailController::class, 'handle'])->name('password.email');
-Route::get('/password/reset/', [ShowResetPasswordFormController::class, 'handle'])->name('password.reset.token');
+
+Route::get('/password/reset', [ShowForgotPasswordController::class, 'handle'])->name('password.reset');
+Route::get('/password/reset/{token}', [ShowResetPasswordController::class, 'handle'])->name('password.reset.token');
 Route::post('/password/reset', [ResetPasswordController::class, 'handle'])->name('password.update');
-/**
+
+Route::get('/register', [ShowRegistrationController::class, 'handle'])->name('register.show');
+Route::post('/register', [RegisterController::class, 'handle'])->name('register');
+
+Route::get('/email/verify', [ShowVerification::class, 'handle'])->name('verification.notice');
+Route::post('/email/resend', [ResendVerificationCode::class, 'handle'])->name('verification.resend');
+Route::get('/verify/{id}/{hash}', [VerificationController::class, 'handle'])->name('verification.verify');
+
+Route::get('/password/confirm', [ShowConfirmPasswordController::class, 'handle'])->name('password.confirm');
+Route::post('/password/confirm', [ConfirmPasswordController::class, 'handle']);
+
+/*
  * Tables routes
  */
 Route::get('/tables', [CountryController::class, 'index'])->name('tables');
