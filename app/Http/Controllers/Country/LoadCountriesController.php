@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Country;
 
 use App\Core\Infra\IController;
+use App\Core\Infra\Traits\AlertsUser;
 use App\Core\Infra\Traits\HasPaginationArguments;
 use App\Core\Infra\Traits\HasRecordArguments;
 use App\Domain\UseCases\Country\LoadCountries;
@@ -16,7 +17,7 @@ use Illuminate\Http\Request;
 
 class LoadCountriesController extends Controller implements IController
 {
-    use HasRecordArguments, HasPaginationArguments;
+    use HasRecordArguments, HasPaginationArguments, AlertsUser;
 
     public function __construct(
         private readonly LoadCountries $loadCountries
@@ -46,13 +47,11 @@ class LoadCountriesController extends Controller implements IController
                 ]);
             } else {
                 $pagination = $result->get();
-                $return = view('country.index', compact('pagination'))->with(
-                    $this->getParams(
-                        $request,
-                        $this->getRecordArgs(),
-                        $args
-                    ),
-                );
+                $return = view('country.index', compact('pagination'))->with(array_merge(
+                    $this->getAlerts(),
+                    $this->getRecordArgs(),
+                    $args
+                ));
             }
         } catch (Exception $e) {
             $return = back()->with([

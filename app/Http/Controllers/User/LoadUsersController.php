@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Core\Infra\IController;
+use App\Core\Infra\Traits\AlertsUser;
 use App\Core\Infra\Traits\HasPaginationArguments;
 use App\Core\Infra\Traits\HasRecordArguments;
 use App\Domain\UseCases\User\LoadUsers;
@@ -16,7 +17,7 @@ use Illuminate\Http\Request;
 
 class LoadUsersController extends Controller implements IController
 {
-    use HasPaginationArguments, HasRecordArguments;
+    use HasPaginationArguments, HasRecordArguments, AlertsUser;
 
     public function __construct(
         private readonly LoadUsers $loadUser
@@ -46,13 +47,11 @@ class LoadUsersController extends Controller implements IController
                 ]);
             } else {
                 $pagination = $result->get();
-                $return = view('user.index', compact('pagination'))->with(
-                    $this->getParams(
-                        $request,
-                        $this->getRecordArgs(),
-                        $args
-                    ),
-                );
+                $return = view('user.index', compact('pagination'))->with(array_merge(
+                    $this->getAlerts(),
+                    $this->getRecordArgs(),
+                    $args
+                ));
             }
         } catch (Exception $e) {
             $return = back()->with([

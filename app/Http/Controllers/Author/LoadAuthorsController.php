@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Author;
 
 use App\Core\Infra\IController;
+use App\Core\Infra\Traits\AlertsUser;
 use App\Core\Infra\Traits\HasPaginationArguments;
 use App\Core\Infra\Traits\HasRecordArguments;
 use App\Domain\UseCases\Author\LoadAuthors;
@@ -16,7 +17,7 @@ use Illuminate\Http\Request;
 
 class LoadAuthorsController extends Controller implements IController
 {
-    use HasPaginationArguments, HasRecordArguments;
+    use HasPaginationArguments, HasRecordArguments, AlertsUser;
 
     public function __construct(
         private readonly LoadAuthors $loadAllAuthors
@@ -46,13 +47,11 @@ class LoadAuthorsController extends Controller implements IController
                 ]);
             } else {
                 $pagination = $result->get();
-                $return = view('author.index', compact('pagination'))->with(
-                    $this->getParams(
-                        $request,
-                        $this->getRecordArgs(),
-                        $args
-                    ),
-                );
+                $return = view('author.index', compact('pagination'))->with(array_merge(
+                    $this->getAlerts(),
+                    $this->getRecordArgs(),
+                    $args
+                ));
             }
         } catch (Exception $e) {
             $return = back()->with([
