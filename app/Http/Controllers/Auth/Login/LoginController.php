@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Auth\Login;
 
 use App\Core\Infra\IController;
-use App\Http\Controllers\Auth\HasGuardMethods;
+use App\Core\Infra\Traits\AlertsUser;
+use App\Core\Infra\Traits\HasGuardMethods;
+use App\Core\Infra\Traits\HasValidator;
+use App\Core\Infra\Traits\RedirectsUser;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller implements IController
 {
-    use HasGuardMethods;
+    use HasGuardMethods, RedirectsUser, HasValidator, AlertsUser;
 
     /**
      * Create a new controller instance.
@@ -21,40 +26,55 @@ class LoginController extends Controller implements IController
         $this->middleware('guest');
     }
 
+    protected function rules(): array
+    {
+        return [
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
+    }
+
+    public function redirectTo(): string
+    {
+        return 'tables.user.index';
+    }
+
     /**
      * @inheritDoc
      */
     public function handle(Request $request)
     {
-        // TODO: use case.
-        $email = $request->input('email');
-        $password = $request->input('password');
-        $remember = $request->input('remember');
+        try {
+            $remember = $request->input('remember', false);
 
-        if (!$email) {
-            return redirect()->intended('login')->withErrors([
-                'email' => 'Email is required'
-            ]);
-        }
+            $raw = [
+                'email' => $request->input('email'),
+                'password' => $request->input('password'),
+            ];
 
-        if (!$password) {
-            return redirect()->intended('login')->withErrors([
-                'password' => 'Password is required'
-            ]);
-        }
+            $this->validateWith(
+                $this->validator($raw),
+            );
 
-        if ($this->guard()->attempt(['email' => $email, 'password' => $password], $remember)) {
-            if ($request->hasSession()) {
-                $request->session()->put('auth.password_confirmed_at', time());
+            if ($this->guard()->attempt($raw, $remember)) {
+                if ($request->hasSession()) {
+                    $request->session()->put('auth.password_confirmed_at', time());
+                }
+
+                $request->session()->regenerate();
+
+                return redirect()->route($this->redirectPath());
             }
 
-            $request->session()->regenerate();
-
-            return redirect()->intended('tables/users');
+            return back()->withErrors([
+                'email' => 'Email or password is incorrect'
+            ]);
+        } catch (ValidationException $th) {
+            $this->alertDanger('Validation error');
+            return back()->withInput()->withErrors($th->errors());
+        } catch (Exception $th) {
+            $this->alertDanger($th->getMessage());
+            return back()->withInput();
         }
-
-        return redirect()->intended('login')->withErrors([
-            'email' => 'Email or password is incorrect'
-        ]);
     }
 }

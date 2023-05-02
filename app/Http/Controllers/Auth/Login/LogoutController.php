@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth\Login;
 
 use App\Core\Infra\IController;
-use App\Http\Controllers\Auth\HasGuardMethods;
+use App\Core\Infra\Traits\HasGuardMethods;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
