@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth\ForgottenPassword;
 
 use App\Core\Infra\IController;
-use App\Http\Controllers\Auth\HasBrokerMethods;
-use App\Http\Controllers\Auth\HasGuardMethods;
+use App\Core\Infra\Traits\HasBrokerMethods;
+use App\Core\Infra\Traits\HasGuardMethods;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Application;
@@ -14,8 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Validation\Rules;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 
 class ResetPasswordController extends Controller implements IController
