@@ -16,6 +16,11 @@ class ConfirmPasswordController extends Controller implements IController
 {
     use HasValidator, AlertsUser, RedirectsUser;
 
+    public function __construct()
+    {
+        $this->middleware('auth')->only('handle');
+    }
+
     /**
      * @throws ValidationException
      */
