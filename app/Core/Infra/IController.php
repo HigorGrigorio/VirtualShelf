@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
  * Interface Controller
  *
  * template for controllers
- * @template TRequest
- * @template TResponse
  */
 interface IController
 {
