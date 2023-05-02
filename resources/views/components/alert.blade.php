@@ -29,37 +29,15 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    @if(isset($inform))
+    @if(isset($info))
         <div data-alert-count="3" class="alert animated flipInX alert-info alert-dismissible">
             <strong>
                 <i class="fa fa-exclamation-circle me-3"></i>
                 Information
             </strong>
-            <p class="p-3">{{ $inform }}</p>
+            <p class="p-3">{{ $info }}</p>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    @push('scripts')
-        <script>
-            $(document).ready(function () {
-                setTimeout(async function () {
-                    // get quantity of alerts
-                    let alertContainer = $('#alert-container');
-                    let alertCount = alertContainer.children().length;
-
-                    while (alertCount > 0) {
-                        // await 3 seconds
-                        await new Promise(r => setTimeout(r, 3000));
-                        // get the last alert
-                        let alert = alertContainer.children().last();
-                        // remove the alert
-                        alert.remove();
-                        // decrease the alert count
-                        alertCount--;
-                    }
-                }, 0);
-            });
-        </script>
-    @endpush
 </div>
 
