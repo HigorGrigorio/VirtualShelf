@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Author;
 
 use App\Core\Infra\IController;
+use App\Core\Infra\Traits\AlertsUser;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasRecordArguments;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ShowStoreAuthorFormController extends Controller implements IController
 {
-    use HasRecordArguments;
+    use HasRecordArguments, AlertsUser;
 
     public function getTable(): string
     {
@@ -20,12 +25,13 @@ class ShowStoreAuthorFormController extends Controller implements IController
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
-            $return = view('author.store')->with(
-                $this->getRecordArgs(),
-            );
+            $return = view('author.store', $this->getAlerts())
+                ->with(
+                    $this->getRecordArgs(),
+                );
         } catch (Exception) {
             abort(404);
         }

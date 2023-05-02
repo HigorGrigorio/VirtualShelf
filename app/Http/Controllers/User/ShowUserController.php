@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Core\Infra\IController;
+use App\Core\Infra\Traits\AlertsUser;
 use App\Domain\UseCases\User\LoadUserById;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasRecordArguments;
+use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use SebastianBergmann\CodeCoverage\Exception;
 
-class ShowUserController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
+class ShowUserController extends Controller implements IController
 {
-    use HasRecordArguments;
+    use HasRecordArguments, AlertsUser;
 
     public function __construct(
         private readonly LoadUserById $loadUserById
@@ -27,7 +34,7 @@ class ShowUserController extends \App\Http\Controllers\Controller implements \Ap
      * @inheritDoc
      */
     public
-    function handle(Request $request)
+    function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $findResult = $this->loadUserById
@@ -40,16 +47,20 @@ class ShowUserController extends \App\Http\Controllers\Controller implements \Ap
                 abort(404);
             }
 
-            return view('user.show', $this->getParams(
-                $request,
+            return view('user.show', array_merge(
+                $this->getAlerts(),
+                $this->getRecordArgs(),
                 [
-                    'record' => $findResult->get(),
+                    'record' => $findResult->get()
+                ]
+            ));
+        } catch (Exception $e) {
+            return back()->with(array_merge(
+                $this->getAlerts(),
+                [
+                    'danger' => "Don't is possible show this user"
                 ])
             );
-        } catch (Exception) {
-            return back()->with([
-                'danger' => "Don't is possible show this user"
-            ]);
         }
     }
 }

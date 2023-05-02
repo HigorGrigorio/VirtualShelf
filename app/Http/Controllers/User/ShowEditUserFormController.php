@@ -3,15 +3,20 @@
 namespace App\Http\Controllers\User;
 
 use App\Core\Infra\IController;
+use App\Core\Infra\Traits\AlertsUser;
 use App\Domain\UseCases\User\LoadUserById;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasRecordArguments;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ShowEditUserFormController extends Controller implements IController
 {
-    use HasRecordArguments;
+    use HasRecordArguments, AlertsUser;
 
     public function __construct(
         public readonly LoadUserById $loadUserById
@@ -27,7 +32,7 @@ class ShowEditUserFormController extends Controller implements IController
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $findResult = $this->loadUserById
@@ -40,19 +45,19 @@ class ShowEditUserFormController extends Controller implements IController
                 abort(404);
             }
 
-            $return = view('user.edit')->with(
-                $this->getParams($request,
-                    [
-                        'record' => $findResult->get(),
-                    ],
-                    $this->getRecordArgs()
-                )
-            );
+            $return = view('user.edit', array_merge(
+                $this->getAlerts(),
+                $this->getRecordArgs(),
+                [
+                    'record' => $findResult->get()
+                ]
+            ));
         } catch (Exception) {
-            $return = back()->with(
-                $this->getParams($request, [
-                    'danger' => 'Do not possible to edit this record',
-                ])
+            $return = back()->with(array_merge(
+                    $this->getAlerts(),
+                    [
+                        'danger' => 'Do not possible to edit this record',
+                    ])
             );
         }
         return $return;

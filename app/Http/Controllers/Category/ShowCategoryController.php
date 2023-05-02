@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\Category;
 
+use App\Core\Infra\IController;
+use App\Core\Infra\Traits\AlertsUser;
 use App\Domain\UseCases\Category\LoadCategoryById;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasRecordArguments;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class ShowCategoryController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
+class ShowCategoryController extends Controller implements IController
 {
-    use HasRecordArguments;
+    use HasRecordArguments, AlertsUser;
 
     public function __construct(
         public readonly LoadCategoryById $loadCategoryById
@@ -26,7 +33,7 @@ class ShowCategoryController extends \App\Http\Controllers\Controller implements
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $findResult = $this->loadCategoryById
@@ -39,17 +46,20 @@ class ShowCategoryController extends \App\Http\Controllers\Controller implements
                 abort(404);
             }
 
-            $return = view('category.show')->with($this->getParams(
-                $request,
+            $return = view('category.show', array_merge(
+                $this->getAlerts(),
                 $this->getRecordArgs(),
                 [
                     'record' => $findResult->get()
                 ]
             ));
         } catch (Exception) {
-            $return = back()->with([
-                'danger' => "Don't is possible show category"
-            ]);
+            $return = back()->with(array_merge(
+                    $this->getAlerts(),
+                    [
+                        'danger' => "Don't is possible show category"
+                    ])
+            );
         }
         return $return;
     }

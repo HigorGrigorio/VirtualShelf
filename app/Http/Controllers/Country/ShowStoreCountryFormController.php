@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Country;
 
 use App\Core\Infra\IController;
+use App\Core\Infra\Traits\AlertsUser;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasRecordArguments;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ShowStoreCountryFormController extends Controller implements IController
 {
-    use HasRecordArguments;
+    use HasRecordArguments, AlertsUser;
 
     protected function getTable(): string
     {
@@ -20,14 +25,15 @@ class ShowStoreCountryFormController extends Controller implements IController
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
-            return view('country.store', $this->getParams(
-                $request,
-                $this->getRecordArgs()
+            return view('country.store', array_merge(
+                $this->getAlerts(),
+                $this->getRecordArgs(),
+
             ));
-        } catch (Exception $e) {
+        } catch (Exception) {
             abort(404);
         }
     }

@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Core\Infra\IController;
+use App\Core\Infra\Traits\AlertsUser;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasRecordArguments;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class ShowStoreUserFormController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
+class ShowStoreUserFormController extends Controller implements IController
 {
-    use HasRecordArguments;
+    use HasRecordArguments, AlertsUser;
 
     public function getTable(): string
     {
@@ -18,14 +25,14 @@ class ShowStoreUserFormController extends \App\Http\Controllers\Controller imple
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
-            return view('user.store', $this->getParams(
-                $request,
-                $this->getRecordArgs()
+            return view('user.store', array_merge(
+                $this->getAlerts(),
+                $this->getRecordArgs(),
             ));
-        } catch (Exception $e) {
+        } catch (Exception) {
             abort(404);
         }
     }

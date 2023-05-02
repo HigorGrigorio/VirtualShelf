@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers\Category;
 
+use App\Core\Infra\IController;
 use App\Domain\UseCases\Category\UpdateCategory;
+use App\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
-class UpdateCategoryController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
+class UpdateCategoryController extends Controller implements IController
 {
 
     public function __construct(
@@ -40,7 +46,7 @@ class UpdateCategoryController extends \App\Http\Controllers\Controller implemen
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $this->validate($request, $this->rules($request->route('id')));
@@ -60,9 +66,9 @@ class UpdateCategoryController extends \App\Http\Controllers\Controller implemen
                 ]);
             } else {
                 $return = redirect()->route('tables.category.index')->with(
-                    $this->getParams($request, [
+                    [
                         'success' => $result->getMessage(),
-                    ])
+                    ]
                 );
             }
         } catch (ValidationException $e) {

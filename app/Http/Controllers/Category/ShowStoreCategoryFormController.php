@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers\Category;
 
-use App\Domain\UseCases\Category\LoadCategoryById;
+use App\Core\Infra\IController;
+use App\Core\Infra\Traits\AlertsUser;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasRecordArguments;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class ShowStoreCategoryFormController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
+class ShowStoreCategoryFormController extends Controller implements IController
 {
-    use HasRecordArguments;
+    use HasRecordArguments, AlertsUser;
 
     protected function getTable(): string
     {
@@ -19,12 +25,12 @@ class ShowStoreCategoryFormController extends \App\Http\Controllers\Controller i
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
-            return view('category.store', $this->getParams(
-                $request,
-                $this->getRecordArgs()
+            return view('category.store', array_merge(
+                $this->getAlerts(),
+                $this->getRecordArgs(),
             ));
         } catch (Exception $e) {
             abort(404);

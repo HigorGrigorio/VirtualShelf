@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Core\Infra\IController;
 use App\Domain\UseCases\User\CreateUser;
+use App\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class StoreUserController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
+class StoreUserController extends Controller implements IController
 {
     public function __construct(
         private readonly CreateUser $createUser
@@ -29,7 +35,7 @@ class StoreUserController extends \App\Http\Controllers\Controller implements \A
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $this->validate($request, $this->rules());

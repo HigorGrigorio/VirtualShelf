@@ -6,6 +6,10 @@ use App\Core\Infra\IController;
 use App\Domain\UseCases\Category\DeleteCategoryById;
 use App\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class DeleteCategoryController extends Controller implements IController
@@ -19,7 +23,7 @@ class DeleteCategoryController extends Controller implements IController
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $deleteResult = $this->deleteCategoryById

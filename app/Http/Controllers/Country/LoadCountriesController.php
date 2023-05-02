@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers\Country;
 
+use App\Core\Infra\IController;
 use App\Domain\UseCases\Country\LoadCountries;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasPaginationArguments;
 use App\Http\Controllers\HasRecordArguments;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class LoadCountriesController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
+class LoadCountriesController extends Controller implements IController
 {
     use HasRecordArguments, HasPaginationArguments;
 
@@ -26,7 +32,7 @@ class LoadCountriesController extends \App\Http\Controllers\Controller implement
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $args = $this->getArgsOfPagination($request);

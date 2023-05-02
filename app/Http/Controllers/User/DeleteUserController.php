@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Core\Infra\IController;
 use App\Domain\UseCases\User\DeleteUserById;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasRecordArguments;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class DeleteUserController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
+class DeleteUserController extends Controller implements IController
 {
     use HasRecordArguments;
 
@@ -25,7 +31,7 @@ class DeleteUserController extends \App\Http\Controllers\Controller implements \
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $deleteResult = $this->deleteUserById

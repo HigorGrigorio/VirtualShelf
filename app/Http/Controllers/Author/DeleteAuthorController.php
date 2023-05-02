@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Author;
 
+use App\Core\Infra\IController;
 use App\Domain\UseCases\Author\DeleteAuthorById;
+use App\Http\Controllers\Controller;
 use Exception;
-use http\Exception\RuntimeException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class DeleteAuthorController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
+class DeleteAuthorController extends Controller implements IController
 {
     public function __construct(
         private readonly DeleteAuthorById $deleteAuthorById
@@ -18,7 +23,7 @@ class DeleteAuthorController extends \App\Http\Controllers\Controller implements
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $deleteResult = $this->deleteAuthorById

@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\Category;
 
+use App\Core\Infra\IController;
+use App\Core\Infra\Traits\AlertsUser;
 use App\Domain\UseCases\Category\LoadCategoryById;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasRecordArguments;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class ShowEditCategoryFormController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
+class ShowEditCategoryFormController extends Controller implements IController
 {
-    use HasRecordArguments;
+    use HasRecordArguments, AlertsUser;
 
     public function __construct(
         private readonly LoadCategoryById $loadCategoryById
@@ -25,7 +32,7 @@ class ShowEditCategoryFormController extends \App\Http\Controllers\Controller im
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $findResult = $this->loadCategoryById
@@ -38,19 +45,19 @@ class ShowEditCategoryFormController extends \App\Http\Controllers\Controller im
                 abort(404);
             }
 
-            $return = view('category.edit')->with(
-                $this->getParams($request,
-                    [
-                        'record' => $findResult->get(),
-                    ],
-                    $this->getRecordArgs()
-                )
-            );
+            $return = view('category.edit', array_merge(
+                $this->getAlerts(),
+                $this->getRecordArgs(),
+                [
+                    'record' => $findResult->get()
+                ]
+            ));
         } catch (Exception) {
-            $return = back()->with(
-                $this->getParams($request, [
-                    'danger' => 'Do not possible to edit this record',
-                ])
+            $return = back()->with(array_merge(
+                    $this->getAlerts(),
+                    [
+                        'danger' => 'Do not possible to edit this record',
+                    ])
             );
         }
         return $return;

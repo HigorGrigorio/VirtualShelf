@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers\Author;
 
+use App\Core\Infra\IController;
 use App\Domain\UseCases\Author\UpdateAuthor;
+use App\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class UpdateAuthorController extends \App\Http\Controllers\Controller implements \App\Core\Infra\IController
+class UpdateAuthorController extends Controller implements IController
 {
     public function __construct(
         private readonly UpdateAuthor $updateAuthor
@@ -26,7 +32,7 @@ class UpdateAuthorController extends \App\Http\Controllers\Controller implements
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $this->validate($request, $this->rules());
@@ -45,9 +51,9 @@ class UpdateAuthorController extends \App\Http\Controllers\Controller implements
                 ]);
             } else {
                 $return = redirect()->route('tables.author.index')->with(
-                    $this->getParams($request, [
+                    [
                         'success' => $result->getMessage(),
-                    ])
+                    ]
                 );
             }
         } catch (ValidationException $e) {

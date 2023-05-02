@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Country;
 
 use App\Core\Infra\IController;
-use App\Domain\UseCases\Category\LoadCategoryById;
+use App\Core\Infra\Traits\AlertsUser;
 use App\Domain\UseCases\Country\LoadCountryById;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HasRecordArguments;
@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class ShowEditCountryFormController extends Controller implements IController
 {
-    use HasRecordArguments;
+    use HasRecordArguments, AlertsUser;
 
     public function __construct(
         private readonly LoadCountryById $loadCountryById
@@ -41,19 +41,19 @@ class ShowEditCountryFormController extends Controller implements IController
                 abort(404);
             }
 
-            $return = view('country.edit')->with(
-                $this->getParams($request,
-                    [
-                        'record' => $findResult->get(),
-                    ],
-                    $this->getRecordArgs()
-                )
-            );
+            $return = view('country.edit', array_merge(
+                $this->getAlerts(),
+                $this->getRecordArgs(),
+                [
+                    'record' => $findResult->get()
+                ]
+            ));
         } catch (Exception) {
-            $return = back()->with(
-                $this->getParams($request, [
-                    'danger' => 'Do not possible to edit this record',
-                ])
+            $return = back()->with(array_merge(
+                    $this->getAlerts(),
+                    [
+                        'danger' => 'Do not possible to edit this record',
+                    ])
             );
         }
         return $return;

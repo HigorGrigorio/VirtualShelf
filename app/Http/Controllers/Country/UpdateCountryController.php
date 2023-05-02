@@ -6,6 +6,10 @@ use App\Core\Infra\IController;
 use App\Domain\UseCases\Country\UpdateCountry;
 use App\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -41,7 +45,7 @@ class UpdateCountryController extends Controller implements IController
     /**
      * @inheritDoc
      */
-    public function handle(Request $request)
+    public function handle(Request $request): Factory|Application|View|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         try {
             $this->validate($request, $this->rules($request->route('id')));
@@ -60,9 +64,9 @@ class UpdateCountryController extends Controller implements IController
                 ]);
             } else {
                 $return = redirect()->route('tables.country.index')->with(
-                    $this->getParams($request, [
+                    [
                         'success' => $result->getMessage(),
-                    ])
+                    ]
                 );
             }
         } catch (ValidationException $e) {
