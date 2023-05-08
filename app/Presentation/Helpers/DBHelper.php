@@ -2,8 +2,8 @@
 
 namespace App\Presentation\Helpers;
 
-use App\Presentation\Helpers\Interfaces\IDataBase;
-use App\Presentation\Traits\Singleton;
+use App\Core\Infra\Traits\Singleton;
+use App\Presentation\Helpers\Contracts\IDataBase;
 use Illuminate\Support\Facades\DB;
 
 class DBHelper implements IDataBase

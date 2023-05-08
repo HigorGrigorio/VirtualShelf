@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presentation\Helpers\Interfaces;
+namespace App\Presentation\Helpers\Contracts;
 
 interface IDataBase
 {

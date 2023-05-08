@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Presentation\Helpers\DBHelper;
-use App\Presentation\Helpers\Interfaces\IDataBase;
+use App\Presentation\Helpers\Contracts\IDataBase;
 use Illuminate\Support\ServiceProvider;
 
 class DataBaseProvider extends ServiceProvider

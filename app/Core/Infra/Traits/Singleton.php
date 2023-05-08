@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presentation\Traits;
+namespace App\Core\Infra\Traits;
 
 use Exception;
 
