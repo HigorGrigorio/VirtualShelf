@@ -66,7 +66,7 @@ class StoreCountryController extends Controller implements IController
                 $e->errors()
             );
         } catch (Exception $e) {
-            $return = back()->withErrors([
+            $return = back()->with([
                 'danger' => $e->getMessage()
             ]);
         }
