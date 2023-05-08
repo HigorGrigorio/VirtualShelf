@@ -7,11 +7,11 @@ use App\Http\Database\Repositories\CategoryRepository;
 use App\Http\Database\Repositories\CountryRepository;
 use App\Http\Database\Repositories\LanguageRepository;
 use App\Http\Database\Repositories\UserRepository;
-use App\Presentation\Interfaces\IAuthorRepository;
-use App\Presentation\Interfaces\ICategoryRepository;
-use App\Presentation\Interfaces\ICountryRepository;
-use App\Presentation\Interfaces\ILanguageRepository;
-use App\Presentation\Interfaces\IUserRepository;
+use App\Presentation\Contracts\IAuthorRepository;
+use App\Presentation\Contracts\ICategoryRepository;
+use App\Presentation\Contracts\ICountryRepository;
+use App\Presentation\Contracts\ILanguageRepository;
+use App\Presentation\Contracts\IUserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider

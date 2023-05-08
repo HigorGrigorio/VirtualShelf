@@ -3,7 +3,7 @@
 namespace App\Domain\UseCases\Country;
 
 use App\Domain\UseCases\Base\DeleteRecord;
-use App\Presentation\Interfaces\ICountryRepository;
+use App\Presentation\Contracts\ICountryRepository;
 
 class DeleteCountryById extends DeleteRecord
 {

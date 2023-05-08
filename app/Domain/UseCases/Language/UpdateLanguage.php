@@ -3,7 +3,7 @@
 namespace App\Domain\UseCases\Language;
 
 use App\Domain\UseCases\Base\UpdateRecord;
-use App\Presentation\Interfaces\ILanguageRepository;
+use App\Presentation\Contracts\ILanguageRepository;
 
 class UpdateLanguage extends UpdateRecord
 {

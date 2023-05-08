@@ -3,7 +3,7 @@
 namespace App\Domain\UseCases\Category;
 
 use App\Domain\UseCases\Base\DeleteRecord;
-use App\Presentation\Interfaces\ICategoryRepository;
+use App\Presentation\Contracts\ICategoryRepository;
 
 class DeleteCategoryById extends DeleteRecord
 {

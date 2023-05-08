@@ -3,7 +3,7 @@
 namespace App\Domain\UseCases\Language;
 
 use App\Domain\UseCases\Base\DeleteRecord;
-use App\Presentation\Interfaces\ILanguageRepository;
+use App\Presentation\Contracts\ILanguageRepository;
 
 class DeleteLanguageById extends DeleteRecord
 {

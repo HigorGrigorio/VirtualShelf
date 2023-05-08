@@ -4,7 +4,7 @@ namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
 use App\Models\Category;
-use App\Presentation\Interfaces\ICategoryRepository;
+use App\Presentation\Contracts\ICategoryRepository;
 
 class CategoryRepository extends Repository implements ICategoryRepository
 {

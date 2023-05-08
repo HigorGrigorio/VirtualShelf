@@ -6,7 +6,7 @@ use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\UseCase;
-use App\Presentation\Interfaces\IRepository;
+use App\Presentation\Contracts\IRepository;
 use Exception;
 use Throwable;
 

@@ -4,7 +4,7 @@ namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
 use App\Models\User;
-use App\Presentation\Interfaces\IUserRepository;
+use App\Presentation\Contracts\IUserRepository;
 
 class UserRepository extends Repository implements IUserRepository
 {

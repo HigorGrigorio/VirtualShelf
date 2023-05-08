@@ -4,7 +4,7 @@ namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
 use App\Models\Country;
-use App\Presentation\Interfaces\ICountryRepository;
+use App\Presentation\Contracts\ICountryRepository;
 
 
 class CountryRepository extends Repository implements ICountryRepository

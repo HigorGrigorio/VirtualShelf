@@ -4,7 +4,7 @@ namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
 use App\Models\Language;
-use App\Presentation\Interfaces\ILanguageRepository;
+use App\Presentation\Contracts\ILanguageRepository;
 
 class LanguageRepository extends Repository implements ILanguageRepository
 {

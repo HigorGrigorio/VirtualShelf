@@ -3,7 +3,7 @@
 namespace App\Domain\UseCases\Author;
 
 use App\Domain\UseCases\Base\DeleteRecord;
-use App\Presentation\Interfaces\IAuthorRepository;
+use App\Presentation\Contracts\IAuthorRepository;
 
 class DeleteAuthorById extends DeleteRecord
 {

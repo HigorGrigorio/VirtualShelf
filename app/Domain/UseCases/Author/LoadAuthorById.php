@@ -3,7 +3,7 @@
 namespace App\Domain\UseCases\Author;
 
 use App\Domain\UseCases\Base\LoadRecordById;
-use App\Presentation\Interfaces\IAuthorRepository;
+use App\Presentation\Contracts\IAuthorRepository;
 
 class LoadAuthorById extends LoadRecordById
 {

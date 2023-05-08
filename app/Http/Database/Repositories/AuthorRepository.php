@@ -4,7 +4,7 @@ namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
 use App\Models\Author;
-use App\Presentation\Interfaces\IAuthorRepository;
+use App\Presentation\Contracts\IAuthorRepository;
 
 class AuthorRepository extends Repository implements IAuthorRepository
 {

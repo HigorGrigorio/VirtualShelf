@@ -5,7 +5,7 @@ namespace App\Domain\UseCases\User;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\Base\UpdateRecord;
 use App\Domain\UseCases\UseCase;
-use App\Presentation\Interfaces\IUserRepository;
+use App\Presentation\Contracts\IUserRepository;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;

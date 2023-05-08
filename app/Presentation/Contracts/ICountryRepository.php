@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presentation\Interfaces;
+namespace App\Presentation\Contracts;
 
 use App\Core\Logic\Maybe;
 use App\Models\Country;

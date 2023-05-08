@@ -3,7 +3,7 @@
 namespace App\Domain\UseCases\Language;
 
 use App\Domain\UseCases\Base\LoadRecordById;
-use App\Presentation\Interfaces\ILanguageRepository;
+use App\Presentation\Contracts\ILanguageRepository;
 
 class LoadLanguageById extends LoadRecordById
 {
