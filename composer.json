@@ -9,11 +9,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-http": "*",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "dev-develop",
         "laravel/tinker": "dev-develop",
-        "ext-http": "*"
+        "maatwebsite/excel": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
