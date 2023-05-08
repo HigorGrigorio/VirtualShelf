@@ -28,14 +28,20 @@ use App\Http\Controllers\Category\ShowEditCategoryFormController;
 use App\Http\Controllers\Category\ShowStoreCategoryFormController;
 use App\Http\Controllers\Category\StoreCategoryController;
 use App\Http\Controllers\Category\UpdateCategoryController;
+use App\Http\Controllers\Country\DeleteCountryController;
 use App\Http\Controllers\Country\LoadCountriesController;
 use App\Http\Controllers\Country\ShowCountryController;
 use App\Http\Controllers\Country\ShowEditCountryFormController;
 use App\Http\Controllers\Country\ShowStoreCountryFormController;
 use App\Http\Controllers\Country\StoreCountryController;
 use App\Http\Controllers\Country\UpdateCountryController;
-use App\Http\Controllers\CountryController;
-use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\Language\DeleteLanguageController;
+use App\Http\Controllers\Language\LoadLanguagesController;
+use App\Http\Controllers\Language\ShowEditLanguageFormController;
+use App\Http\Controllers\Language\ShowLanguageController;
+use App\Http\Controllers\Language\ShowStoreLanguageFormController;
+use App\Http\Controllers\Language\StoreLanguageController;
+use App\Http\Controllers\Language\UpdateLanguageController;
 use App\Http\Controllers\User\DeleteUserController;
 use App\Http\Controllers\User\LoadUsersController;
 use App\Http\Controllers\User\ShowEditUserFormController;
@@ -79,7 +85,7 @@ Route::post('/password/confirm', [ConfirmPasswordController::class, 'handle']);
 /*
  * Tables routes
  */
-Route::get('/tables', [CountryController::class, 'index'])->name('tables');
+Route::get('/tables', [])->name('tables');
 
 Route::prefix('/tables')->middleware('auth')->group(function () {
 
@@ -97,7 +103,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/edit/{id}', [ShowEditCountryFormController::class, 'handle'])->name('tables.country.edit');
         Route::post('/update/{id}', [UpdateCountryController::class, 'handle'])->name('tables.country.update');
 
-        Route::get('/delete/{id}', [CountryController::class, 'destroy'])->name('tables.country.destroy');
+        Route::get('/delete/{id}', [DeleteCountryController::class, 'handle'])->name('tables.country.destroy');
     });
 
     /**
@@ -120,18 +126,18 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
     /**
      * Language
      */
-    Route::get('/languages', [LoadCategoriesController::class, 'handle'])->name('tables.language.index');
+    Route::get('/languages', [LoadLanguagesController::class, 'handle'])->name('tables.language.index');
 
     Route::prefix('language')->group(function () {
-        Route::get('/store', [LanguageController::class, 'create'])->name('tables.language.create');
-        Route::post('/', [LanguageController::class, 'store'])->name('tables.language.store');
+        Route::get('/store', [ShowStoreLanguageFormController::class, 'handle'])->name('tables.language.create');
+        Route::post('/', [StoreLanguageController::class, 'handle'])->name('tables.language.store');
 
-        Route::get('/show/{id}', [LanguageController::class, 'show'])->name('tables.language.show');
+        Route::get('/show/{id}', [ShowLanguageController::class, 'handle'])->name('tables.language.show');
 
-        Route::get('/edit/{id}', [LanguageController::class, 'edit'])->name('tables.language.edit');
-        Route::post('/update/{id}', [LanguageController::class, 'update'])->name('tables.language.update');
+        Route::get('/edit/{id}', [ShowEditLanguageFormController::class, 'handle'])->name('tables.language.edit');
+        Route::post('/update/{id}', [UpdateLanguageController::class, 'handle'])->name('tables.language.update');
 
-        Route::get('/delete/{id}', [LanguageController::class, 'destroy'])->name('tables.language.destroy');
+        Route::get('/delete/{id}', [DeleteLanguageController::class, 'handle'])->name('tables.language.destroy');
     });
 
     /**
