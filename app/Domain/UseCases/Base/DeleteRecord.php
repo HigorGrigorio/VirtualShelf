@@ -5,13 +5,13 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\UseCase;
-use App\Http\Database\Contracts\IRepository;
+use App\Http\Database\Contracts\Repository;
 use Exception;
 
 class DeleteRecord extends UseCase
 {
     public function __construct(
-        IRepository $repository
+        Repository $repository
     )
     {
         parent::__construct($repository);
@@ -43,7 +43,7 @@ class DeleteRecord extends UseCase
         return $result;
     }
 
-    public static function create(IRepository $repository): DeleteRecord
+    public static function create(Repository $repository): DeleteRecord
     {
         return new DeleteRecord($repository);
     }

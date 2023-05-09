@@ -3,11 +3,11 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
-use App\Http\Database\Contracts\ICountryRepository;
+use App\Http\Database\Contracts\CountryRepository as RepositoryContract;
 use App\Models\Country;
 
 
-class CountryRepository extends Repository implements ICountryRepository
+class CountryRepository extends Repository implements RepositoryContract
 {
     public function __construct(
         readonly Country $dao

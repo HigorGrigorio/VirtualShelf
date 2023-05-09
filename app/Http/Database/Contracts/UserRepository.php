@@ -4,7 +4,7 @@ namespace App\Http\Database\Contracts;
 
 use App\Core\Logic\Maybe;
 
-interface IUserRepository extends IRepository
+interface UserRepository extends Repository
 {
     public function getUserByFirstName($userName): Maybe;
 

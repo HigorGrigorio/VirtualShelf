@@ -5,13 +5,13 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\UseCase;
-use App\Http\Database\Contracts\IRepository;
+use App\Http\Database\Contracts\Repository;
 use Throwable;
 
 class CreateRecord extends UseCase
 {
     public function __construct(
-        IRepository $repository
+        Repository $repository
     )
     {
         parent::__construct($repository);
@@ -29,7 +29,7 @@ class CreateRecord extends UseCase
         return $result;
     }
 
-    public static function create(IRepository $repository): CreateRecord
+    public static function create(Repository $repository): CreateRecord
     {
         return new CreateRecord($repository);
     }

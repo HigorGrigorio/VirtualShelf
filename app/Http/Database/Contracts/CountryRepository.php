@@ -5,7 +5,7 @@ namespace App\Http\Database\Contracts;
 use App\Core\Logic\Maybe;
 use App\Models\Country;
 
-interface ICountryRepository extends IRepository
+interface CountryRepository extends Repository
 {
     /**
      * @param string $name

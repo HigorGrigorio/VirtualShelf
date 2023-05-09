@@ -5,14 +5,14 @@ namespace App\Domain\UseCases\User;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\Base\DeleteRecord;
 use App\Domain\UseCases\UseCase;
-use App\Http\Database\Contracts\IUserRepository;
+use App\Http\Database\Contracts\UserRepository;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 
 class DeleteUserById extends UseCase
 {
     public function __construct(
-        IUserRepository $repository
+        UserRepository $repository
     )
     {
         parent::__construct($repository);

@@ -5,13 +5,13 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\UseCase;
-use App\Http\Database\Contracts\IRepository;
+use App\Http\Database\Contracts\Repository;
 use Exception;
 
 class UpdateRecord extends UseCase
 {
     public function __construct(
-        IRepository $repository
+        Repository $repository
     )
     {
         parent::__construct($repository);
@@ -51,7 +51,7 @@ class UpdateRecord extends UseCase
         return $result;
     }
 
-    public static function create(IRepository $repository): UpdateRecord
+    public static function create(Repository $repository): UpdateRecord
     {
         return new self($repository);
     }

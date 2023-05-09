@@ -5,7 +5,7 @@ namespace App\Http\Database\Contracts;
 use App\Core\Logic\Maybe;
 use App\Models\Author;
 
-interface IAuthorRepository extends IRepository
+interface AuthorRepository extends Repository
 {
     /**
      * @param string $name

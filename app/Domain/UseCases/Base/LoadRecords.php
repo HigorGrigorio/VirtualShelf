@@ -5,14 +5,14 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\UseCase;
-use App\Http\Database\Contracts\IRepository;
+use App\Http\Database\Contracts\Repository;
 use Illuminate\Support\Facades\Config;
 use Throwable;
 
 class LoadRecords extends UseCase
 {
     public function __construct(
-        IRepository $repository
+        Repository $repository
     )
     {
         parent::__construct($repository);

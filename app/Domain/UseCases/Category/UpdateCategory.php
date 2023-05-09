@@ -3,13 +3,13 @@
 namespace App\Domain\UseCases\Category;
 
 use App\Domain\UseCases\Base\UpdateRecord;
-use App\Http\Database\Contracts\ICategoryRepository;
+use App\Http\Database\Contracts\CategoryRepository;
 
 class UpdateCategory extends UpdateRecord
 {
 
     public function __construct(
-        ICategoryRepository $repository
+        CategoryRepository $repository
     )
     {
         parent::__construct($repository);

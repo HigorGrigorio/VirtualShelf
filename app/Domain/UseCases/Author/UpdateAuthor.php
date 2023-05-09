@@ -3,12 +3,12 @@
 namespace App\Domain\UseCases\Author;
 
 use App\Domain\UseCases\Base\UpdateRecord;
-use App\Http\Database\Contracts\IAuthorRepository;
+use App\Http\Database\Contracts\AuthorRepository;
 
 class UpdateAuthor extends UpdateRecord
 {
     public function __construct(
-        readonly IAuthorRepository $repository,
+        readonly AuthorRepository $repository,
     )
     {
         parent::__construct($repository);

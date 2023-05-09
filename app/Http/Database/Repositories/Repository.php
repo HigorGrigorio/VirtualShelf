@@ -3,11 +3,11 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
-use App\Http\Database\Contracts\IRepository;
+use App\Http\Database\Contracts\Repository as Contract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-abstract class Repository implements IRepository
+abstract class Repository implements Contract
 {
     public function __construct(
         private readonly Model $dao

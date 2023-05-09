@@ -6,7 +6,7 @@ use App\Core\Logic\Maybe;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface IRepository
+interface Repository
 {
     public function create(array $data): Model;
 

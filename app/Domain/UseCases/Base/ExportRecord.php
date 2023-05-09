@@ -5,7 +5,7 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\UseCase;
-use App\Http\Database\Contracts\IRepository;
+use App\Http\Database\Contracts\Repository;
 use App\Presentation\Adapters\Excel\FromCollectionAdapter;
 use App\Presentation\Adapters\Excel\FromViewAdapter;
 use Exception;
@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class ExportRecord extends UseCase
 {
 
-    public function __construct(IRepository $repository)
+    public function __construct(Repository $repository)
     {
         parent::__construct($repository);
     }

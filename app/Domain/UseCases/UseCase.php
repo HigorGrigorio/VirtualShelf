@@ -4,13 +4,13 @@ namespace App\Domain\UseCases;
 
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Result;
-use App\Http\Database\Contracts\IRepository;
+use App\Http\Database\Contracts\Repository;
 
 abstract class UseCase implements IUseCase
 {
     private array $args = [];
 
-    public function __construct(private readonly IRepository $repository)
+    public function __construct(private readonly Repository $repository)
     {
     }
 
@@ -38,7 +38,7 @@ abstract class UseCase implements IUseCase
         return $this;
     }
 
-    public function getRepository(): IRepository
+    public function getRepository(): Repository
     {
         return $this->repository;
     }

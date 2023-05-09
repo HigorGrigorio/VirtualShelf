@@ -3,10 +3,10 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
-use App\Http\Database\Contracts\IAuthorRepository;
+use App\Http\Database\Contracts\AuthorRepository as RepositoryContract;
 use App\Models\Author;
 
-class AuthorRepository extends Repository implements IAuthorRepository
+class AuthorRepository extends Repository implements RepositoryContract
 {
     public function __construct(
         readonly Author $dao

@@ -3,12 +3,12 @@
 namespace App\Domain\UseCases\Country;
 
 use App\Domain\UseCases\Base\CreateRecord;
-use App\Http\Database\Contracts\ICountryRepository;
+use App\Http\Database\Contracts\CountryRepository;
 
 class CreateCountry extends CreateRecord
 {
     public function __construct(
-        ICountryRepository $repository
+        CountryRepository $repository
     )
     {
         parent::__construct($repository);

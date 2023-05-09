@@ -4,7 +4,7 @@ namespace App\Http\Database\Contracts;
 
 use App\Core\Logic\Maybe;
 
-interface ILanguageRepository extends IRepository
+interface LanguageRepository extends Repository
 {
     public function getLanguageByName(string $name): Maybe;
 

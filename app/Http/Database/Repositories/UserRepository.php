@@ -3,10 +3,10 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
-use App\Http\Database\Contracts\IUserRepository;
+use App\Http\Database\Contracts\UserRepository as RepositoryContract;
 use App\Models\User;
 
-class UserRepository extends Repository implements IUserRepository
+class UserRepository extends Repository implements RepositoryContract
 {
     public function __construct(
         readonly User $dao

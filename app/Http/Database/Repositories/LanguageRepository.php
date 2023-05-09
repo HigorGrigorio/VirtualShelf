@@ -3,10 +3,10 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
-use App\Http\Database\Contracts\ILanguageRepository;
+use App\Http\Database\Contracts\LanguageRepository as RepositoryContract;
 use App\Models\Language;
 
-class LanguageRepository extends Repository implements ILanguageRepository
+class LanguageRepository extends Repository implements RepositoryContract
 {
     public function __construct(
         readonly Language $dao
