@@ -4,10 +4,10 @@ namespace App\Core\Logic;
 
 use TypeError;
 
-readonly class Maybe
+class Maybe
 {
-    private function __construct(private bool  $isJust_,
-                                 private mixed $value_ = null)
+    private function __construct(private readonly bool  $isJust_,
+                                 private readonly mixed $value_ = null)
     {
     }
 
