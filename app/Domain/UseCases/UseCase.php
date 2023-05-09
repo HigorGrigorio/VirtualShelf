@@ -4,7 +4,7 @@ namespace App\Domain\UseCases;
 
 use App\Core\Domain\IUseCase;
 use App\Core\Logic\Result;
-use App\Presentation\Contracts\IRepository;
+use App\Http\Database\Contracts\IRepository;
 
 abstract class UseCase implements IUseCase
 {

@@ -3,7 +3,7 @@
 namespace App\Domain\UseCases\Country;
 
 use App\Domain\UseCases\Base\LoadRecordById;
-use App\Presentation\Contracts\ICountryRepository;
+use App\Http\Database\Contracts\ICountryRepository;
 
 class LoadCountryById extends LoadRecordById
 {

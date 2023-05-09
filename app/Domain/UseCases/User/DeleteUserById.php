@@ -5,7 +5,7 @@ namespace App\Domain\UseCases\User;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\Base\DeleteRecord;
 use App\Domain\UseCases\UseCase;
-use App\Presentation\Contracts\IUserRepository;
+use App\Http\Database\Contracts\IUserRepository;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 

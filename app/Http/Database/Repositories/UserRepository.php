@@ -3,8 +3,8 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
+use App\Http\Database\Contracts\IUserRepository;
 use App\Models\User;
-use App\Presentation\Contracts\IUserRepository;
 
 class UserRepository extends Repository implements IUserRepository
 {

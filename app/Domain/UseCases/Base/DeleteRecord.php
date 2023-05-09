@@ -2,13 +2,11 @@
 
 namespace App\Domain\UseCases\Base;
 
-use App\Core\Domain\IUseCase;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\UseCase;
-use App\Presentation\Contracts\IRepository;
+use App\Http\Database\Contracts\IRepository;
 use Exception;
-use Throwable;
 
 class DeleteRecord extends UseCase
 {

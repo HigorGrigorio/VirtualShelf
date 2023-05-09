@@ -3,8 +3,8 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
+use App\Http\Database\Contracts\IAuthorRepository;
 use App\Models\Author;
-use App\Presentation\Contracts\IAuthorRepository;
 
 class AuthorRepository extends Repository implements IAuthorRepository
 {

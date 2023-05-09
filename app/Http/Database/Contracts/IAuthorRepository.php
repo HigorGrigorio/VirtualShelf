@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presentation\Contracts;
+namespace App\Http\Database\Contracts;
 
 use App\Core\Logic\Maybe;
 use App\Models\Author;

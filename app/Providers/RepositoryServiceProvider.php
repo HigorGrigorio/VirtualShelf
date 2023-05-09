@@ -2,16 +2,16 @@
 
 namespace App\Providers;
 
+use App\Http\Database\Contracts\IAuthorRepository;
+use App\Http\Database\Contracts\ICategoryRepository;
+use App\Http\Database\Contracts\ICountryRepository;
+use App\Http\Database\Contracts\ILanguageRepository;
+use App\Http\Database\Contracts\IUserRepository;
 use App\Http\Database\Repositories\AuthorRepository;
 use App\Http\Database\Repositories\CategoryRepository;
 use App\Http\Database\Repositories\CountryRepository;
 use App\Http\Database\Repositories\LanguageRepository;
 use App\Http\Database\Repositories\UserRepository;
-use App\Presentation\Contracts\IAuthorRepository;
-use App\Presentation\Contracts\ICategoryRepository;
-use App\Presentation\Contracts\ICountryRepository;
-use App\Presentation\Contracts\ILanguageRepository;
-use App\Presentation\Contracts\IUserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presentation\Contracts;
+namespace App\Http\Database\Contracts;
 
 use App\Core\Logic\Maybe;
 use Illuminate\Database\Eloquent\Model;
@@ -27,5 +27,7 @@ interface IRepository
     public function update(array $columns, array $data): int;
 
     public function updateById(int $id, array $data): bool;
+
+    public function export (array $columns ): Maybe;
 
 }

@@ -3,7 +3,7 @@
 namespace App\Domain\UseCases\User;
 
 use App\Domain\UseCases\Base\LoadRecords;
-use App\Presentation\Contracts\IUserRepository;
+use App\Http\Database\Contracts\IUserRepository;
 
 class LoadUsers extends LoadRecords
 {

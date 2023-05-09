@@ -3,7 +3,7 @@
 namespace App\Domain\UseCases\Language;
 
 use App\Domain\UseCases\Base\CreateRecord;
-use App\Presentation\Contracts\ILanguageRepository;
+use App\Http\Database\Contracts\ILanguageRepository;
 
 class CreateLanguage extends CreateRecord
 {

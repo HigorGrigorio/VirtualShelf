@@ -5,7 +5,7 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\UseCase;
-use App\Presentation\Contracts\IRepository;
+use App\Http\Database\Contracts\IRepository;
 use Throwable;
 
 class CreateRecord extends UseCase

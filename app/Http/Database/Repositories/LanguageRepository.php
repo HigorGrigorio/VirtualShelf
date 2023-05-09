@@ -3,8 +3,8 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
+use App\Http\Database\Contracts\ILanguageRepository;
 use App\Models\Language;
-use App\Presentation\Contracts\ILanguageRepository;
 
 class LanguageRepository extends Repository implements ILanguageRepository
 {
@@ -23,6 +23,6 @@ class LanguageRepository extends Repository implements ILanguageRepository
 
     public function getLanguageByCode(string $code): Maybe
     {
-        return $this->getBy('acronym', $acronym);
+        return $this->getBy('acronym', $code);
     }
 }

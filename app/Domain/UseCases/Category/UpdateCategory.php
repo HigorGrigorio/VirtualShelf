@@ -3,7 +3,7 @@
 namespace App\Domain\UseCases\Category;
 
 use App\Domain\UseCases\Base\UpdateRecord;
-use App\Presentation\Contracts\ICategoryRepository;
+use App\Http\Database\Contracts\ICategoryRepository;
 
 class UpdateCategory extends UpdateRecord
 {
