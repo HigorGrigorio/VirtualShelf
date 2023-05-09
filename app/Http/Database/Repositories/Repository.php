@@ -3,7 +3,7 @@
 namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
-use App\Presentation\Contracts\IRepository;
+use App\Http\Database\Contracts\IRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -100,7 +100,7 @@ abstract class Repository implements IRepository
         return $data;
     }
 
-    public function update(array $data, array $columns): int
+    public function update(array $columns, array $data): int
     {
         $models = $this->dao->where($columns)->get();
 
@@ -108,7 +108,7 @@ abstract class Repository implements IRepository
 
         if ($models) {
             for ($i = 0; $i < count($models); $i++) {
-                if($models[$i]->update($data)) {
+                if ($models[$i]->update($data)) {
                     $models[$i]->save();
                     $affectedRows++;
                 }
@@ -129,6 +129,11 @@ abstract class Repository implements IRepository
         }
 
         return $updated;
+    }
+
+    public function export(array $columns): Maybe
+    {
+        return Maybe::flat($this->dao->select($columns)->get(), ['array' => false]);
     }
 
     public function getDao(): Model
