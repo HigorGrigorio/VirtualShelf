@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\Verification\ResendVerificationCode;
 use App\Http\Controllers\Auth\Verification\ShowVerification;
 use App\Http\Controllers\Auth\Verification\VerificationController;
 use App\Http\Controllers\Author\DeleteAuthorController;
+use App\Http\Controllers\Author\ExportAuthorsController;
 use App\Http\Controllers\Author\LoadAuthorsController;
 use App\Http\Controllers\Author\ShowAuthorController;
 use App\Http\Controllers\Author\ShowEditAuthorFormController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\Author\ShowStoreAuthorFormController;
 use App\Http\Controllers\Author\StoreAuthorController;
 use App\Http\Controllers\Author\UpdateAuthorController;
 use App\Http\Controllers\Category\DeleteCategoryController;
+use App\Http\Controllers\Category\ExportCategoriesController;
 use App\Http\Controllers\Category\LoadCategoriesController;
 use App\Http\Controllers\Category\ShowCategoryController;
 use App\Http\Controllers\Category\ShowEditCategoryFormController;
@@ -29,6 +31,7 @@ use App\Http\Controllers\Category\ShowStoreCategoryFormController;
 use App\Http\Controllers\Category\StoreCategoryController;
 use App\Http\Controllers\Category\UpdateCategoryController;
 use App\Http\Controllers\Country\DeleteCountryController;
+use App\Http\Controllers\Country\ExportCountriesController;
 use App\Http\Controllers\Country\LoadCountriesController;
 use App\Http\Controllers\Country\ShowCountryController;
 use App\Http\Controllers\Country\ShowEditCountryFormController;
@@ -36,6 +39,7 @@ use App\Http\Controllers\Country\ShowStoreCountryFormController;
 use App\Http\Controllers\Country\StoreCountryController;
 use App\Http\Controllers\Country\UpdateCountryController;
 use App\Http\Controllers\Language\DeleteLanguageController;
+use App\Http\Controllers\Language\ExportLanguagesController;
 use App\Http\Controllers\Language\LoadLanguagesController;
 use App\Http\Controllers\Language\ShowEditLanguageFormController;
 use App\Http\Controllers\Language\ShowLanguageController;
@@ -43,6 +47,7 @@ use App\Http\Controllers\Language\ShowStoreLanguageFormController;
 use App\Http\Controllers\Language\StoreLanguageController;
 use App\Http\Controllers\Language\UpdateLanguageController;
 use App\Http\Controllers\User\DeleteUserController;
+use App\Http\Controllers\User\ExportUsersController;
 use App\Http\Controllers\User\LoadUsersController;
 use App\Http\Controllers\User\ShowEditUserFormController;
 use App\Http\Controllers\User\ShowStoreUserFormController;
@@ -104,6 +109,8 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::post('/update/{id}', [UpdateCountryController::class, 'handle'])->name('tables.country.update');
 
         Route::get('/delete/{id}', [DeleteCountryController::class, 'handle'])->name('tables.country.destroy');
+
+        Route::post('/export/{format}', [ExportCountriesController::class, 'handle'])->name('tables.country.export');
     });
 
     /**
@@ -111,7 +118,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
      */
     Route::get('/authors', [LoadAuthorsController::class, 'handle'])->name('tables.author.index');
 
-    Route::prefix('author')->group(function () {
+    Route::prefix('authors')->group(function () {
         Route::get('/create', [ShowStoreAuthorFormController::class, 'handle'])->name('tables.author.create');
         Route::post('/', [StoreAuthorController::class, 'handle'])->name('tables.author.store');
 
@@ -121,6 +128,8 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::post('/update/{id}', [UpdateAuthorController::class, 'handle'])->name('tables.author.update');
 
         Route::get('/delete/{id}', [DeleteAuthorController::class, 'handle'])->name('tables.author.destroy');
+
+        Route::post('/export/{format}', [ExportAuthorsController::class, 'handle'])->name('tables.author.export');
     });
 
     /**
@@ -138,6 +147,8 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::post('/update/{id}', [UpdateLanguageController::class, 'handle'])->name('tables.language.update');
 
         Route::get('/delete/{id}', [DeleteLanguageController::class, 'handle'])->name('tables.language.destroy');
+
+        Route::post('/export/{format}', [ExportLanguagesController::class, 'handle'])->name('tables.language.export');
     });
 
     /**
@@ -155,6 +166,8 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::post('/update/{id}', [UpdateCategoryController::class, 'handle'])->name('tables.category.update');
 
         Route::get('/delete/{id}', [DeleteCategoryController::class, 'handle'])->name('tables.category.destroy');
+
+        Route::post('/export/{format}', [ExportCategoriesController::class, 'handle'])->name('tables.category.export');
     });
 
     /**
@@ -172,5 +185,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::post('/update/{id}', [UpdateUserController::class, 'handle'])->name('tables.user.update');
 
         Route::get('/delete/{id}', [DeleteUserController::class, 'handle'])->name('tables.user.destroy');
+
+        Route::post('/export/{format}', [ExportUsersController::class, 'handle'])->name('tables.user.export');
     });
 });

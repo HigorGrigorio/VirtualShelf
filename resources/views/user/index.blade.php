@@ -8,17 +8,20 @@
                     <i class="fas fa-plus"></i>
                     <span class="ms-2">Add</span>
                 </a>
+                <!-- dropdown export -->
+                @include(
+                    'layouts.partials.dropdown-export',
+                    ['table' => 'user']
+                )
             </div>
             <form action="{{route('tables.user.index')}}" method="get"
                   class="d-flex flex-row w-75 gap-3 align-items-center">
-                <div>
+                <div class="input-group">
                     <select name="limit" class="form-select" aria-label="Limit of exhibition..." style="width: 5rem">
                         @foreach($limits as $op)
                             <option value="{{$op}}" {{ $op == $limit ? 'selected' : '' }}>{{$op}}</option>
                         @endforeach
                     </select>
-                </div>
-                <div class="input-group">
                     <div class="form-outline">
                         <input type="search" id="search" name="search" class="form-control" value="{{ $search ?? ''}}"/>
                         <label class="form-label" for="search">Search</label>

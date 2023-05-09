@@ -199,10 +199,7 @@ return [
         App\Providers\RepositoryServiceProvider::class,
 
         App\Providers\DataBaseProvider::class,
-        /*
-        * Package Service Providers...
-        */
-        \Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ],
 
     /*
@@ -217,7 +214,6 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ])->toArray(),
 
     'pagination' => [
