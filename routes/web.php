@@ -46,6 +46,7 @@ use App\Http\Controllers\Language\ShowLanguageController;
 use App\Http\Controllers\Language\ShowStoreLanguageFormController;
 use App\Http\Controllers\Language\StoreLanguageController;
 use App\Http\Controllers\Language\UpdateLanguageController;
+use App\Http\Controllers\State\DeleteStateController;
 use App\Http\Controllers\State\LoadStatesController;
 use App\Http\Controllers\State\ShowEditStateFormController;
 use App\Http\Controllers\State\ShowStateController;
@@ -211,7 +212,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/edit/{id}', [ShowEditStateFormController::class, 'handle'])->name('tables.state.edit');
         Route::post('/update/{id}', [UpdateStateController::class, 'handle'])->name('tables.state.update');
 
-        Route::get('/delete/{id}', [])->name('tables.state.destroy');
+        Route::get('/delete/{id}', [DeleteStateController::class, 'handle'])->name('tables.state.destroy');
 
         Route::post('/export/{format}', [])->name('tables.state.export');
     });
