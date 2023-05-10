@@ -37,7 +37,7 @@
                 <div class="d-flex align-items-center justify-content-around mt-5" role="group"
                      aria-label="Basic example">
                     <button type="submit" class="btn btn-ocean" style="width: 15%">Send</button>
-                    <a href="{{ route('tables.country.index') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
+                    <a href="{{ route('tables.state.index') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
                 </div>
             </form>
         </div>
