@@ -5,6 +5,7 @@ namespace App\Http\Database\Repositories;
 use App\Core\Logic\Maybe;
 use App\Http\Database\Contracts\Repository as Contract;
 use Closure;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -14,6 +15,30 @@ abstract class Repository implements Contract
         private readonly Model $dao
     )
     {
+    }
+
+    /**
+     * Returns the relations of the model to be loaded in the query.
+     *
+     * @return array
+     */
+    protected function relations(): array
+    {
+        return [];
+    }
+
+    protected function getQueryBuilderWithRelations(): Model|Builder
+    {
+        // the query builder to be returned.
+        $queryBuilder = $this->dao;
+
+        // get relations
+        $relations = $this->relations();
+
+        return match (count($relations)) {
+            0 => $queryBuilder,
+            default => $queryBuilder->with($relations)
+        };
     }
 
     public function create(array $data): Model
@@ -50,24 +75,29 @@ abstract class Repository implements Contract
 
     public function getAll(): array
     {
-        $queryBuilder = $this->dao;
-
-        $relations = $this->relations();
-
-        if (count($relations) > 0)
-            $queryBuilder = $queryBuilder->with($relations);
-
-        return $queryBuilder->all()->toArray();
+        return $this
+            ->getQueryBuilderWithRelations()
+            ->all()
+            ->toArray();
     }
 
     public function getBy(string $column, string $value): Maybe
     {
-        return Maybe::flat($this->dao->where($column, $value)->first());
+        return Maybe::flat(
+            $this
+                ->getQueryBuilderWithRelations()
+                ->where($column, $value)
+                ->first()
+        );
     }
 
     public function getById($id): Maybe
     {
-        return Maybe::flat($this->dao->find($id));
+        return Maybe::flat(
+            $this
+                ->getQueryBuilderWithRelations()
+                ->find($id)
+        );
     }
 
     private function getSearchQueryAdapter(string|null $search, array $searchable): Closure
@@ -84,16 +114,6 @@ abstract class Repository implements Contract
     private function getSearchable(): array
     {
         return $this->dao->getFillable();
-    }
-
-    /**
-     * Returns the relations of the model to be loaded in the query.
-     *
-     * @return array
-     */
-    protected function relations(): array
-    {
-        return [];
     }
 
     public function paginate(int $page, string $search = null, $limit = null, array $searchable = null): LengthAwarePaginator
