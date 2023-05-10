@@ -17,7 +17,7 @@ class StateRepository extends Repository implements RepositoryContract
 
     protected function relations(): array
     {
-        return ['country'];
+        return ['state'];
     }
 
     public function getStateByName(string $name): Maybe
