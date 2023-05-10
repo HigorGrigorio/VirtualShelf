@@ -51,6 +51,7 @@ use App\Http\Controllers\State\ShowEditStateFormController;
 use App\Http\Controllers\State\ShowStateController;
 use App\Http\Controllers\State\ShowStoreStateFormController;
 use App\Http\Controllers\State\StoreStateController;
+use App\Http\Controllers\State\UpdateStateController;
 use App\Http\Controllers\User\DeleteUserController;
 use App\Http\Controllers\User\ExportUsersController;
 use App\Http\Controllers\User\LoadUsersController;
@@ -208,7 +209,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/show/{id}', [ShowStateController::class, 'handle'])->name('tables.state.show');
 
         Route::get('/edit/{id}', [ShowEditStateFormController::class, 'handle'])->name('tables.state.edit');
-        Route::post('/update/{id}', [])->name('tables.state.update');
+        Route::post('/update/{id}', [UpdateStateController::class, 'handle'])->name('tables.state.update');
 
         Route::get('/delete/{id}', [])->name('tables.state.destroy');
 

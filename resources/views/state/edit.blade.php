@@ -20,12 +20,19 @@
 
                 <label class="form-label">Select a Country</label>
                 <!--Country select-->
-                <select name="country_id" class="form-select" aria-label="Country of State">
+                <select name="country_id" class="form-select  @error('country_id') is-invalid @enderror"
+                        aria-label="Country of State">
                     @foreach($countries as $country)
                         <option
-                        value="{{$country['id']}}" {{$country['id'] === $record['country_id'] ? 'selected' : ''}}>{{ $country['name'] }}</option>
+                            value="{{$country['id']}}" {{$country['id'] === $record['country_id'] ? 'selected' : ''}}>{{ $country['name'] }}</option>
                     @endforeach
                 </select>
+
+                @error('country_id')
+                    <span class="form-text text-danger">
+                        {{$message}}
+                    </span>
+                @enderror
 
                 <div class="d-flex align-items-center justify-content-around mt-5" role="group"
                      aria-label="Basic example">
