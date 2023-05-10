@@ -2,10 +2,10 @@
 
 namespace App\Domain\UseCases\User;
 
-use App\Domain\UseCases\Base\LoadRecords;
+use App\Domain\UseCases\Base\PaginateRecords;
 use App\Http\Database\Contracts\UserRepository;
 
-class LoadUsers extends LoadRecords
+class PaginateUsers extends PaginateRecords
 {
     public function __construct(
         readonly UserRepository $repository

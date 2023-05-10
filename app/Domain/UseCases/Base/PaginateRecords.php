@@ -9,7 +9,7 @@ use App\Http\Database\Contracts\Repository;
 use Illuminate\Support\Facades\Config;
 use Throwable;
 
-class LoadRecords extends UseCase
+class PaginateRecords extends UseCase
 {
     public function __construct(
         Repository $repository

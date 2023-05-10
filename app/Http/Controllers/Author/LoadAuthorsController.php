@@ -6,7 +6,7 @@ use App\Core\Infra\IController;
 use App\Core\Infra\Traits\AlertsUser;
 use App\Core\Infra\Traits\HasPaginationArguments;
 use App\Core\Infra\Traits\HasRecordArguments;
-use App\Domain\UseCases\Author\LoadAuthors;
+use App\Domain\UseCases\Author\PaginateAuthors;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -20,7 +20,7 @@ class LoadAuthorsController extends Controller implements IController
     use HasPaginationArguments, HasRecordArguments, AlertsUser;
 
     public function __construct(
-        private readonly LoadAuthors $loadAllAuthors
+        private readonly PaginateAuthors $loadAllAuthors
     )
     {
     }

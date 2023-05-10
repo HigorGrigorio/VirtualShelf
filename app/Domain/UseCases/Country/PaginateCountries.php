@@ -2,10 +2,10 @@
 
 namespace App\Domain\UseCases\Country;
 
-use App\Domain\UseCases\Base\LoadRecords;
+use App\Domain\UseCases\Base\PaginateRecords;
 use App\Http\Database\Contracts\CountryRepository;
 
-class LoadCountries extends LoadRecords
+class PaginateCountries extends PaginateRecords
 {
     public function __construct(CountryRepository $countryRepository)
     {

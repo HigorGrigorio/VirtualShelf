@@ -2,10 +2,10 @@
 
 namespace App\Domain\UseCases\Language;
 
-use App\Domain\UseCases\Base\LoadRecords;
+use App\Domain\UseCases\Base\PaginateRecords;
 use App\Http\Database\Contracts\LanguageRepository;
 
-class LoadLanguages extends LoadRecords
+class PaginateLanguages extends PaginateRecords
 {
     public function __construct(
         LanguageRepository $repository

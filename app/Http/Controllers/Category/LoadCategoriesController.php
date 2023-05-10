@@ -6,7 +6,7 @@ use App\Core\Infra\IController;
 use App\Core\Infra\Traits\AlertsUser;
 use App\Core\Infra\Traits\HasPaginationArguments;
 use App\Core\Infra\Traits\HasRecordArguments;
-use App\Domain\UseCases\Category\LoadCategories;
+use App\Domain\UseCases\Category\PaginateCategories;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -20,7 +20,7 @@ class LoadCategoriesController extends Controller implements IController
     use HasRecordArguments, HasPaginationArguments, AlertsUser;
 
     public function __construct(
-        private readonly LoadCategories $loadCategories
+        private readonly PaginateCategories $loadCategories
     )
     {
     }

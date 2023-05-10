@@ -2,10 +2,10 @@
 
 namespace App\Domain\UseCases\State;
 
-use App\Domain\UseCases\Base\LoadRecords;
+use App\Domain\UseCases\Base\PaginateRecords;
 use App\Http\Database\Contracts\StateRepository;
 
-class LoadStates extends LoadRecords
+class PaginateStates extends PaginateRecords
 {
     public function __construct(
         StateRepository $repository

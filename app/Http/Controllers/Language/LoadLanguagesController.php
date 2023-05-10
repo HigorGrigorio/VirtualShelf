@@ -6,7 +6,7 @@ use App\Core\Infra\IController;
 use App\Core\Infra\Traits\AlertsUser;
 use App\Core\Infra\Traits\HasPaginationArguments;
 use App\Core\Infra\Traits\HasRecordArguments;
-use App\Domain\UseCases\Language\LoadLanguages;
+use App\Domain\UseCases\Language\PaginateLanguages;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -20,7 +20,7 @@ class LoadLanguagesController extends Controller implements IController
     use HasRecordArguments, HasPaginationArguments, AlertsUser;
 
     public function __construct(
-        private readonly LoadLanguages $loadLanguages
+        private readonly PaginateLanguages $loadLanguages
     )
     {
     }
