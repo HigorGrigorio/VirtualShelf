@@ -46,6 +46,14 @@ use App\Http\Controllers\Language\ShowLanguageController;
 use App\Http\Controllers\Language\ShowStoreLanguageFormController;
 use App\Http\Controllers\Language\StoreLanguageController;
 use App\Http\Controllers\Language\UpdateLanguageController;
+use App\Http\Controllers\Publisher\DeletePublisherController;
+use App\Http\Controllers\Publisher\ExportPublishersController;
+use App\Http\Controllers\Publisher\LoadPublishersController;
+use App\Http\Controllers\Publisher\ShowEditPublisherFormController;
+use App\Http\Controllers\Publisher\ShowPublisherController;
+use App\Http\Controllers\Publisher\ShowStorePublisherFormController;
+use App\Http\Controllers\Publisher\StorePublisherController;
+use App\Http\Controllers\Publisher\UpdatePublisherController;
 use App\Http\Controllers\State\DeleteStateController;
 use App\Http\Controllers\State\ExportStatesController;
 use App\Http\Controllers\State\LoadStatesController;
@@ -198,9 +206,8 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
     });
 
     /**
-     * Language
+     * States
      */
-
     Route::prefix('states')->group(function () {
 
         Route::get('/', [LoadStatesController::class, 'handle'])->name('tables.state.index');
@@ -216,5 +223,25 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/delete/{id}', [DeleteStateController::class, 'handle'])->name('tables.state.destroy');
 
         Route::post('/export/{format}', [ExportStatesController::class, 'handle'])->name('tables.state.export');
+    });
+
+    /**
+     * Publishers
+     */
+    Route::prefix('publishers')->group(function () {
+
+        Route::get('/', [LoadPublishersController::class, 'handle'])->name('tables.publisher.index');
+
+        Route::get('/store', [ShowStorePublisherFormController::class, 'handle'])->name('tables.publisher.create');
+        Route::post('/', [StorePublisherController::class, 'handle'])->name('tables.publisher.store');
+
+        Route::get('/show/{id}', [ShowPublisherController::class, 'handle'])->name('tables.publisher.show');
+
+        Route::get('/edit/{id}', [ShowEditPublisherFormController::class, 'handle'])->name('tables.publisher.edit');
+        Route::post('/update/{id}', [UpdatePublisherController::class, 'handle'])->name('tables.publisher.update');
+
+        Route::get('/delete/{id}', [DeletePublisherController::class, 'handle'])->name('tables.publisher.destroy');
+
+        Route::post('/export/{format}', [ExportPublishersController::class, 'handle'])->name('tables.publisher.export');
     });
 });
