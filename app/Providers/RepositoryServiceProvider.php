@@ -7,10 +7,12 @@ use App\Http\Database\Contracts\CategoryRepository;
 use App\Http\Database\Contracts\CountryRepository;
 use App\Http\Database\Contracts\LanguageRepository;
 use App\Http\Database\Contracts\UserRepository;
+use App\Http\Database\Contracts\StateRepository;
 use App\Http\Database\Repositories\AuthorRepository as AuthorRepositoryImpl;
 use App\Http\Database\Repositories\CategoryRepository as CategoryRepositoryImpl;
 use App\Http\Database\Repositories\CountryRepository as CountryRepositoryImpl;
 use App\Http\Database\Repositories\LanguageRepository as LanguageRepositoryImpl;
+use App\Http\Database\Repositories\StateRepository as StateRepositoryImpl;
 use App\Http\Database\Repositories\UserRepository as UserRepositoryImpl;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +24,7 @@ class RepositoryServiceProvider extends ServiceProvider
         LanguageRepository::class => LanguageRepositoryImpl::class,
         CategoryRepository::class => CategoryRepositoryImpl::class,
         UserRepository::class => UserRepositoryImpl::class,
+        StateRepository::class => StateRepositoryImpl::class,
     ];
 
     /**

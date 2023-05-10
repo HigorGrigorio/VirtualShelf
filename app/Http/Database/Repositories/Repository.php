@@ -4,6 +4,7 @@ namespace App\Http\Database\Repositories;
 
 use App\Core\Logic\Maybe;
 use App\Http\Database\Contracts\Repository as Contract;
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -49,7 +50,10 @@ abstract class Repository implements Contract
 
     public function getAll(): array
     {
-        return $this->dao->all()->toArray();
+        return $this->dao
+            ->all()
+            ->with($this->relations())
+            ->toArray();
     }
 
     public function getBy(string $column, string $value): Maybe
@@ -62,7 +66,7 @@ abstract class Repository implements Contract
         return Maybe::flat($this->dao->find($id));
     }
 
-    private function getSearchQuery(string|null $search, array $searchable): \Closure
+    private function getSearchQueryAdapter(string|null $search, array $searchable): Closure
     {
         return function ($query) use ($searchable, $search) {
             if ($search) {
@@ -78,26 +82,38 @@ abstract class Repository implements Contract
         return $this->dao->getFillable();
     }
 
+    /**
+     * Returns the relations of the model to be loaded in the query.
+     *
+     * @return array
+     */
+    protected function relations(): array
+    {
+        return [];
+    }
+
     public function paginate(int $page, string $search = null, $limit = null, array $searchable = null): LengthAwarePaginator
     {
-        if (!is_null($search)) {
-            if (is_null($searchable)) {
-                $searchable = $this->getSearchable();
-            } else {
-                $searchable = array_merge(
+        $table = $this->dao;
+
+        if ($search) {
+            $searchable = match ($searchable) {
+                null => $this->getSearchable(),
+                default => array_merge(
                     $this->getSearchable(),
                     $searchable
-                );
-            }
+                ),
+            };
 
-            $data = $this->dao
-                ->where($this->getSearchQuery($search, $searchable))
-                ->paginate($limit);
-        } else {
-            $data = $this->dao->paginate($limit);
+            $table = $table->where($this->getSearchQueryAdapter($search, $searchable));
         }
 
-        return $data;
+        $relations = $this->relations();
+
+        if (count($relations) > 0)
+            $table = $table->with($relations);
+
+        return $table->paginate($limit);
     }
 
     public function update(array $columns, array $data): int

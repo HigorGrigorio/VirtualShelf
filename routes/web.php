@@ -46,6 +46,7 @@ use App\Http\Controllers\Language\ShowLanguageController;
 use App\Http\Controllers\Language\ShowStoreLanguageFormController;
 use App\Http\Controllers\Language\StoreLanguageController;
 use App\Http\Controllers\Language\UpdateLanguageController;
+use App\Http\Controllers\State\LoadStatesController;
 use App\Http\Controllers\User\DeleteUserController;
 use App\Http\Controllers\User\ExportUsersController;
 use App\Http\Controllers\User\LoadUsersController;
@@ -90,16 +91,16 @@ Route::post('/password/confirm', [ConfirmPasswordController::class, 'handle']);
 /*
  * Tables routes
  */
-Route::get('/tables', [])->name('tables');
 
 Route::prefix('/tables')->middleware('auth')->group(function () {
+    Route::get('/tables', [])->name('tables');
 
     /**
      * Country
      */
-    Route::get('/countries', [LoadCountriesController::class, 'handle'])->name('tables.country.index');
-
     Route::prefix('country')->group(function () {
+        Route::get('/', [LoadCountriesController::class, 'handle'])->name('tables.country.index');
+
         Route::get('/store', [ShowStoreCountryFormController::class, 'handle'])->name('tables.country.create');
         Route::post('/', [StoreCountryController::class, 'handle'])->name('tables.country.store');
 
@@ -116,9 +117,9 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
     /**
      * Author
      */
-    Route::get('/authors', [LoadAuthorsController::class, 'handle'])->name('tables.author.index');
-
     Route::prefix('authors')->group(function () {
+        Route::get('/', [LoadAuthorsController::class, 'handle'])->name('tables.author.index');
+
         Route::get('/create', [ShowStoreAuthorFormController::class, 'handle'])->name('tables.author.create');
         Route::post('/', [StoreAuthorController::class, 'handle'])->name('tables.author.store');
 
@@ -135,9 +136,9 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
     /**
      * Language
      */
-    Route::get('/languages', [LoadLanguagesController::class, 'handle'])->name('tables.language.index');
+    Route::prefix('languages')->group(function () {
+        Route::get('/', [LoadLanguagesController::class, 'handle'])->name('tables.language.index');
 
-    Route::prefix('language')->group(function () {
         Route::get('/store', [ShowStoreLanguageFormController::class, 'handle'])->name('tables.language.create');
         Route::post('/', [StoreLanguageController::class, 'handle'])->name('tables.language.store');
 
@@ -154,9 +155,9 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
     /**
      * Category
      */
-    Route::get('/categories', [LoadCategoriesController::class, 'handle'])->name('tables.category.index');
-
     Route::prefix('category')->group(function () {
+        Route::get('/', [LoadCategoriesController::class, 'handle'])->name('tables.category.index');
+
         Route::get('/store', [ShowStoreCategoryFormController::class, 'handle'])->name('tables.category.create');
         Route::post('/', [StoreCategoryController::class, 'handle'])->name('tables.category.store');
 
@@ -173,9 +174,9 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
     /**
      * User
      */
-    Route::get('/users', [LoadUsersController::class, 'handle'])->name('tables.user.index');
+    Route::prefix('users')->group(function () {
+        Route::get('/', [LoadUsersController::class, 'handle'])->name('tables.user.index');
 
-    Route::prefix('user')->group(function () {
         Route::get('/store', [ShowStoreUserFormController::class, 'handle'])->name('tables.user.create');
         Route::post('/', [StoreUserController::class, 'handle'])->name('tables.user.store');
 
@@ -187,5 +188,26 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/delete/{id}', [DeleteUserController::class, 'handle'])->name('tables.user.destroy');
 
         Route::post('/export/{format}', [ExportUsersController::class, 'handle'])->name('tables.user.export');
+    });
+
+    /**
+     * Language
+     */
+
+    Route::prefix('states')->group(function () {
+
+        Route::get('/', [LoadStatesController::class, 'handle'])->name('tables.state.index');
+
+        Route::get('/store', [])->name('tables.state.create');
+        Route::post('/', [])->name('tables.state.store');
+
+        Route::get('/show/{id}', [])->name('tables.state.show');
+
+        Route::get('/edit/{id}', [])->name('tables.state.edit');
+        Route::post('/update/{id}', [])->name('tables.state.update');
+
+        Route::get('/delete/{id}', [])->name('tables.state.destroy');
+
+        Route::post('/export/{format}', [])->name('tables.state.export');
     });
 });

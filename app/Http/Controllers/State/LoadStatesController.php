@@ -15,7 +15,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class LoadStateController extends Controller implements IController
+class LoadStatesController extends Controller implements IController
 {
     use HasRecordArguments, HasPaginationArguments, AlertsUser;
 
