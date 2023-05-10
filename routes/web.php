@@ -49,6 +49,7 @@ use App\Http\Controllers\Language\UpdateLanguageController;
 use App\Http\Controllers\State\LoadStatesController;
 use App\Http\Controllers\State\ShowStateController;
 use App\Http\Controllers\State\ShowStoreStateFormController;
+use App\Http\Controllers\State\StoreStateController;
 use App\Http\Controllers\User\DeleteUserController;
 use App\Http\Controllers\User\ExportUsersController;
 use App\Http\Controllers\User\LoadUsersController;
@@ -201,7 +202,7 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/', [LoadStatesController::class, 'handle'])->name('tables.state.index');
 
         Route::get('/store', [ShowStoreStateFormController::class, 'handle'])->name('tables.state.create');
-        Route::post('/', [])->name('tables.state.store');
+        Route::post('/', [StoreStateController::class, 'handle'])->name('tables.state.store');
 
         Route::get('/show/{id}', [ShowStateController::class, 'handle'])->name('tables.state.show');
 

@@ -50,10 +50,14 @@ abstract class Repository implements Contract
 
     public function getAll(): array
     {
-        return $this->dao
-            ->all()
-            ->with($this->relations())
-            ->toArray();
+        $queryBuilder = $this->dao;
+
+        $relations = $this->relations();
+
+        if (count($relations) > 0)
+            $queryBuilder = $queryBuilder->with($relations);
+
+        return $queryBuilder->all()->toArray();
     }
 
     public function getBy(string $column, string $value): Maybe
