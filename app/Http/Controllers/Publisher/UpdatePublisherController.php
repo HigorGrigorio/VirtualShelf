@@ -33,7 +33,14 @@ class UpdatePublisherController extends Controller implements IController
                 'max:50',
                 Rule::unique('publishers')->ignore($id),
             ],
-            'states_id' => [
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:50',
+                Rule::unique('publishers')->ignore($id),
+            ],
+            'state_id' => [
                 'required',
                 'integer',
                 'exists:states,id',
@@ -53,6 +60,7 @@ class UpdatePublisherController extends Controller implements IController
                 ->setArgs([
                     'id' => $request->route('id'),
                     'name' => $request->input('name'),
+                    'email' => $request->input('email'),
                     'states_id' => $request->input('states_id'),
                 ])
                 ->execute();

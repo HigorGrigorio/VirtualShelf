@@ -76,7 +76,7 @@ abstract class Repository implements Contract
     public function getAll(): array
     {
         return $this
-            ->getQueryBuilderWithRelations()
+            ->getDao()
             ->all()
             ->toArray();
     }

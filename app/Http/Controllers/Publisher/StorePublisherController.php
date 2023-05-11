@@ -33,6 +33,7 @@ class StorePublisherController extends Controller implements IController
     {
         return [
             'name' => 'required|string|max:50|unique:publishers',
+            'email' => 'required|email|unique:publishers',
             'state_id' => 'required|integer|exists:states,id'
         ];
     }

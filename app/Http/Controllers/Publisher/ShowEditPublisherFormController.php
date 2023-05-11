@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Publisher;
 use App\Core\Infra\IController;
 use App\Core\Infra\Traits\AlertsUser;
 use App\Core\Infra\Traits\HasRecordArguments;
-use App\Domain\UseCases\Country\LoadCountries;
+use App\Domain\UseCases\State\LoadStates;
 use App\Domain\UseCases\Publisher\LoadPublisherById;
 use App\Http\Controllers\Controller;
 use Exception;
@@ -21,7 +21,7 @@ class ShowEditPublisherFormController extends Controller implements IController
 
     public function __construct(
         private readonly LoadPublisherById $loadPublisherById,
-        private readonly LoadCountries $loadCountries
+        private readonly LoadStates $loadStates
     )
     {
     }
@@ -43,10 +43,10 @@ class ShowEditPublisherFormController extends Controller implements IController
                 ])
                 ->execute();
 
-            $findCountriesResult = $this->loadCountries->execute();
+            $findStatesResult = $this->loadStates->execute();
 
 
-            if ($findPublisherResult->isRejected() || $findCountriesResult->isRejected()) {
+            if ($findPublisherResult->isRejected() || $findStatesResult->isRejected()) {
                 abort(404);
             }
 
@@ -55,7 +55,7 @@ class ShowEditPublisherFormController extends Controller implements IController
                 $this->getRecordArgs(),
                 [
                     'record' => $findPublisherResult->get(),
-                    'countries' => $findCountriesResult->get(),
+                    'states' => $findStatesResult->get(),
                 ]
             ));
         } catch (Exception) {

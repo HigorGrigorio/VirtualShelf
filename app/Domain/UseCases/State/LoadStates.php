@@ -3,12 +3,12 @@
 namespace App\Domain\UseCases\State;
 
 use App\Domain\UseCases\Base\LoadRecords;
-use App\Http\Database\Repositories\CountryRepository;
+use App\Http\Database\Repositories\StateRepository;
 
 class LoadStates extends LoadRecords
 {
     public function __construct(
-        CountryRepository $repository
+        StateRepository $repository
     )
     {
         parent::__construct($repository);
