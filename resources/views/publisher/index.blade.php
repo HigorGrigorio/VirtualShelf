@@ -1,20 +1,20 @@
-@extends('layouts.app', ['title' => 'States'])
+@extends('layouts.app', ['title' => 'Publishers'])
 
 @section('content')
     <div class="container px-0">
         <div class="pt-4 pb-3 container-fluid d-flex flex-row justify-content-between px-0">
             <div>
-                <a href="{{route('tables.state.create')}}" class="btn btn-ocean">
+                <a href="{{route('tables.'.$singular.'.create')}}" class="btn btn-ocean">
                     <i class="fas fa-plus"></i>
                     <span class="ms-2">Add</span>
                 </a>
                 <!-- dropdown export -->
                 @include(
                     'layouts.partials.dropdown-export',
-                    ['table' => 'state']
+                    ['table' => $singular]
                 )
             </div>
-            <form action="{{route('tables.state.index')}}" method="get"
+            <form action="{{route('tables.'.$singular.'.index')}}" method="get"
                   class="d-flex flex-row w-75 gap-3 align-items-center">
                 <div class="input-group">
                     <select name="limit" class="form-select" aria-label="Limit of exhibition..." style="width: 5rem">
@@ -52,22 +52,22 @@
                         <tr>
                             <th scope="row">{{ $row->id }}</th>
                             <th>{{ $row->name }}</th>
-                            <th>{{ $row->country->name }}</th>
+                            <th>{{ $row->state->name }}</th>
                             <td>
-                                <a href="{{ route('tables.state.edit', ['id' => $row->id]) }}"
+                                <a href="{{ route('tables.'.$singular.'.edit', ['id' => $row->id]) }}"
                                    role="button"
                                    class="btn btn-link text-warning btn-rounded btn-sm fw-bold"
                                    data-mdb-ripple-color="primary">
                                     <i class="fa fa-pencil"></i>
                                 </a>
                                 <button
-                                    data-href="{{ route('tables.state.destroy', ['id' => $row->id]) }}"
+                                    data-href="{{ route('tables.'.$singular.'.destroy', ['id' => $row->id]) }}"
                                     data-mdb-toggle="modal"
                                     data-mdb-target="#confirm-modal"
                                     class="btn btn-link text-danger btn-rounded btn-sm fw-bold">
                                     <i class="fa fa-trash"></i>
                                 </button>
-                                <a href="{{ route('tables.state.show', ['id' => $row->id]) }}"
+                                <a href="{{ route('tables.'.$singular.'.show', ['id' => $row->id]) }}"
                                    role="button"
                                    class="btn btn-link text-success btn-rounded btn-sm fw-bold"
                                    data-mdb-ripple-color="primary">

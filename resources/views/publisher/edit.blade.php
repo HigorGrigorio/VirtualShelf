@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => `Editing ` . $record[`name`]])
 
 @section('content')
     <div class="pt-lg-5 d-flex align-items-center">
@@ -8,7 +8,7 @@
                         {{$record->name}} ({{$record->state->name}})
                     @endif.</h1>
             </div>
-            <form action="{{route('tables.publisher.update', $record->id)}}" method="POST">
+            <form action="{{route('tables.'.$singular.'.update', $record->id)}}" method="POST">
                 @csrf
 
                 <x-input type="text"
@@ -45,7 +45,7 @@
                 <div class="d-flex align-items-center justify-content-around mt-5" role="group"
                      aria-label="Basic example">
                     <button type="submit" class="btn btn-ocean" style="width: 15%">Send</button>
-                    <a href="{{ route('tables.publisher.index') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
+                    <a href="{{ route('tables.'.$singular.'.index') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
                 </div>
             </form>
         </div>

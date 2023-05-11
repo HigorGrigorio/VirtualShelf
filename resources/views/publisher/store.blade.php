@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => 'Creating a State'])
 
 @section('content')
     <div class="pt-lg-5 d-flex align-items-center">
@@ -6,11 +6,11 @@
             <div>
                 <h1 class="text-smoke">Inserting Publishing</h1>
             </div>
-            <form action="{{ route('tables.publishing.store') }}" method="POST">
+            <form action="{{ route('tables.'.$singular.'.store') }}" method="POST">
                 @csrf
 
                 <x-input type="text" id="name " name="name" label="State Name"
-                         help="Make sure the publishing is not registered"/>
+                         help="Make sure the publisher is not registered"/>
 
                 <x-input type="text" id="email " name="email" label="State Email"
                          help="The email must be unique"/>
@@ -34,7 +34,7 @@
                 <div class="d-flex align-items-center justify-content-around mt-4" role="group"
                      aria-label="Basic example">
                     <button type="submit" class="btn btn-ocean" style="width: 15%">Send</button>
-                    <a href="{{ route('tables.publishing.index') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
+                    <a href="{{ route('tables.'.$singular.'.index') }}" class="btn btn-danger" style="width: 15%">Cancel</a>
                 </div>
             </form>
         </div>
