@@ -10,4 +10,8 @@ use App\Core\Logic\Result;
 interface IUseCase
 {
     public function execute(): Result;
+
+    public function getArgs(): array;
+
+    public function setArgs(array $args): IUseCase;
 }
