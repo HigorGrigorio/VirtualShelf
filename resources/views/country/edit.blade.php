@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => 'Editing ' . $record->name])
 
 @section('content')
     <div class="pt-lg-5 d-flex align-items-center">

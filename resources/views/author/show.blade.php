@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => 'Viewing ' . $singular])
 
 @section('content')
     <x-modal-delete></x-modal-delete>

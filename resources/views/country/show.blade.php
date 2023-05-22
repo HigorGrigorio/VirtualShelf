@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => 'Viewing ' . $record['name']])
 
 @section('content')
     <x-modal-delete></x-modal-delete>

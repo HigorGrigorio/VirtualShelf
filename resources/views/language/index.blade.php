@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => 'Languages'])
 
 @section('content')
     <div class="container px-0">

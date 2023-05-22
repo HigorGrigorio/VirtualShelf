@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => `Editing ` . $record[`name`]])
 
 @section('content')
     <div class="pt-lg-5 d-flex align-items-center">
@@ -16,7 +16,7 @@
                          help="The slug must be unique"/>
 
                 <x-text-area type="text" id="description" name="description" label="Category Description" rows="4"
-                             help="The max of characters is 512." max="512" />
+                             help="The max of characters is 512." max="512"/>
 
                 <div class="d-flex align-items-center justify-content-around" role="group"
                      aria-label="Basic example">

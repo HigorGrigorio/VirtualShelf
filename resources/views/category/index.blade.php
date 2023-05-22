@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => 'Category' . $plural])
 
 @section('content')
     <div class="container px-0">
