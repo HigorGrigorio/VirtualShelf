@@ -54,6 +54,12 @@ use App\Http\Controllers\Publisher\ShowPublisherController;
 use App\Http\Controllers\Publisher\ShowStorePublisherFormController;
 use App\Http\Controllers\Publisher\StorePublisherController;
 use App\Http\Controllers\Publisher\UpdatePublisherController;
+use App\Http\Controllers\PublisherLanguage\DeletePublisherLanguageController;
+use App\Http\Controllers\PublisherLanguage\PaginatePublishersLanguagesController;
+use App\Http\Controllers\PublisherLanguage\ShowEditPublisherLanguageFormController;
+use App\Http\Controllers\PublisherLanguage\ShowStorePublisherLanguageFormController;
+use App\Http\Controllers\PublisherLanguage\StorePublisherLanguageController;
+use App\Http\Controllers\PublisherLanguage\UpdatePublisherLanguageController;
 use App\Http\Controllers\State\DeleteStateController;
 use App\Http\Controllers\State\ExportStatesController;
 use App\Http\Controllers\State\LoadStatesController;
@@ -243,5 +249,18 @@ Route::prefix('/tables')->middleware('auth')->group(function () {
         Route::get('/delete/{id}', [DeletePublisherController::class, 'handle'])->name('tables.publisher.destroy');
 
         Route::post('/export/{format}', [ExportPublishersController::class, 'handle'])->name('tables.publisher.export');
+    });
+
+    Route::prefix('publishers-languages')->group(function () {
+
+        Route::get('/', [PaginatePublishersLanguagesController::class, 'handle'])->name('tables.publishers-language.index');
+
+        Route::get('/store', [ShowStorePublisherLanguageFormController::class, 'handle'])->name('tables.publishers-language.create');
+        Route::post('/', [StorePublisherLanguageController::class, 'handle'])->name('tables.publishers-language.store');
+
+        Route::get('/edit/{id}', [ShowEditPublisherLanguageFormController::class, 'handle'])->name('tables.publishers-language.edit');
+        Route::post('/update/{id}', [UpdatePublisherLanguageController::class, 'handle'])->name('tables.publishers-language.update');
+
+        Route::get('/delete/{id}', [DeletePublisherLanguageController::class, 'handle'])->name('tables.publishers-language.destroy');
     });
 });
