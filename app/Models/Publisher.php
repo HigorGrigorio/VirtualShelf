@@ -26,4 +26,9 @@ class Publisher extends Model
     {
         return $this->belongsTo(State::class);
     }
+
+    public function languages(): BelongsTo
+    {
+        return $this->belongsTo(PublisherLanguage::class);
+    }
 }
