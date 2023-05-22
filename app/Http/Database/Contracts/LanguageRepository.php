@@ -4,7 +4,16 @@ namespace App\Http\Database\Contracts;
 
 use App\Core\Logic\Maybe;
 
-interface LanguageRepository extends Repository
+interface LanguageRepository extends
+    CreateRepository,
+    DeleteByIdRepository,
+    DeleteRepository,
+    ExportRepository,
+    GetByIdRepository,
+    PaginateRepository,
+    UpdateByIdRepository,
+    UpdateRepository,
+    GetAllRepository
 {
     public function getLanguageByName(string $name): Maybe;
 

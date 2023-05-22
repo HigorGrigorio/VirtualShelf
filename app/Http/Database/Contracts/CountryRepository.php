@@ -5,7 +5,15 @@ namespace App\Http\Database\Contracts;
 use App\Core\Logic\Maybe;
 use App\Models\Country;
 
-interface CountryRepository extends Repository
+interface CountryRepository extends
+    CreateRepository,
+    DeleteByIdRepository,
+    DeleteRepository,
+    ExportRepository,
+    GetByIdRepository,
+    PaginateRepository,
+    UpdateByIdRepository,
+    UpdateRepository
 {
     /**
      * @param string $name
