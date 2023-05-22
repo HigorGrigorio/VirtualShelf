@@ -9,6 +9,16 @@ use App\Models\Country;
 
 class CountryRepository extends Repository implements RepositoryContract
 {
+    use Traits\CreateRepository,
+        Traits\DeleteById,
+        Traits\DeleteRepository,
+        Traits\ExportRepository,
+        Traits\GetAllRepository,
+        Traits\GetByIdRepository,
+        Traits\PaginateRepository,
+        Traits\UpdateByIdRepository,
+        Traits\UpdateRepository;
+
     public function __construct(
         readonly Country $dao
     )

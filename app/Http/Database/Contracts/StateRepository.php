@@ -4,7 +4,15 @@ namespace App\Http\Database\Contracts;
 
 use App\Core\Logic\Maybe;
 
-interface StateRepository extends Repository
+interface StateRepository extends
+    CreateRepository,
+    DeleteByIdRepository,
+    DeleteRepository,
+    ExportRepository,
+    GetByIdRepository,
+    PaginateRepository,
+    UpdateByIdRepository,
+    UpdateRepository
 {
     public function getStateByName(string $name): Maybe;
 

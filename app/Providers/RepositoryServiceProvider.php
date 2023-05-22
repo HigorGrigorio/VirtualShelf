@@ -6,17 +6,18 @@ use App\Http\Database\Contracts\AuthorRepository;
 use App\Http\Database\Contracts\CategoryRepository;
 use App\Http\Database\Contracts\CountryRepository;
 use App\Http\Database\Contracts\LanguageRepository;
+use App\Http\Database\Contracts\PublisherLanguageRepository;
 use App\Http\Database\Contracts\PublisherRepository;
-use App\Http\Database\Contracts\UserRepository;
 use App\Http\Database\Contracts\StateRepository;
+use App\Http\Database\Contracts\UserRepository;
 use App\Http\Database\Repositories\AuthorRepository as AuthorRepositoryImpl;
 use App\Http\Database\Repositories\CategoryRepository as CategoryRepositoryImpl;
 use App\Http\Database\Repositories\CountryRepository as CountryRepositoryImpl;
 use App\Http\Database\Repositories\LanguageRepository as LanguageRepositoryImpl;
+use App\Http\Database\Repositories\PublisherLanguageRepository as PublisherLanguageRepositoryImpl;
+use App\Http\Database\Repositories\PublisherRepository as PublisherRepositoryImpl;
 use App\Http\Database\Repositories\StateRepository as StateRepositoryImpl;
 use App\Http\Database\Repositories\UserRepository as UserRepositoryImpl;
-use App\Http\Database\Repositories\PublisherRepository as PublisherRepositoryImpl;
-use App\Models\Publisher;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -29,6 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider
         UserRepository::class => UserRepositoryImpl::class,
         StateRepository::class => StateRepositoryImpl::class,
         PublisherRepository::class => PublisherRepositoryImpl::class,
+        PublisherLanguageRepository::class => PublisherLanguageRepositoryImpl::class
     ];
 
     /**

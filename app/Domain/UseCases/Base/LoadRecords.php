@@ -5,13 +5,14 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\UseCase;
+use App\Http\Database\Contracts\GetAllRepository;
 use App\Http\Database\Contracts\Repository;
 use Exception;
 
 class LoadRecords extends UseCase
 {
     public function __construct(
-        Repository $repository
+        GetAllRepository $repository
     )
     {
         parent::__construct($repository);

@@ -19,7 +19,7 @@ class StorePublisherController extends Controller implements IController
     use HasRecordArguments;
 
     public function __construct(
-        private readonly CreatePublisher $createPublisher
+        private readonly CreatePublisher $createPublisher,
     )
     {
     }
@@ -35,6 +35,7 @@ class StorePublisherController extends Controller implements IController
             'name' => 'required|string|max:50|unique:publishers',
             'email' => 'required|email|unique:publishers',
             'state_id' => 'required|integer|exists:states,id'
+
         ];
     }
 

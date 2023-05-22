@@ -8,6 +8,16 @@ use App\Models\Publisher;
 
 class PublisherRepository extends Repository implements RepositoryContract
 {
+    use Traits\CreateRepository,
+        Traits\DeleteById,
+        Traits\DeleteRepository,
+        Traits\ExportRepository,
+        Traits\GetAllRepository,
+        Traits\GetByIdRepository,
+        Traits\PaginateRepository,
+        Traits\UpdateByIdRepository,
+        Traits\UpdateRepository;
+
     public function __construct(
         readonly Publisher $dao
     )
@@ -15,7 +25,7 @@ class PublisherRepository extends Repository implements RepositoryContract
         parent::__construct($dao);
     }
 
-    protected function relations(): array
+    public function relations(): array
     {
         return ['state'];
     }

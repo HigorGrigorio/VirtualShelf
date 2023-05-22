@@ -6,12 +6,13 @@ use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\UseCase;
 use App\Http\Database\Contracts\Repository;
+use App\Http\Database\Contracts\UpdateRepository;
 use Exception;
 
 class UpdateRecord extends UseCase
 {
     public function __construct(
-        Repository $repository
+        UpdateRepository $repository
     )
     {
         parent::__construct($repository);

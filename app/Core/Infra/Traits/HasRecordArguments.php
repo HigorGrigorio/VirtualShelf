@@ -21,7 +21,7 @@ trait HasRecordArguments
      */
     protected function getTablePlural(): string
     {
-        return Str::plural($this->getTable());
+        return str_replace('_', '-', Str::plural($this->getTable()));
     }
 
     public function getColumns(): array
@@ -35,7 +35,7 @@ trait HasRecordArguments
     protected
     function getTableSingular(): string
     {
-        return Str::singular($this->getTable());
+        return str_replace('_', '-', Str::singular($this->getTable()));
     }
 
     /**
@@ -75,15 +75,17 @@ trait HasRecordArguments
      */
     public function getRecordArgs(): array
     {
+        $tables = DBHelper::getInstance()->getTables();
+
         return [
             'tables' => array_map(
                 fn($table) => [
-                    'name' => $table,
-                    'singular' => Str::singular($table),
-                    'plural' => Str::plural($table),
-                    'index' => 'tables.' . Str::singular($table) . '.index',
+                    'name' => str_replace('_', '-', $table),
+                    'singular' => Str::singular(str_replace('_', '-', $table)),
+                    'plural' => Str::plural(str_replace('_', '-', $table)),
+                    'index' => 'tables.' . Str::singular(str_replace('_', '-', $table)) . '.index',
                 ],
-                DBHelper::getInstance()->getTables(),
+                $tables
             ),
             'table' => $this->getTable(),
             'singular' => $this->getTableSingular(),

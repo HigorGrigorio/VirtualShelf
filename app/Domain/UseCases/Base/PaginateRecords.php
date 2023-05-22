@@ -5,6 +5,7 @@ namespace App\Domain\UseCases\Base;
 use App\Core\Logic\Maybe;
 use App\Core\Logic\Result;
 use App\Domain\UseCases\UseCase;
+use App\Http\Database\Contracts\PaginateRepository;
 use App\Http\Database\Contracts\Repository;
 use Illuminate\Support\Facades\Config;
 use Throwable;
@@ -12,7 +13,7 @@ use Throwable;
 class PaginateRecords extends UseCase
 {
     public function __construct(
-        Repository $repository
+        PaginateRepository $repository
     )
     {
         parent::__construct($repository);

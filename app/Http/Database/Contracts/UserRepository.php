@@ -4,7 +4,15 @@ namespace App\Http\Database\Contracts;
 
 use App\Core\Logic\Maybe;
 
-interface UserRepository extends Repository
+interface UserRepository extends
+    CreateRepository,
+    DeleteByIdRepository,
+    DeleteRepository,
+    ExportRepository,
+    GetByIdRepository,
+    PaginateRepository,
+    UpdateByIdRepository,
+    UpdateRepository
 {
     public function getUserByFirstName($userName): Maybe;
 
